@@ -708,7 +708,7 @@
 
                 catalog.forEach(item => {
                     item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
-                    item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.poster, 'w1280');
+                    item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
                 });
 
                 heroItems = catalog.slice(0, 10);
