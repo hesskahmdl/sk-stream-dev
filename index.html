@@ -37,25 +37,25 @@
         }
         .search-box input:focus { width: 240px; border-color: #e50914; }
 
-        /* HERO BANNER - PAYSAGE NETFLIX HD (IMAGE COMPLETE PAYSAGE) */
+        /* HERO BANNER - DÉZOOMÉ ET RECADRÉ PROPREMENT */
         .hero-container {
-            position: relative; width: 100%; height: 75vh; min-height: 500px; max-height: 750px;
-            background-size: cover; background-position: center center; background-repeat: no-repeat;
+            position: relative; width: 100%; height: 65vh; min-height: 450px; max-height: 650px;
+            background-size: cover; background-position: center 20%; background-repeat: no-repeat;
             transition: background-image 0.8s ease-in-out;
-            display: flex; align-items: flex-end; padding: 0 50px 60px; margin-top: 55px;
+            display: flex; align-items: flex-end; padding: 0 50px 50px; margin-top: 55px;
         }
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(11,11,14,0.2) 0%, rgba(11,11,14,0.7) 60%, #0b0b0e 100%),
-                        linear-gradient(90deg, #0b0b0e 15%, rgba(11,11,14,0.6) 50%, transparent 100%);
+            background: linear-gradient(180deg, rgba(11,11,14,0.3) 0%, rgba(11,11,14,0.8) 65%, #0b0b0e 100%),
+                        linear-gradient(90deg, #0b0b0e 20%, rgba(11,11,14,0.5) 60%, transparent 100%);
         }
-        .hero-content { position: relative; z-index: 10; max-width: 650px; }
+        .hero-content { position: relative; z-index: 10; max-width: 600px; }
         .hero-tag { color: #e50914; font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
-        .hero-title { font-size: 46px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        .hero-title { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 15px; color: #ddd; font-weight: bold; }
         .badge { background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; }
         .badge-rating { background: #ffc107; color: #000; }
-        .hero-overview { font-size: 14px; color: #ccc; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+        .hero-overview { font-size: 13px; color: #ccc; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
 
         .btn-watch {
             background: #e50914; color: #fff; border: none; padding: 12px 32px; border-radius: 30px;
@@ -78,7 +78,6 @@
         .carousel { display: flex; gap: 18px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 0; scrollbar-width: none; }
         .carousel::-webkit-scrollbar { display: none; }
         
-        /* CARTES DE FILMS AGRANDIES */
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; padding: 15px 0; }
 
         .card {
@@ -89,7 +88,7 @@
         .movie-grid .card { flex: none; height: 270px; }
         .card img.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
 
-        /* CARTE CRÉER UNE SAGA SUR L'ACCUEIL */
+        /* CARTE CRÉER UNE SAGA (MASQUÉE PAR DÉFAUT) */
         .card-add-saga {
             border: 2px dashed rgba(229, 9, 20, 0.6);
             background: rgba(19, 19, 26, 0.8);
@@ -107,29 +106,13 @@
             transform: translateY(-6px) scale(1.02);
         }
         .add-saga-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: #e50914;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.5);
+            width: 55px; height: 55px; border-radius: 50%; background: #e50914;
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: bold; box-shadow: 0 4px 15px rgba(229, 9, 20, 0.5);
             transition: transform 0.2s;
         }
-        .card-add-saga:hover .add-saga-circle {
-            transform: scale(1.1);
-        }
-        .add-saga-text {
-            font-size: 13px;
-            font-weight: 800;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .card-add-saga:hover .add-saga-circle { transform: scale(1.1); }
+        .add-saga-text { font-size: 13px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .card-hover-overlay {
             position: absolute; inset: 0; background: rgba(11, 11, 14, 0.92);
@@ -285,8 +268,8 @@
             nav { gap: 12px; }
             .nav-item { font-size: 13px; }
             .search-box input { width: 120px; padding: 5px 10px; font-size: 12px; }
-            .hero-container { height: 50vh; padding: 0 20px 30px; margin-top: 50px; }
-            .hero-title { font-size: 28px; }
+            .hero-container { height: 45vh; padding: 0 20px 30px; margin-top: 50px; }
+            .hero-title { font-size: 26px; }
             .main-content { padding: 10px 15px; }
             .saga-header { flex-direction: column; }
             .saga-poster { width: 180px; height: 260px; }
@@ -390,7 +373,7 @@
         <div id="filteredSection" style="display:none;">
             <div class="section-header">
                 <div class="section-title" id="filterTitle">Résultats</div>
-                <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="handleCreateSagaClick()">➕ Créer une Saga</button>
+                <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="openCreateSagaModal()">➕ Créer une Saga</button>
                 <select class="filter-select" id="sortSelect" onchange="applySorting()">
                     <option value="rating-desc" data-i18n="sort_rating_desc">⭐ Les mieux notés</option>
                     <option value="rating-asc" data-i18n="sort_rating_asc">⭐ Les moins bien notés</option>
@@ -682,13 +665,14 @@
             localStorage.setItem('sk_sagas_database', JSON.stringify(SAGAS_DATABASE));
         }
 
-        /* MOT DE PASSE REQUIS POUR MODALE ADMIN : tastycroustyjetaime2026 */
+        /* VERIFICATION MOT DE PASSE SECRET */
         function triggerAdminPrompt() {
             const pass = prompt("Entrez le mot de passe Administrateur :");
             if (pass === "tastycroustyjetaime2026") {
                 isAdmin = true;
-                alert("🔓 Mode Administrateur activé avec succès !");
+                alert("🔓 Mode Administrateur activé ! L'option 'Créer une Saga' est débloquée.");
                 updateAdminUI();
+                renderSections();
             } else if (pass !== null) {
                 alert("❌ Mot de passe incorrect !");
             }
@@ -711,17 +695,6 @@
             if (currentSaga) renderSagaMovies();
         }
 
-        function handleCreateSagaClick() {
-            if (!isAdmin) {
-                triggerAdminPrompt();
-                if (isAdmin) {
-                    openCreateSagaModal();
-                }
-            } else {
-                openCreateSagaModal();
-            }
-        }
-
         function isAnimeItem(i) {
             if (i.type === 'anime') return true;
             const text = ((i.title || '') + ' ' + (i.overview || '')).toLowerCase();
@@ -735,7 +708,8 @@
 
                 catalog.forEach(item => {
                     item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
-                    item.backdrop = formatTmdbImage(item.backdrop || item.backdrop_path || item.poster, 'original');
+                    // Image de couverture dézoomée pour éviter le cadrage trop serré
+                    item.backdrop = formatTmdbImage(item.backdrop || item.backdrop_path || item.poster, 'w1280');
                 });
 
                 heroItems = catalog.slice(0, 10);
@@ -872,7 +846,7 @@
 
         function createAddSagaCardHtml() {
             return `
-                <div class="card card-add-saga" onclick="handleCreateSagaClick()">
+                <div class="card card-add-saga" onclick="openCreateSagaModal()">
                     <div class="add-saga-circle">+</div>
                     <div class="add-saga-text">Créer une Saga</div>
                 </div>
@@ -896,7 +870,10 @@
             const popAnimes = catalog.filter(i => isAnimeItem(i)).slice(0, 30);
 
             document.getElementById('gridTop10').innerHTML = top10.map((item, idx) => createTop10CardHtml(item, idx + 1)).join('');
-            document.getElementById('gridSagas').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('') + createAddSagaCardHtml();
+            
+            // LA CARTE "+ CRÉER UNE SAGA" N'APPARAÎT QUE SI ISADMIN EST VRAI
+            document.getElementById('gridSagas').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('') + (isAdmin ? createAddSagaCardHtml() : '');
+            
             document.getElementById('gridMovies').innerHTML = popMovies.map(createCardHtml).join('');
             document.getElementById('gridSeries').innerHTML = popSeries.map(createCardHtml).join('');
             document.getElementById('gridAnimes').innerHTML = (popAnimes.length ? popAnimes : catalog.slice(0, 30)).slice(0, 30).map(createCardHtml).join('');
@@ -994,13 +971,20 @@
             updateAdminUI();
         }
 
-        /* RECHERCHE AVEC DÉTECTION DU CODE SECRET panel_adminhesskaCEO */
+        /* RECHERCHE AVEC AFFICHE SECRÈTE DE CONNEXION ADMIN */
         function handleSearch(query) {
             const q = query.trim();
             
-            if (q.toLowerCase().includes("panel_adminhesskaceo")) {
+            if (q.toLowerCase() === "panel_adminhesskaceo") {
                 document.getElementById('searchInput').value = '';
-                triggerAdminPrompt();
+                closeSagaView();
+                closePlayer();
+                document.getElementById('heroBanner').style.display = 'none';
+                document.getElementById('homeSections').style.display = 'none';
+                document.getElementById('filteredSection').style.display = 'block';
+                document.getElementById('filterTitle').textContent = "🔒 Panneau Administrateur Sécurisé";
+                document.getElementById('gridFiltered').innerHTML = createAdminCardHtml();
+                document.getElementById('btnLoadMore').style.display = 'none';
                 return;
             }
 
@@ -1056,7 +1040,7 @@
             }
 
             if (currentCategoryType === 'saga' && !searchInput.value.trim()) {
-                document.getElementById('gridFiltered').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('') + createAddSagaCardHtml();
+                document.getElementById('gridFiltered').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('') + (isAdmin ? createAddSagaCardHtml() : '');
                 document.getElementById('btnLoadMore').style.display = 'none';
                 return;
             }
@@ -1213,7 +1197,7 @@
             document.getElementById(id).scrollBy({ left: amount, behavior: 'smooth' });
         }
 
-        /* FONCTIONS D'ADMINISTRATION */
+        /* FONCTIONS ADMIN */
         function openCreateSagaModal() {
             document.getElementById('createSagaModal').style.display = 'flex';
         }
