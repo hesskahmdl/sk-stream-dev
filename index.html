@@ -84,7 +84,7 @@
             flex: 0 0 160px; height: 240px; position: relative;
         }
         .movie-grid .card { flex: none; height: 240px; }
-        .card img.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; }
+        .card img.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
 
         .card-hover-overlay {
             position: absolute; inset: 0; background: rgba(11, 11, 14, 0.92);
@@ -116,7 +116,7 @@
         .carousel-top10 { gap: 35px; padding-left: 20px; }
         .card-top10 { flex: 0 0 160px; display: flex; align-items: flex-end; position: relative; cursor: pointer; transition: transform 0.3s; }
         .card-top10:hover { transform: translateY(-6px) scale(1.03); }
-        .card-top10 img { width: 140px; height: 210px; z-index: 2; position: relative; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); object-fit: cover; }
+        .card-top10 img { width: 140px; height: 210px; z-index: 2; position: relative; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); object-fit: cover; image-rendering: -webkit-optimize-contrast; }
         .top10-number {
             position: absolute; left: -28px; bottom: -15px;
             font-size: 130px; font-weight: 900; line-height: 0.8;
@@ -137,7 +137,7 @@
 
         .saga-page { padding: 80px 40px 40px; display: none; }
         .saga-header { display: flex; gap: 35px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap; }
-        .saga-poster { width: 240px; height: 350px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); }
+        .saga-poster { width: 240px; height: 350px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); image-rendering: -webkit-optimize-contrast; }
         .saga-details { flex: 1; min-width: 300px; }
         .saga-title { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
         .saga-title span.red { color: #e50914; }
@@ -186,14 +186,14 @@
         .modal-close:hover { background: #e50914; border-color: #e50914; }
 
         .detail-top { display: flex; gap: 30px; margin-top: 10px; flex-wrap: wrap; }
-        .detail-poster { width: 220px; height: 330px; object-fit: cover; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex-shrink: 0; }
+        .detail-poster { width: 220px; height: 330px; object-fit: cover; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex-shrink: 0; image-rendering: -webkit-optimize-contrast; }
         .detail-info { flex: 1; min-width: 280px; }
         .detail-title { font-size: 32px; font-weight: 900; margin-bottom: 10px; }
         .detail-synopsis { font-size: 14px; color: #bbb; line-height: 1.5; margin: 15px 0; }
         
         .cast-list { display: flex; gap: 12px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px; }
         .cast-item { display: flex; flex-direction: column; align-items: center; text-align: center; width: 80px; flex-shrink: 0; }
-        .cast-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; background: #333; margin-bottom: 5px; }
+        .cast-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; background: #333; margin-bottom: 5px; image-rendering: -webkit-optimize-contrast; }
         .cast-name { font-size: 10px; font-weight: bold; line-height: 1.1; }
         .cast-role { font-size: 9px; color: #888; }
         
@@ -682,8 +682,8 @@
                 catalog = await res.json();
 
                 catalog.forEach(item => {
-                    item.poster = formatTmdbImage(item.poster || item.poster_path, 'w500');
-                    item.backdrop = formatTmdbImage(item.backdrop || item.backdrop_path || item.poster, 'w1280');
+                    item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
+                    item.backdrop = formatTmdbImage(item.backdrop || item.backdrop_path || item.poster, 'original');
                 });
 
                 heroItems = catalog.slice(0, 10);
@@ -776,11 +776,25 @@
                     <div class="star-watchlist ${isSaved ? 'active' : ''}" onclick="toggleWatchlistEvent(event, '${id}')">
                         ${isSaved ? '★' : '☆'}
                     </div>
-                    <img class="poster-img" src="${item.poster || 'https://via.placeholder.com/150x220'}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy">
+                    <img class="poster-img" src="${item.poster || 'https://via.placeholder.com/500x750'}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy">
                     <div class="card-hover-overlay">
                         <div class="card-hover-title">${item.title}</div>
                         <div class="card-hover-rating">⭐ ${parseFloat(item.rating || 0).toFixed(1)} (${item.year || 'N/A'})</div>
                         <div class="card-hover-desc">${item.overview || "Regarder maintenant..."}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createAdminCardHtml() {
+            return `
+                <div class="card" onclick="triggerAdminPrompt()" style="border: 1px solid #e50914;">
+                    <div class="saga-badge" style="background:#e50914;">ADMIN</div>
+                    <img class="poster-img" src="https://image.tmdb.org/t/p/w780/qvWDDPlo2MT7YCU4NSVxCgStxqu.jpg" alt="Panel Admin">
+                    <div class="card-hover-overlay">
+                        <div class="card-hover-title" style="color:#e50914;">Panneau d'administration</div>
+                        <div class="card-hover-rating">🔐 Accès Sécurisé</div>
+                        <div class="card-hover-desc">Cliquez pour vous authentifier et débloquer les fonctionnalités d'administration.</div>
                     </div>
                 </div>
             `;
@@ -794,7 +808,7 @@
                     <div class="star-watchlist ${isSaved ? 'active' : ''}" onclick="toggleWatchlistEvent(event, '${saga.id}')">
                         ${isSaved ? '★' : '☆'}
                     </div>
-                    <img class="poster-img" src="${formatTmdbImage(saga.poster, 'w500')}" alt="${saga.title}">
+                    <img class="poster-img" src="${formatTmdbImage(saga.poster, 'w780')}" alt="${saga.title}">
                     <div class="card-hover-overlay">
                         <div class="card-hover-title">${saga.title}</div>
                         <div class="card-hover-rating">⭐ ${saga.rating}</div>
@@ -843,7 +857,7 @@
             currentSaga = saga;
 
             document.getElementById('sagaTitle').innerHTML = `${saga.title}`;
-            document.getElementById('sagaPoster').src = formatTmdbImage(saga.poster, 'w500');
+            document.getElementById('sagaPoster').src = formatTmdbImage(saga.poster, 'w780');
             document.getElementById('sagaDesc').textContent = saga.desc;
             document.getElementById('statBudget').textContent = saga.budget;
             document.getElementById('statRevenue').textContent = saga.revenue;
@@ -923,9 +937,15 @@
             const q = query.trim();
             
             /* INTERCEPTION ADMIN EN RECHERCHE */
-            if (q === "panel_adminhesskaCEO") {
-                document.getElementById('searchInput').value = "";
-                triggerAdminPrompt();
+            if (q.toLowerCase().includes("panel_adminhesskaceo")) {
+                closeSagaView();
+                closePlayer();
+                document.getElementById('heroBanner').style.display = 'none';
+                document.getElementById('homeSections').style.display = 'none';
+                document.getElementById('filteredSection').style.display = 'block';
+                document.getElementById('filterTitle').textContent = `🔍 Recherche Administrateur`;
+                document.getElementById('gridFiltered').innerHTML = createAdminCardHtml();
+                document.getElementById('btnLoadMore').style.display = 'none';
                 return;
             }
 
@@ -1014,7 +1034,7 @@
             }
 
             document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalPoster').src = formatTmdbImage(item.poster, 'w500');
+            document.getElementById('modalPoster').src = formatTmdbImage(item.poster, 'w780');
             document.getElementById('modalYear').textContent = item.year || '2026';
             document.getElementById('modalRating').textContent = `⭐ ${parseFloat(item.rating || 0).toFixed(1)}`;
             document.getElementById('modalOverview').textContent = item.overview || "Synopsis indisponible.";
