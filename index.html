@@ -824,7 +824,9 @@
                     item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
                 }
                 if (!hasCustomBackdrop) {
-                    item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
+                    // Restauration de la logique originale pour lire correctement la propriété 'backdrop', 'backdrops' ou 'backdrop_path'
+                    const rawBackdrop = item.backdrop || item.backdrops || item.backdrop_path;
+                    item.backdrop = formatTmdbImage(rawBackdrop, 'w1280');
                 }
             });
 
@@ -864,7 +866,8 @@
         function showHero(index) {
             heroIndex = index;
             const item = heroItems[heroIndex];
-            const bgImage = item.backdrop || item.poster;
+            // S'assure de récupérer l'image de fond si disponible, sinon se rabat sur le poster
+            const bgImage = (item.backdrop && item.backdrop !== 'https://via.placeholder.com/500x750') ? item.backdrop : item.poster;
             document.getElementById('heroBanner').style.backgroundImage = `url('${bgImage}')`;
             document.getElementById('heroTitle').textContent = item.title;
             document.getElementById('heroYear').textContent = item.year || '2026';
