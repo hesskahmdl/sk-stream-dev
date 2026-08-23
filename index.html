@@ -40,7 +40,7 @@
         /* HERO BANNER CORRIGÉE (STYLE NETFLIX HD) */
         .hero-container {
             position: relative; width: 100%; height: 65vh; min-height: 450px; max-height: 700px;
-            background-size: cover; background-position: center top; background-repeat: no-repeat;
+            background-size: contain; background-position: center top; background-repeat: no-repeat;
             transition: background-image 0.8s ease-in-out;
             display: flex; align-items: flex-end; padding: 0 40px 60px; margin-top: 55px;
         }
@@ -84,7 +84,49 @@
             flex: 0 0 160px; height: 240px; position: relative;
         }
         .movie-grid .card { flex: none; height: 240px; }
-        .card img.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
+        .card img.poster-img { width: 100%; height: 100%; object-fit: fill; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
+
+        /* CARTE CRÉER UNE SAGA SUR L'ACCUEIL */
+        .card-add-saga {
+            border: 2px dashed rgba(229, 9, 20, 0.6);
+            background: rgba(19, 19, 26, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-align: center;
+            padding: 15px;
+        }
+        .card-add-saga:hover {
+            border-color: #e50914;
+            background: rgba(229, 9, 20, 0.1);
+            transform: translateY(-6px) scale(1.02);
+        }
+        .add-saga-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #e50914;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.5);
+            transition: transform 0.2s;
+        }
+        .card-add-saga:hover .add-saga-circle {
+            transform: scale(1.1);
+        }
+        .add-saga-text {
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         .card-hover-overlay {
             position: absolute; inset: 0; background: rgba(11, 11, 14, 0.92);
@@ -116,7 +158,7 @@
         .carousel-top10 { gap: 35px; padding-left: 20px; }
         .card-top10 { flex: 0 0 160px; display: flex; align-items: flex-end; position: relative; cursor: pointer; transition: transform 0.3s; }
         .card-top10:hover { transform: translateY(-6px) scale(1.03); }
-        .card-top10 img { width: 140px; height: 210px; z-index: 2; position: relative; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); object-fit: cover; image-rendering: -webkit-optimize-contrast; }
+        .card-top10 img { width: 140px; height: 210px; z-index: 2; position: relative; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); object-fit: fill; image-rendering: -webkit-optimize-contrast; }
         .top10-number {
             position: absolute; left: -28px; bottom: -15px;
             font-size: 130px; font-weight: 900; line-height: 0.8;
@@ -137,7 +179,7 @@
 
         .saga-page { padding: 80px 40px 40px; display: none; }
         .saga-header { display: flex; gap: 35px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap; }
-        .saga-poster { width: 240px; height: 350px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); image-rendering: -webkit-optimize-contrast; }
+        .saga-poster { width: 240px; height: 350px; object-fit: fill; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); image-rendering: -webkit-optimize-contrast; }
         .saga-details { flex: 1; min-width: 300px; }
         .saga-title { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
         .saga-title span.red { color: #e50914; }
@@ -186,14 +228,14 @@
         .modal-close:hover { background: #e50914; border-color: #e50914; }
 
         .detail-top { display: flex; gap: 30px; margin-top: 10px; flex-wrap: wrap; }
-        .detail-poster { width: 220px; height: 330px; object-fit: cover; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex-shrink: 0; image-rendering: -webkit-optimize-contrast; }
+        .detail-poster { width: 220px; height: 330px; object-fit: fill; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex-shrink: 0; image-rendering: -webkit-optimize-contrast; }
         .detail-info { flex: 1; min-width: 280px; }
         .detail-title { font-size: 32px; font-weight: 900; margin-bottom: 10px; }
         .detail-synopsis { font-size: 14px; color: #bbb; line-height: 1.5; margin: 15px 0; }
         
         .cast-list { display: flex; gap: 12px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px; }
         .cast-item { display: flex; flex-direction: column; align-items: center; text-align: center; width: 80px; flex-shrink: 0; }
-        .cast-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; background: #333; margin-bottom: 5px; image-rendering: -webkit-optimize-contrast; }
+        .cast-img { width: 55px; height: 55px; border-radius: 50%; object-fit: fill; background: #333; margin-bottom: 5px; image-rendering: -webkit-optimize-contrast; }
         .cast-name { font-size: 10px; font-weight: bold; line-height: 1.1; }
         .cast-role { font-size: 9px; color: #888; }
         
@@ -345,7 +387,7 @@
         <div id="filteredSection" style="display:none;">
             <div class="section-header">
                 <div class="section-title" id="filterTitle">Résultats</div>
-                <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="openCreateSagaModal()">➕ Créer une Saga</button>
+                <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="handleCreateSagaClick()">➕ Créer une Saga</button>
                 <select class="filter-select" id="sortSelect" onchange="applySorting()">
                     <option value="rating-desc" data-i18n="sort_rating_desc">⭐ Les mieux notés</option>
                     <option value="rating-asc" data-i18n="sort_rating_asc">⭐ Les moins bien notés</option>
@@ -670,6 +712,14 @@
             if (currentSaga) renderSagaMovies();
         }
 
+        function handleCreateSagaClick() {
+            if (!isAdmin) {
+                triggerAdminPrompt();
+            } else {
+                openCreateSagaModal();
+            }
+        }
+
         function isAnimeItem(i) {
             if (i.type === 'anime') return true;
             const text = ((i.title || '') + ' ' + (i.overview || '')).toLowerCase();
@@ -818,6 +868,15 @@
             `;
         }
 
+        function createAddSagaCardHtml() {
+            return `
+                <div class="card card-add-saga" onclick="handleCreateSagaClick()">
+                    <div class="add-saga-circle">+</div>
+                    <div class="add-saga-text">Créer une Saga</div>
+                </div>
+            `;
+        }
+
         function createTop10CardHtml(item, rank) {
             const id = String(item.tmdb_id_clean || item.tmdb_id);
             return `
@@ -835,7 +894,7 @@
             const popAnimes = catalog.filter(i => isAnimeItem(i)).slice(0, 30);
 
             document.getElementById('gridTop10').innerHTML = top10.map((item, idx) => createTop10CardHtml(item, idx + 1)).join('');
-            document.getElementById('gridSagas').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('');
+            document.getElementById('gridSagas').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('') + createAddSagaCardHtml();
             document.getElementById('gridMovies').innerHTML = popMovies.map(createCardHtml).join('');
             document.getElementById('gridSeries').innerHTML = popSeries.map(createCardHtml).join('');
             document.getElementById('gridAnimes').innerHTML = (popAnimes.length ? popAnimes : catalog.slice(0, 30)).slice(0, 30).map(createCardHtml).join('');
@@ -1001,7 +1060,7 @@
             }
 
             if (currentCategoryType === 'saga' && !searchInput.value.trim()) {
-                document.getElementById('gridFiltered').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('');
+                document.getElementById('gridFiltered').innerHTML = SAGAS_DATABASE.map(createSagaCardHtml).join('') + createAddSagaCardHtml();
                 document.getElementById('btnLoadMore').style.display = 'none';
                 return;
             }
