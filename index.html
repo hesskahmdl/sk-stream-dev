@@ -37,7 +37,7 @@
         }
         .search-box input:focus { width: 240px; border-color: #e50914; }
 
-        /* HERO BANNER - DIMENSIONS ET STYLE ISSUS DU SECOND CODE */
+        /* HERO BANNER */
         .hero-container {
             position: relative; width: 100%; height: 75vh; min-height: 480px;
             background-size: cover; background-position: center; transition: background-image 0.8s ease-in-out;
@@ -87,21 +87,14 @@
         .movie-grid .card { flex: none; height: 270px; }
         .card img.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
 
-        /* CARTE CRÉER UNE SAGA (MASQUÉE PAR DÉFAUT) */
         .card-add-saga {
             border: 2px dashed rgba(229, 9, 20, 0.6);
             background: rgba(19, 19, 26, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-align: center;
-            padding: 15px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 12px; text-align: center; padding: 15px;
         }
         .card-add-saga:hover {
-            border-color: #e50914;
-            background: rgba(229, 9, 20, 0.15);
+            border-color: #e50914; background: rgba(229, 9, 20, 0.15);
             transform: translateY(-6px) scale(1.02);
         }
         .add-saga-circle {
@@ -149,8 +142,7 @@
             font-size: 130px; font-weight: 900; line-height: 0.8;
             color: rgba(11, 11, 14, 0.85);
             -webkit-text-stroke: 4px #e50914;
-            z-index: 3;
-            user-select: none;
+            z-index: 3; user-select: none;
             font-family: 'Impact', 'Arial Black', sans-serif;
             text-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
             pointer-events: none;
@@ -604,7 +596,7 @@
             {
                 id: "spider-man-mcu",
                 title: "Spider-Man (MCU) - Saga",
-                poster: "/3BVng0lmJyYIUqm5dxLS2eZ2625.jpg",
+                poster: "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg",
                 exactTitles: ["spider-man: homecoming", "spider-man: far from home", "spider-man: no way home", "spider-man: brand new day"],
                 desc: "Cette saga nous dépeint la vie de Peter Parker, partagé entre sa vie de lycéen lambda et ses aspirations de justicier au sein du MCU.",
                 budget: "760 000 000 $", revenue: "6 234 107 164 $", rating: "7.6", duration: "9h 20min",
@@ -702,49 +694,115 @@
         }
 
         async function init() {
+            const fallbackCatalog = [
+                {
+                    tmdb_id_clean: "1001",
+                    title: "Spider-Man: Brand New Day",
+                    rating: "8.8",
+                    year: "2026",
+                    type: "movie",
+                    overview: "Peter Parker entame un tout nouveau chapitre sous le costume de l'araignée.",
+                    poster: "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg"
+                },
+                {
+                    tmdb_id_clean: "1002",
+                    title: "Mutiny",
+                    rating: "8.1",
+                    year: "2026",
+                    type: "movie",
+                    overview: "Un thriller d'action intense au cœur d'une mutinerie à haut risque.",
+                    poster: "https://image.tmdb.org/t/p/original/qDa0fqDqIBCovRp975RvtGPcuN3.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/qDa0fqDqIBCovRp975RvtGPcuN3.jpg"
+                },
+                {
+                    tmdb_id_clean: "1003",
+                    title: "L'Odyssée",
+                    rating: "8.5",
+                    year: "2026",
+                    type: "movie",
+                    overview: "L'adaptation spectaculaire et éblouissante de la célèbres épopée d'Ulysse.",
+                    poster: "https://image.tmdb.org/t/p/original/n3D2Lmwomtbc4SZFO8hLtLL0b5q.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/n3D2Lmwomtbc4SZFO8hLtLL0b5q.jpg"
+                },
+                {
+                    tmdb_id_clean: "1004",
+                    title: "Toy Story 5",
+                    rating: "8.3",
+                    year: "2026",
+                    type: "movie",
+                    overview: "Woody, Buzz et toute la bande reviennent pour de nouvelles aventures captivantes.",
+                    poster: "https://image.tmdb.org/t/p/original/8sSKdEmlmqF4kJUd28SqthXC4yZ.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/8sSKdEmlmqF4kJUd28SqthXC4yZ.jpg"
+                },
+                {
+                    tmdb_id_clean: "1005",
+                    title: "Colony",
+                    rating: "7.9",
+                    year: "2026",
+                    type: "movie",
+                    overview: "La lutte acharnée pour la survie d'une colonie dans un futur mystérieux et hostile.",
+                    poster: "https://image.tmdb.org/t/p/original/84FEpVVbSKYvKXDZJDZXOKBxCEm.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/84FEpVVbSKYvKXDZJDZXOKBxCEm.jpg"
+                },
+                {
+                    tmdb_id_clean: "1006",
+                    title: "Vaiana (Moana)",
+                    rating: "8.4",
+                    year: "2026",
+                    type: "movie",
+                    overview: "Une grande aventure océanique guidée par le destin et la découverte de soi.",
+                    poster: "https://image.tmdb.org/t/p/original/76WFQTmh4gsqYpWTejxuEu5Iu69.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/76WFQTmh4gsqYpWTejxuEu5Iu69.jpg"
+                },
+                {
+                    tmdb_id_clean: "1007",
+                    title: "Obsession",
+                    rating: "8.0",
+                    year: "2026",
+                    type: "movie",
+                    overview: "Un thriller psychologique haletant où le désir devient une véritable obsession.",
+                    poster: "https://image.tmdb.org/t/p/original/rZfmzpixLKLR3Hg2u0WgC7XLFl8.jpg",
+                    backdrop: "https://image.tmdb.org/t/p/original/rZfmzpixLKLR3Hg2u0WgC7XLFl8.jpg"
+                }
+            ];
+
             try {
                 const res = await fetch('data.json');
                 if (!res.ok) throw new Error("Fichier data.json non trouvé");
                 catalog = await res.json();
             } catch (e) {
-                console.warn("data.json non trouvé. Chargement du catalogue de secours.", e);
-                catalog = [
-                    {
-                        tmdb_id_clean: "550",
-                        title: "Fight Club",
-                        rating: "8.4",
-                        year: "1999",
-                        type: "movie",
-                        overview: "Un employé de bureau insomniaque et un fabriquant de savon forment un club de combat clandestin.",
-                        poster: "/pB8O23J3C3m3P33J3C3m3P33J3C.jpg",
-                        backdrop: "/hZk2P1amK1328iXa8viR3s8fqR4.jpg"
-                    },
-                    {
-                        tmdb_id_clean: "603",
-                        title: "Matrix",
-                        rating: "8.2",
-                        year: "1999",
-                        type: "movie",
-                        overview: "Un pirate informatique apprend par des rebelles la vraie nature de sa réalité.",
-                        poster: "/f89U1A9RdbRdChA1R3aI3Y9Y3.jpg",
-                        backdrop: "/alQ1yfJR9cxAPOx0WsTYj37HawI.jpg"
-                    },
-                    {
-                        tmdb_id_clean: "634649",
-                        title: "Spider-Man: No Way Home",
-                        rating: "8.0",
-                        year: "2021",
-                        type: "movie",
-                        overview: "Pour la première fois dans l'histoire cinématographique de Spider-Man, notre héros masqué est démasqué.",
-                        poster: "/1g0dhY11kqP2SAnC3mB3J3C3m3P.jpg",
-                        backdrop: "/iQF2933J3C3m3P33J3C3m3P33J3.jpg"
-                    }
-                ];
+                console.warn("data.json non trouvé. Chargement du catalogue d'images personnalisées.", e);
+                catalog = fallbackCatalog;
             }
 
+            const customPosters = {
+                "spider-man: brand new day": "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg",
+                "mutiny": "https://image.tmdb.org/t/p/original/qDa0fqDqIBCovRp975RvtGPcuN3.jpg",
+                "l'odyssée": "https://image.tmdb.org/t/p/original/n3D2Lmwomtbc4SZFO8hLtLL0b5q.jpg",
+                "l'odyssee": "https://image.tmdb.org/t/p/original/n3D2Lmwomtbc4SZFO8hLtLL0b5q.jpg",
+                "toy story 5": "https://image.tmdb.org/t/p/original/8sSKdEmlmqF4kJUd28SqthXC4yZ.jpg",
+                "colony": "https://image.tmdb.org/t/p/original/84FEpVVbSKYvKXDZJDZXOKBxCEm.jpg",
+                "vaiana": "https://image.tmdb.org/t/p/original/76WFQTmh4gsqYpWTejxuEu5Iu69.jpg",
+                "moana": "https://image.tmdb.org/t/p/original/76WFQTmh4gsqYpWTejxuEu5Iu69.jpg",
+                "obsession": "https://image.tmdb.org/t/p/original/rZfmzpixLKLR3Hg2u0WgC7XLFl8.jpg"
+            };
+
             catalog.forEach(item => {
-                item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
-                item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
+                const titleLower = (item.title || '').toLowerCase().trim();
+                let hasCustom = false;
+                for (let key in customPosters) {
+                    if (titleLower.includes(key)) {
+                        item.poster = customPosters[key];
+                        item.backdrop = customPosters[key];
+                        hasCustom = true;
+                        break;
+                    }
+                }
+                if (!hasCustom) {
+                    item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
+                    item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
+                }
             });
 
             heroItems = catalog.slice(0, 10);
