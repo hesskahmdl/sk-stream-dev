@@ -596,7 +596,7 @@
             {
                 id: "spider-man-mcu",
                 title: "Spider-Man (MCU) - Saga",
-                poster: "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg",
+                poster: "https://image.tmdb.org/t/p/original/3BVng0lmJyYIUqm5dxLS2eZ2625.jpg",
                 exactTitles: ["spider-man: homecoming", "spider-man: far from home", "spider-man: no way home", "spider-man: brand new day"],
                 desc: "Cette saga nous dépeint la vie de Peter Parker, partagé entre sa vie de lycéen lambda et ses aspirations de justicier au sein du MCU.",
                 budget: "760 000 000 $", revenue: "6 234 107 164 $", rating: "7.6", duration: "9h 20min",
@@ -653,6 +653,12 @@
 
         let SAGAS_DATABASE = JSON.parse(localStorage.getItem('sk_sagas_database')) || DEFAULT_SAGAS;
 
+        // Force l'affiche Spider-Man Saga avec le bon lien
+        const spideySaga = SAGAS_DATABASE.find(s => s.id === "spider-man-mcu");
+        if (spideySaga) {
+            spideySaga.poster = "https://image.tmdb.org/t/p/original/3BVng0lmJyYIUqm5dxLS2eZ2625.jpg";
+        }
+
         function saveSagasToStorage() {
             localStorage.setItem('sk_sagas_database', JSON.stringify(SAGAS_DATABASE));
         }
@@ -703,7 +709,7 @@
                     type: "movie",
                     overview: "Peter Parker entame un tout nouveau chapitre sous le costume de l'araignée.",
                     poster: "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg",
-                    backdrop: "https://image.tmdb.org/t/p/original/5cY4DgCWhABURo3Kedt5hBwhzxF.jpg"
+                    backdrop: "https://image.tmdb.org/t/p/original/vjMvFSmGUxEtqVdaZgvFee9XkZl.jpg"
                 },
                 {
                     tmdb_id_clean: "1002",
@@ -788,19 +794,36 @@
                 "obsession": "https://image.tmdb.org/t/p/original/rZfmzpixLKLR3Hg2u0WgC7XLFl8.jpg"
             };
 
+            const customBackdrops = {
+                "spider-man: brand new day": "https://image.tmdb.org/t/p/original/vjMvFSmGUxEtqVdaZgvFee9XkZl.jpg",
+                "minion": "https://image.tmdb.org/t/p/original/kkcwhgSFd81QDlXo8ytrpHPQjhy.jpg",
+                "monster": "https://image.tmdb.org/t/p/original/kkcwhgSFd81QDlXo8ytrpHPQjhy.jpg"
+            };
+
             catalog.forEach(item => {
                 const titleLower = (item.title || '').toLowerCase().trim();
                 let hasCustom = false;
                 for (let key in customPosters) {
                     if (titleLower.includes(key)) {
                         item.poster = customPosters[key];
-                        item.backdrop = customPosters[key];
                         hasCustom = true;
                         break;
                     }
                 }
+                
+                let hasCustomBackdrop = false;
+                for (let key in customBackdrops) {
+                    if (titleLower.includes(key)) {
+                        item.backdrop = customBackdrops[key];
+                        hasCustomBackdrop = true;
+                        break;
+                    }
+                }
+
                 if (!hasCustom) {
                     item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
+                }
+                if (!hasCustomBackdrop) {
                     item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
                 }
             });
