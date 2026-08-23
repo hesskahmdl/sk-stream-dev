@@ -44,10 +44,10 @@
         }
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(90deg, #0b0b0e 10%, rgba(11,11,14,0.8) 40%, transparent 100%),
-                        linear-gradient(0deg, #0b0b0e 0%, transparent 40%);
+            background: linear-gradient(90deg, #0b0b0e 15%, rgba(11,11,14,0.85) 50%, transparent 100%),
+                        linear-gradient(0deg, #0b0b0e 0%, transparent 50%);
         }
-        .hero-content { position: relative; z-index: 10; max-width: 550px; }
+        .hero-content { position: relative; z-index: 10; max-width: 600px; }
         .hero-tag { color: #e50914; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
         .hero-title { font-size: 38px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
         .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 15px; color: #ddd; font-weight: bold; }
@@ -247,6 +247,7 @@
             .card-top10 { flex: 0 0 130px; }
             .card-top10 img { width: 110px; height: 160px; }
             .top10-number { font-size: 90px; left: -20px; }
+            .trailer-box { width: 100%; }
         }
     </style>
 </head>
@@ -256,28 +257,28 @@
         <div class="logo" onclick="switchTab('all')">SK STREAM</div>
         <nav>
             <button class="nav-item active" id="btn-all" onclick="switchTab('all')">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> <span>Accueil</span>
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> <span data-i18n="nav_home">Accueil</span>
             </button>
             <button class="nav-item" id="btn-saga" onclick="switchTab('saga')">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> <span>Sagas</span>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> <span data-i18n="nav_sagas">Sagas</span>
             </button>
             <button class="nav-item" id="btn-watchlist" onclick="switchTab('watchlist')">
-                <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Ma Watchlist</span>
+                <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span data-i18n="nav_watchlist">Ma Watchlist</span>
             </button>
             <button class="nav-item" id="btn-movie" onclick="switchTab('movie')">
-                <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg> <span>Films</span>
+                <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg> <span data-i18n="nav_movies">Films</span>
             </button>
             <button class="nav-item" id="btn-tv" onclick="switchTab('tv')">
-                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg> <span>Séries</span>
+                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg> <span data-i18n="nav_series">Séries</span>
             </button>
             <button class="nav-item" id="btn-anime" onclick="switchTab('anime')">
-                <svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg> <span>Anime</span>
+                <svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg> <span data-i18n="nav_anime">Anime</span>
             </button>
         </nav>
         
         <div class="right-header">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Rechercher..." oninput="handleSearch(this.value)">
+                <input type="text" id="searchInput" placeholder="Rechercher..." data-i18n-ph="search_ph" oninput="handleSearch(this.value)">
             </div>
             <div class="lang-switch">
                 <img src="https://flagcdn.com/w20/fr.png" alt="FR" id="flag-fr" class="active" onclick="setLang('fr')">
@@ -289,7 +290,7 @@
     <div class="hero-container" id="heroBanner">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-tag">🔥 TENDANCE ACTUELLE</div>
+            <div class="hero-tag" data-i18n="hero_tag">🔥 TENDANCE ACTUELLE</div>
             <h1 class="hero-title" id="heroTitle">---</h1>
             <div class="hero-meta">
                 <span class="badge" id="heroType">FILM</span>
@@ -297,41 +298,41 @@
                 <span class="badge badge-rating" id="heroRating">⭐ 8.5</span>
             </div>
             <p class="hero-overview" id="heroOverview">...</p>
-            <button class="btn-watch" id="heroWatchBtn">▶ REGARDER</button>
+            <button class="btn-watch" id="heroWatchBtn" data-i18n="btn_watch">▶ REGARDER</button>
         </div>
     </div>
 
     <div class="main-content" id="homeMainView">
         <div id="homeSections">
-            <div class="section-title">🔥 Top 10 des Tendances</div>
+            <div class="section-title" data-i18n="sec_top10">🔥 Top 10 des Tendances</div>
             <div class="carousel-wrapper">
                 <button class="arrow-btn left" onclick="scrollCarousel('gridTop10', -500)">❮</button>
                 <div class="carousel carousel-top10" id="gridTop10"></div>
                 <button class="arrow-btn right" onclick="scrollCarousel('gridTop10', 500)">❯</button>
             </div>
 
-            <div class="section-title" style="margin-top: 35px;">👑 Les Sagas Incontournables</div>
+            <div class="section-title" style="margin-top: 35px;" data-i18n="sec_sagas">👑 Les Sagas Incontournables</div>
             <div class="carousel-wrapper">
                 <button class="arrow-btn left" onclick="scrollCarousel('gridSagas', -500)">❮</button>
                 <div class="carousel" id="gridSagas"></div>
                 <button class="arrow-btn right" onclick="scrollCarousel('gridSagas', 500)">❯</button>
             </div>
 
-            <div class="section-title" style="margin-top: 25px;">🎬 Films Populaires</div>
+            <div class="section-title" style="margin-top: 25px;" data-i18n="sec_movies">🎬 Films Populaires</div>
             <div class="carousel-wrapper">
                 <button class="arrow-btn left" onclick="scrollCarousel('gridMovies', -500)">❮</button>
                 <div class="carousel" id="gridMovies"></div>
                 <button class="arrow-btn right" onclick="scrollCarousel('gridMovies', 500)">❯</button>
             </div>
 
-            <div class="section-title">📺 Séries Incontournables</div>
+            <div class="section-title" data-i18n="sec_series">📺 Séries Incontournables</div>
             <div class="carousel-wrapper">
                 <button class="arrow-btn left" onclick="scrollCarousel('gridSeries', -500)">❮</button>
                 <div class="carousel" id="gridSeries"></div>
                 <button class="arrow-btn right" onclick="scrollCarousel('gridSeries', 500)">❯</button>
             </div>
 
-            <div class="section-title">✨ Animés & Mangas</div>
+            <div class="section-title" data-i18n="sec_animes">✨ Animés & Mangas</div>
             <div class="carousel-wrapper">
                 <button class="arrow-btn left" onclick="scrollCarousel('gridAnimes', -500)">❮</button>
                 <div class="carousel" id="gridAnimes"></div>
@@ -344,19 +345,19 @@
                 <div class="section-title" id="filterTitle">Résultats</div>
                 <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="openCreateSagaModal()">➕ Créer une Saga</button>
                 <select class="filter-select" id="sortSelect" onchange="applySorting()">
-                    <option value="rating-desc">⭐ Les mieux notés</option>
-                    <option value="rating-asc">⭐ Les moins bien notés</option>
-                    <option value="title-asc">🔤 Alphabétique (A-Z)</option>
-                    <option value="year-desc">📅 Plus récents</option>
+                    <option value="rating-desc" data-i18n="sort_rating_desc">⭐ Les mieux notés</option>
+                    <option value="rating-asc" data-i18n="sort_rating_asc">⭐ Les moins bien notés</option>
+                    <option value="title-asc" data-i18n="sort_title_asc">🔤 Alphabétique (A-Z)</option>
+                    <option value="year-desc" data-i18n="sort_year_desc">📅 Plus récents</option>
                 </select>
             </div>
             <div class="movie-grid" id="gridFiltered"></div>
-            <button class="btn-load-more" id="btnLoadMore" style="display:none;" onclick="loadMoreItems()">Charger la suite</button>
+            <button class="btn-load-more" id="btnLoadMore" style="display:none;" onclick="loadMoreItems()" data-i18n="btn_load_more">Charger la suite</button>
         </div>
     </div>
 
     <div class="saga-page" id="sagaDetailView">
-        <div class="back-link" onclick="closeSagaView()">❮ Retour aux collections</div>
+        <div class="back-link" onclick="closeSagaView()" data-i18n="back_sagas">❮ Retour aux collections</div>
         
         <div class="saga-header">
             <img class="saga-poster" id="sagaPoster" src="" alt="Poster">
@@ -375,45 +376,45 @@
             </div>
         </div>
 
-        <div class="section-title">Films de la <span class="red">collection</span></div>
+        <div class="section-title"><span data-i18n="saga_sec_movies">Films de la</span> <span class="red">collection</span></div>
         <div class="movie-grid" id="sagaMoviesList"></div>
 
-        <div class="section-title" style="margin-top: 40px;">🏢 Informations de <span class="red">production</span></div>
+        <div class="section-title" style="margin-top: 40px;"><span data-i18n="saga_sec_prod">Informations de</span> <span class="red">production</span></div>
         <div class="info-grid">
             <div class="info-card">
-                <div class="info-card-title">🏢 Sociétés de production</div>
+                <div class="info-card-title" data-i18n="info_producers">🏢 Sociétés de production</div>
                 <div id="infoProducers"></div>
             </div>
             <div class="info-card">
-                <div class="info-card-title">📍 Pays de production</div>
+                <div class="info-card-title" data-i18n="info_countries">📍 Pays de production</div>
                 <div id="infoCountries"></div>
             </div>
             <div class="info-card">
-                <div class="info-card-title">🌐 Langues</div>
+                <div class="info-card-title" data-i18n="info_languages">🌐 Langues</div>
                 <div id="infoLanguages"></div>
             </div>
             <div class="info-card">
-                <div class="info-card-title">🎬 Genres principaux</div>
+                <div class="info-card-title" data-i18n="info_genres">🎬 Genres principaux</div>
                 <div id="infoGenres"></div>
             </div>
         </div>
 
-        <div class="section-title" style="margin-top: 40px;">📈 Statistiques <span class="red">globales</span></div>
+        <div class="section-title" style="margin-top: 40px;"><span data-i18n="saga_sec_stats">Statistiques</span> <span class="red">globales</span></div>
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-card-title">💲 Budget total</div>
+                <div class="stat-card-title" data-i18n="stat_budget">💲 Budget total</div>
                 <div class="stat-card-value" id="statBudget">760 000 000 $</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-title">💰 Revenus totaux</div>
+                <div class="stat-card-title" data-i18n="stat_revenue">💰 Revenus totaux</div>
                 <div class="stat-card-value" id="statRevenue">6 234 107 164 $</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-title">⭐ Note moyenne</div>
+                <div class="stat-card-title" data-i18n="stat_rating">⭐ Note moyenne</div>
                 <div class="stat-card-value" id="statRating">7.6 / 10</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-title">⏱️ Durée totale</div>
+                <div class="stat-card-title" data-i18n="stat_duration">⏱️ Durée totale</div>
                 <div class="stat-card-value" id="statDuration">9h 20min</div>
             </div>
         </div>
@@ -441,14 +442,14 @@
                 </div>
 
                 <div class="trailer-box">
-                    <h3>🎬 Bande-annonce</h3>
+                    <h3 data-i18n="modal_trailer">🎬 Bande-annonce</h3>
                     <div class="trailer-embed" id="trailerContainer"></div>
                 </div>
             </div>
 
             <div class="info-grid" style="margin-top: 20px;">
                 <div class="info-card">
-                    <div class="info-card-title">🏢 Production & Détails</div>
+                    <div class="info-card-title" data-i18n="modal_prod_details">🏢 Production & Détails</div>
                     <div id="movieProducersInfo"><span style="color:#666; font-size:12px;">Chargement des données...</span></div>
                 </div>
             </div>
@@ -496,9 +497,33 @@
         const ITEMS_PER_PAGE = 60;
         let isAdmin = false;
 
+        const translations = {
+            fr: {
+                nav_home: "Accueil", nav_sagas: "Sagas", nav_watchlist: "Ma Watchlist", nav_movies: "Films", nav_series: "Séries", nav_anime: "Anime",
+                search_ph: "Rechercher...", hero_tag: "🔥 TENDANCE ACTUELLE", btn_watch: "▶ REGARDER",
+                sec_top10: "🔥 Top 10 des Tendances", sec_sagas: "👑 Les Sagas Incontournables", sec_movies: "🎬 Films Populaires",
+                sec_series: "📺 Séries Incontournables", sec_animes: "✨ Animés & Mangas",
+                sort_rating_desc: "⭐ Les mieux notés", sort_rating_asc: "⭐ Les moins bien notés", sort_title_asc: "🔤 Alphabétique (A-Z)", sort_year_desc: "📅 Plus récents",
+                btn_load_more: "Charger la suite", back_sagas: "❮ Retour aux collections", saga_sec_movies: "Films de la", saga_sec_prod: "Informations de",
+                info_producers: "🏢 Sociétés de production", info_countries: "📍 Pays de production", info_languages: "🌐 Langues", info_genres: "🎬 Genres principaux",
+                saga_sec_stats: "Statistiques", stat_budget: "💲 Budget total", stat_revenue: "💰 Revenus totaux", stat_rating: "⭐ Note moyenne", stat_duration: "⏱️ Durée totale",
+                modal_trailer: "🎬 Bande-annonce", modal_prod_details: "🏢 Production & Détails", add_wl: "🔖 Ajouter à ma watchlist", rem_wl: "❌ Retirer de ma watchlist"
+            },
+            en: {
+                nav_home: "Home", nav_sagas: "Sagas", nav_watchlist: "My Watchlist", nav_movies: "Movies", nav_series: "TV Shows", nav_anime: "Anime",
+                search_ph: "Search...", hero_tag: "🔥 TRENDING NOW", btn_watch: "▶ WATCH NOW",
+                sec_top10: "🔥 Top 10 Trending", sec_sagas: "👑 Must-Watch Sagas", sec_movies: "🎬 Popular Movies",
+                sec_series: "📺 Must-Watch Series", sec_animes: "✨ Anime & Manga",
+                sort_rating_desc: "⭐ Highest Rated", sort_rating_asc: "⭐ Lowest Rated", sort_title_asc: "🔤 Alphabetical (A-Z)", sort_year_desc: "📅 Newest",
+                btn_load_more: "Load More", back_sagas: "❮ Back to collections", saga_sec_movies: "Movies in this", saga_sec_prod: "Production",
+                info_producers: "🏢 Production Companies", info_countries: "📍 Production Countries", info_languages: "🌐 Languages", info_genres: "🎬 Main Genres",
+                saga_sec_stats: "Global", stat_budget: "💲 Total Budget", stat_revenue: "💰 Total Revenue", stat_rating: "⭐ Average Rating", stat_duration: "⏱️ Total Runtime",
+                modal_trailer: "🎬 Trailer", modal_prod_details: "🏢 Production & Details", add_wl: "🔖 Add to Watchlist", rem_wl: "❌ Remove from Watchlist"
+            }
+        };
+
         const animeKeywords = ["anime", "manga", "japon", "animation", "shonen", "dragon ball", "naruto", "one piece", "demon slayer", "attack on titan"];
 
-        // Rendu net des images TMDB en dimensions w780
         function formatTmdbImage(url) {
             if (!url) return 'https://via.placeholder.com/500x750';
             if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -514,8 +539,24 @@
             lang = selectedLang;
             document.getElementById('flag-fr').classList.toggle('active', lang === 'fr');
             document.getElementById('flag-en').classList.toggle('active', lang === 'en');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.textContent = translations[lang][key];
+            });
+
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+
             if (currentItem) {
                 openDetails(currentItem, false);
+            }
+            if (currentSaga) {
+                openSagaView(currentSaga.id);
+            } else if (currentCategoryType !== 'all') {
+                renderPaginatedGrid();
             }
         }
 
@@ -529,7 +570,6 @@
                 .replace(/-+/g, '-');
         }
 
-        // BASE DE DONNÉES DES SAGAS INITIALE
         const DEFAULT_SAGAS = [
             {
                 id: "spider-man-mcu",
@@ -595,32 +635,21 @@
             localStorage.setItem('sk_sagas_database', JSON.stringify(SAGAS_DATABASE));
         }
 
-        // ECOUTEUR F12 POUR LE CODE D'ADMINISTRATION
-        window.addEventListener('keydown', function(e) {
-            if (e.key === 'F12') {
-                console.log("Tapez votre commande administrateur ici.");
-            }
-        });
-
-        // Détection de la saisie de la commande admin dans la console F12
-        let consoleBuffer = "";
-        window.administration_tool_mdp_hesskaadmin67saga_EX = function() {
+        /* COMMANDE CONSOLE ET CODE ADMIN DANS LES SAGAS */
+        window.panel_adminhesskaCEO = function() {
             if (currentCategoryType === 'saga') {
-                isAdmin = true;
-                alert("🔓 Mode Administrateur activé ! Vous pouvez maintenant ajouter/supprimer des sagas et des films.");
-                updateAdminUI();
+                const pass = prompt("Entrez le mot de passe Administrateur :");
+                if (pass === "HesskaCEOTastycrousty67911") {
+                    isAdmin = true;
+                    alert("🔓 Mode Administrateur activé avec succès !");
+                    updateAdminUI();
+                } else {
+                    alert("❌ Mot de passe incorrect !");
+                }
             } else {
-                alert("⚠️ Veuillez vous rendre sur l'onglet Sagas pour vous authentifier !");
+                alert("⚠️ Veuillez aller dans la section 'Sagas' pour ouvrir le panneau admin !");
             }
         };
-
-        // Redirection property console pour capter la saisie texte brute
-        Object.defineProperty(window, 'administration_tool_mdp_hesskaadmin67saga!?', {
-            get: function() {
-                window.administration_tool_mdp_hesskaadmin67saga_EX();
-                return "Admin déverrouillé.";
-            }
-        });
 
         function updateAdminUI() {
             const addSagaBtn = document.getElementById('adminAddSagaBtn');
@@ -650,7 +679,6 @@
                 const res = await fetch('data.json');
                 catalog = await res.json();
 
-                // Nettoyage de la qualité d'image du catalogue complet
                 catalog.forEach(item => {
                     item.poster = formatTmdbImage(item.poster);
                 });
@@ -726,18 +754,25 @@
             }
         }
 
+        function openDetailsById(tmdbId) {
+            const found = catalog.find(i => String(i.tmdb_id_clean || i.tmdb_id) === String(tmdbId));
+            if (found) {
+                openDetails(found);
+            }
+        }
+
         function createCardHtml(item, isInSagaView = false) {
             const id = String(item.tmdb_id_clean || item.tmdb_id);
             const isSaved = isSavedInWatchlist(id);
             const removeBtn = (isAdmin && isInSagaView) ? `<button class="btn-remove-movie" onclick="removeMovieFromCurrentSaga(event, '${item.title.replace(/'/g, "\\'")}')">✕</button>` : '';
 
             return `
-                <div class="card movie-saga-item" onclick='openDetails(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
+                <div class="card movie-saga-item" onclick="openDetailsById('${id}')">
                     ${removeBtn}
                     <div class="star-watchlist ${isSaved ? 'active' : ''}" onclick="toggleWatchlistEvent(event, '${id}')">
                         ${isSaved ? '★' : '☆'}
                     </div>
-                    <img class="poster-img" src="${item.poster || 'https://via.placeholder.com/150x220'}" alt="${item.title}" loading="lazy">
+                    <img class="poster-img" src="${item.poster || 'https://via.placeholder.com/150x220'}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy">
                     <div class="card-hover-overlay">
                         <div class="card-hover-title">${item.title}</div>
                         <div class="card-hover-rating">⭐ ${parseFloat(item.rating || 0).toFixed(1)} (${item.year || 'N/A'})</div>
@@ -766,10 +801,11 @@
         }
 
         function createTop10CardHtml(item, rank) {
+            const id = String(item.tmdb_id_clean || item.tmdb_id);
             return `
-                <div class="card-top10" onclick='openDetails(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
+                <div class="card-top10" onclick="openDetailsById('${id}')">
                     <div class="top10-number">${rank}</div>
-                    <img src="${item.poster}" alt="${item.title}" loading="lazy">
+                    <img src="${item.poster}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy">
                 </div>
             `;
         }
@@ -918,11 +954,11 @@
 
         function renderPaginatedGrid() {
             let catTitle = "Résultats";
-            if (currentCategoryType === 'saga') catTitle = "👑 Les Sagas Incontournables";
-            else if (currentCategoryType === 'movie') catTitle = "🎬 Tous les Films";
-            else if (currentCategoryType === 'tv') catTitle = "📺 Toutes les Séries";
-            else if (currentCategoryType === 'anime') catTitle = "✨ Tous les Animés";
-            else if (currentCategoryType === 'watchlist') catTitle = "🔖 Ma Watchlist";
+            if (currentCategoryType === 'saga') catTitle = translations[lang].sec_sagas;
+            else if (currentCategoryType === 'movie') catTitle = translations[lang].sec_movies;
+            else if (currentCategoryType === 'tv') catTitle = translations[lang].sec_series;
+            else if (currentCategoryType === 'anime') catTitle = translations[lang].sec_animes;
+            else if (currentCategoryType === 'watchlist') catTitle = translations[lang].nav_watchlist;
 
             const searchInput = document.getElementById('searchInput');
             if (!searchInput.value.trim()) {
@@ -1043,10 +1079,10 @@
             if (!btn) return;
             const saved = JSON.parse(localStorage.getItem('sk_watchlist') || '[]');
             if (saved.includes(itemId)) {
-                btn.innerHTML = "❌ Retirer de ma watchlist";
+                btn.innerHTML = translations[lang].rem_wl;
                 btn.classList.add('active');
             } else {
-                btn.innerHTML = "🔖 Ajouter à ma watchlist";
+                btn.innerHTML = translations[lang].add_wl;
                 btn.classList.remove('active');
             }
         }
