@@ -33,39 +33,40 @@
 
         .search-box input {
             background: #18181f; border: 1px solid #2a2a35; color: #fff; padding: 6px 12px;
-            border-radius: 20px; outline: none; font-size: 13px; width: 160px; transition: width 0.3s;
+            border-radius: 20px; outline: none; font-size: 13px; width: 180px; transition: width 0.3s;
         }
-        .search-box input:focus { width: 220px; border-color: #e50914; }
+        .search-box input:focus { width: 240px; border-color: #e50914; }
 
-        /* HERO BANNER CORRIGÉE (STYLE NETFLIX HD) */
+        /* HERO BANNER - PAYSAGE NETFLIX HD (IMAGE COMPLETE PAYSAGE) */
         .hero-container {
-            position: relative; width: 100%; height: 65vh; min-height: 450px; max-height: 700px;
-            background-size: contain; background-position: center top; background-repeat: no-repeat;
+            position: relative; width: 100%; height: 75vh; min-height: 500px; max-height: 750px;
+            background-size: cover; background-position: center center; background-repeat: no-repeat;
             transition: background-image 0.8s ease-in-out;
-            display: flex; align-items: flex-end; padding: 0 40px 60px; margin-top: 55px;
+            display: flex; align-items: flex-end; padding: 0 50px 60px; margin-top: 55px;
         }
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(11,11,14,0.3) 0%, rgba(11,11,14,0.8) 70%, #0b0b0e 100%),
-                        linear-gradient(90deg, #0b0b0e 10%, rgba(11,11,14,0.6) 50%, transparent 100%);
+            background: linear-gradient(180deg, rgba(11,11,14,0.2) 0%, rgba(11,11,14,0.7) 60%, #0b0b0e 100%),
+                        linear-gradient(90deg, #0b0b0e 15%, rgba(11,11,14,0.6) 50%, transparent 100%);
         }
         .hero-content { position: relative; z-index: 10; max-width: 650px; }
-        .hero-tag { color: #e50914; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
-        .hero-title { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .hero-tag { color: #e50914; font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .hero-title { font-size: 46px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 15px; color: #ddd; font-weight: bold; }
-        .badge { background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; }
+        .badge { background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; }
         .badge-rating { background: #ffc107; color: #000; }
         .hero-overview { font-size: 14px; color: #ccc; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
 
         .btn-watch {
-            background: #e50914; color: #fff; border: none; padding: 12px 30px; border-radius: 30px;
+            background: #e50914; color: #fff; border: none; padding: 12px 32px; border-radius: 30px;
             font-size: 15px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
+            box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
         }
         .btn-watch:hover { background: #ff0f1a; transform: scale(1.05); }
 
-        .main-content { padding: 15px 30px; position: relative; z-index: 10; margin-top: -30px; }
+        .main-content { padding: 15px 35px; position: relative; z-index: 10; margin-top: -30px; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin: 25px 0 12px; flex-wrap: wrap; gap: 10px; }
-        .section-title { font-size: 18px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+        .section-title { font-size: 20px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
         .section-title span.red { color: #e50914; }
 
         .filter-select {
@@ -74,17 +75,19 @@
         }
 
         .carousel-wrapper { position: relative; }
-        .carousel { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 0; scrollbar-width: none; }
+        .carousel { display: flex; gap: 18px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 0; scrollbar-width: none; }
         .carousel::-webkit-scrollbar { display: none; }
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; padding: 15px 0; }
+        
+        /* CARTES DE FILMS AGRANDIES */
+        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; padding: 15px 0; }
 
         .card {
-            cursor: pointer; transition: transform 0.3s; background: #13131a;
+            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: #13131a;
             border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
-            flex: 0 0 160px; height: 240px; position: relative;
+            flex: 0 0 180px; height: 270px; position: relative;
         }
-        .movie-grid .card { flex: none; height: 240px; }
-        .card img.poster-img { width: 100%; height: 100%; object-fit: fill; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
+        .movie-grid .card { flex: none; height: 270px; }
+        .card img.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; image-rendering: -webkit-optimize-contrast; }
 
         /* CARTE CRÉER UNE SAGA SUR L'ACCUEIL */
         .card-add-saga {
@@ -100,7 +103,7 @@
         }
         .card-add-saga:hover {
             border-color: #e50914;
-            background: rgba(229, 9, 20, 0.1);
+            background: rgba(229, 9, 20, 0.15);
             transform: translateY(-6px) scale(1.02);
         }
         .add-saga-circle {
@@ -130,11 +133,11 @@
 
         .card-hover-overlay {
             position: absolute; inset: 0; background: rgba(11, 11, 14, 0.92);
-            padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 14px; display: flex; flex-direction: column; justify-content: flex-end;
             opacity: 0; transition: opacity 0.3s ease; border-radius: 12px; border: 1px solid #e50914;
         }
         .card:hover .card-hover-overlay { opacity: 1; }
-        .card:hover { transform: translateY(-6px) scale(1.02); z-index: 10; }
+        .card:hover { transform: translateY(-6px) scale(1.03); z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
 
         .saga-badge {
             position: absolute; top: 10px; left: 10px;
@@ -151,14 +154,14 @@
         .star-watchlist:hover { transform: scale(1.2); }
         .star-watchlist.active { background: rgba(255, 193, 7, 0.2); border-color: #ffc107; color: #ffc107; }
 
-        .card-hover-title { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 4px; line-height: 1.2; }
-        .card-hover-rating { font-size: 11px; color: #ffc107; font-weight: bold; margin-bottom: 6px; }
-        .card-hover-desc { font-size: 10px; color: #aaa; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-hover-title { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; line-height: 1.2; }
+        .card-hover-rating { font-size: 12px; color: #ffc107; font-weight: bold; margin-bottom: 6px; }
+        .card-hover-desc { font-size: 11px; color: #aaa; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         .carousel-top10 { gap: 35px; padding-left: 20px; }
-        .card-top10 { flex: 0 0 160px; display: flex; align-items: flex-end; position: relative; cursor: pointer; transition: transform 0.3s; }
+        .card-top10 { flex: 0 0 180px; display: flex; align-items: flex-end; position: relative; cursor: pointer; transition: transform 0.3s; }
         .card-top10:hover { transform: translateY(-6px) scale(1.03); }
-        .card-top10 img { width: 140px; height: 210px; z-index: 2; position: relative; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); object-fit: fill; image-rendering: -webkit-optimize-contrast; }
+        .card-top10 img { width: 155px; height: 235px; z-index: 2; position: relative; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); object-fit: cover; image-rendering: -webkit-optimize-contrast; }
         .top10-number {
             position: absolute; left: -28px; bottom: -15px;
             font-size: 130px; font-weight: 900; line-height: 0.8;
@@ -179,7 +182,7 @@
 
         .saga-page { padding: 80px 40px 40px; display: none; }
         .saga-header { display: flex; gap: 35px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap; }
-        .saga-poster { width: 240px; height: 350px; object-fit: fill; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); image-rendering: -webkit-optimize-contrast; }
+        .saga-poster { width: 250px; height: 360px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); image-rendering: -webkit-optimize-contrast; }
         .saga-details { flex: 1; min-width: 300px; }
         .saga-title { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
         .saga-title span.red { color: #e50914; }
@@ -228,14 +231,14 @@
         .modal-close:hover { background: #e50914; border-color: #e50914; }
 
         .detail-top { display: flex; gap: 30px; margin-top: 10px; flex-wrap: wrap; }
-        .detail-poster { width: 220px; height: 330px; object-fit: fill; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex-shrink: 0; image-rendering: -webkit-optimize-contrast; }
+        .detail-poster { width: 230px; height: 340px; object-fit: cover; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex-shrink: 0; image-rendering: -webkit-optimize-contrast; }
         .detail-info { flex: 1; min-width: 280px; }
         .detail-title { font-size: 32px; font-weight: 900; margin-bottom: 10px; }
         .detail-synopsis { font-size: 14px; color: #bbb; line-height: 1.5; margin: 15px 0; }
         
         .cast-list { display: flex; gap: 12px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px; }
         .cast-item { display: flex; flex-direction: column; align-items: center; text-align: center; width: 80px; flex-shrink: 0; }
-        .cast-img { width: 55px; height: 55px; border-radius: 50%; object-fit: fill; background: #333; margin-bottom: 5px; image-rendering: -webkit-optimize-contrast; }
+        .cast-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; background: #333; margin-bottom: 5px; image-rendering: -webkit-optimize-contrast; }
         .cast-name { font-size: 10px; font-weight: bold; line-height: 1.1; }
         .cast-role { font-size: 9px; color: #888; }
         
@@ -281,15 +284,15 @@
             .logo { font-size: 18px; }
             nav { gap: 12px; }
             .nav-item { font-size: 13px; }
-            .search-box input { width: 110px; padding: 5px 10px; font-size: 12px; }
+            .search-box input { width: 120px; padding: 5px 10px; font-size: 12px; }
             .hero-container { height: 50vh; padding: 0 20px 30px; margin-top: 50px; }
             .hero-title { font-size: 28px; }
             .main-content { padding: 10px 15px; }
             .saga-header { flex-direction: column; }
-            .saga-poster { width: 160px; height: 240px; }
+            .saga-poster { width: 180px; height: 260px; }
             .saga-title { font-size: 26px; }
-            .card-top10 { flex: 0 0 130px; }
-            .card-top10 img { width: 110px; height: 160px; }
+            .card-top10 { flex: 0 0 140px; }
+            .card-top10 img { width: 120px; height: 180px; }
             .top10-number { font-size: 90px; left: -20px; }
             .trailer-box { width: 100%; }
         }
@@ -679,14 +682,10 @@
             localStorage.setItem('sk_sagas_database', JSON.stringify(SAGAS_DATABASE));
         }
 
-        /* ACTIVATION ADMIN PAR RECHERCHE ET CONSOLE */
-        window.panel_adminhesskaCEO = function() {
-            triggerAdminPrompt();
-        };
-
+        /* MOT DE PASSE REQUIS POUR MODALE ADMIN : tastycroustyjetaime2026 */
         function triggerAdminPrompt() {
             const pass = prompt("Entrez le mot de passe Administrateur :");
-            if (pass === "HesskaCEOTastycrousty67911" || pass === "2026") {
+            if (pass === "tastycroustyjetaime2026") {
                 isAdmin = true;
                 alert("🔓 Mode Administrateur activé avec succès !");
                 updateAdminUI();
@@ -715,6 +714,9 @@
         function handleCreateSagaClick() {
             if (!isAdmin) {
                 triggerAdminPrompt();
+                if (isAdmin) {
+                    openCreateSagaModal();
+                }
             } else {
                 openCreateSagaModal();
             }
@@ -992,19 +994,13 @@
             updateAdminUI();
         }
 
+        /* RECHERCHE AVEC DÉTECTION DU CODE SECRET panel_adminhesskaCEO */
         function handleSearch(query) {
             const q = query.trim();
             
-            /* INTERCEPTION ADMIN EN RECHERCHE */
             if (q.toLowerCase().includes("panel_adminhesskaceo")) {
-                closeSagaView();
-                closePlayer();
-                document.getElementById('heroBanner').style.display = 'none';
-                document.getElementById('homeSections').style.display = 'none';
-                document.getElementById('filteredSection').style.display = 'block';
-                document.getElementById('filterTitle').textContent = `🔍 Recherche Administrateur`;
-                document.getElementById('gridFiltered').innerHTML = createAdminCardHtml();
-                document.getElementById('btnLoadMore').style.display = 'none';
+                document.getElementById('searchInput').value = '';
+                triggerAdminPrompt();
                 return;
             }
 
