@@ -704,19 +704,54 @@
         async function init() {
             try {
                 const res = await fetch('data.json');
+                if (!res.ok) throw new Error("Fichier data.json non trouvé");
                 catalog = await res.json();
+            } catch (e) {
+                console.warn("data.json non trouvé. Chargement du catalogue de secours.", e);
+                catalog = [
+                    {
+                        tmdb_id_clean: "550",
+                        title: "Fight Club",
+                        rating: "8.4",
+                        year: "1999",
+                        type: "movie",
+                        overview: "Un employé de bureau insomniaque et un fabriquant de savon forment un club de combat clandestin.",
+                        poster: "/pB8O23J3C3m3P33J3C3m3P33J3C.jpg",
+                        backdrop: "/hZk2P1amK1328iXa8viR3s8fqR4.jpg"
+                    },
+                    {
+                        tmdb_id_clean: "603",
+                        title: "Matrix",
+                        rating: "8.2",
+                        year: "1999",
+                        type: "movie",
+                        overview: "Un pirate informatique apprend par des rebelles la vraie nature de sa réalité.",
+                        poster: "/f89U1A9RdbRdChA1R3aI3Y9Y3.jpg",
+                        backdrop: "/alQ1yfJR9cxAPOx0WsTYj37HawI.jpg"
+                    },
+                    {
+                        tmdb_id_clean: "634649",
+                        title: "Spider-Man: No Way Home",
+                        rating: "8.0",
+                        year: "2021",
+                        type: "movie",
+                        overview: "Pour la première fois dans l'histoire cinématographique de Spider-Man, notre héros masqué est démasqué.",
+                        poster: "/1g0dhY11kqP2SAnC3mB3J3C3m3P.jpg",
+                        backdrop: "/iQF2933J3C3m3P33J3C3m3P33J3.jpg"
+                    }
+                ];
+            }
 
-                catalog.forEach(item => {
-                    item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
-                    item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
-                });
+            catalog.forEach(item => {
+                item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
+                item.backdrop = formatTmdbImage(item.backdrops || item.backdrop_path || item.backdrop, 'w1280');
+            });
 
-                heroItems = catalog.slice(0, 10);
-                setupHeroSlider();
-                renderSections();
+            heroItems = catalog.slice(0, 10);
+            setupHeroSlider();
+            renderSections();
 
-                handleInitialUrl();
-            } catch (e) { console.error("Erreur chargement:", e); }
+            handleInitialUrl();
         }
 
         function handleInitialUrl() {
