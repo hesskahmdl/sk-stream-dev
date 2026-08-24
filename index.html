@@ -37,6 +37,40 @@
         }
         .search-box input:focus { width: 240px; border-color: #e50914; }
 
+        /* BOUTON ET MODAL DISCORD */
+        .btn-header-login {
+            background: #e50914; color: #fff; border: none; padding: 7px 16px;
+            border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+            transition: 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 6px;
+        }
+        .btn-header-login:hover { background: #ff0f1a; transform: scale(1.03); }
+
+        .user-profile-badge {
+            display: flex; align-items: center; gap: 8px; background: #18181f;
+            border: 1px solid #333; padding: 4px 12px 4px 5px; border-radius: 20px;
+            cursor: pointer; position: relative;
+        }
+        .user-profile-badge img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+        .user-profile-badge span { font-size: 12px; font-weight: bold; color: #fff; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .auth-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 7000;
+            display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px);
+        }
+        .auth-modal-card {
+            background: #13131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+            padding: 30px; width: 90%; max-width: 380px; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            position: relative; text-align: center;
+        }
+        .auth-modal-title { font-size: 20px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; color: #fff; }
+
+        .btn-discord-login {
+            width: 100%; background: #5865F2; color: #fff; border: none; padding: 14px;
+            border-radius: 10px; font-size: 15px; font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;
+        }
+        .btn-discord-login:hover { background: #4752C4; transform: translateY(-2px); }
+
         /* HERO BANNER */
         .hero-container {
             position: relative; width: 100%; height: 75vh; min-height: 480px;
@@ -306,8 +340,30 @@
                 <img src="https://flagcdn.com/w20/fr.png" alt="FR" id="flag-fr" class="active" onclick="setLang('fr')">
                 <img src="https://flagcdn.com/w20/gb.png" alt="EN" id="flag-en" onclick="setLang('en')">
             </div>
+
+            <!-- BOUTON CONNEXION -->
+            <button class="btn-header-login" id="btnOpenAuthModal" onclick="openAuthModal()">
+                🔑 Connexion
+            </button>
+            <div class="user-profile-badge" id="userProfileBadge" style="display:none;" onclick="logoutUser()">
+                <img id="userAvatarImg" src="" alt="Profil">
+                <span id="userNameSpan">Utilisateur</span>
+            </div>
         </div>
     </header>
+
+    <!-- MODAL DE CONNEXION DISCORD -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-card">
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+            <h2 class="auth-modal-title">Connexion</h2>
+            
+            <button class="btn-discord-login" onclick="loginWithDiscord()">
+                <svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="#fff"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.91-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,45.92,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,45.92,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+                <span>Connexion via Discord</span>
+            </button>
+        </div>
+    </div>
 
     <div class="hero-container" id="heroBanner">
         <div class="hero-overlay"></div>
@@ -485,7 +541,7 @@
         </div>
     </div>
 
-    <!-- MODALE DE CRÉATION DE SAGA (ADMIN) -->
+    <!-- MODALES ADMIN -->
     <div class="admin-modal" id="createSagaModal">
         <div class="admin-modal-content">
             <div class="admin-modal-title">Créer une nouvelle Saga</div>
@@ -513,11 +569,94 @@
 
     <script>
         const API_KEY = "89dc647004be44c785266ccd4d69576a";
+        const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1526689378087206974/-zDtM-nloEoxB79enr-FF3cocR0YIKHHHk6m7i70-V0I0iDGlW9ZTDTfO2fF8u1kWmP2";
+        const DISCORD_OAUTH_URL = "https://discord.com/oauth2/authorize?client_id=1499817025688567939&response_type=code&redirect_uri=https%3A%2F%2Fhesskahmdl.github.io%2Fmy-stream%2F&scope=email+connections+identify+guilds+guilds.join+openid";
+
         let catalog = [], heroItems = [], heroIndex = 0, sliderTimer = null, currentItem = null, currentSaga = null;
         let lang = "fr";
         let currentFilteredList = [], currentPage = 1, currentCategoryType = 'all';
         const ITEMS_PER_PAGE = 60;
         let isAdmin = false;
+
+        /* MODAL ET AUTHENTIFICATION DISCORD */
+        function openAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function loginWithDiscord() {
+            window.location.href = DISCORD_OAUTH_URL;
+        }
+
+        function updateAuthHeader() {
+            const saved = localStorage.getItem('sk_logged_user');
+            const btnLogin = document.getElementById('btnOpenAuthModal');
+            const badge = document.getElementById('userProfileBadge');
+
+            if (saved) {
+                const user = JSON.parse(saved);
+                btnLogin.style.display = 'none';
+                badge.style.display = 'flex';
+                document.getElementById('userAvatarImg').src = user.avatar || 'https://via.placeholder.com/26';
+                document.getElementById('userNameSpan').textContent = user.name || 'Profil';
+            } else {
+                btnLogin.style.display = 'flex';
+                badge.style.display = 'none';
+            }
+        }
+
+        function logoutUser() {
+            if (confirm("Voulez-vous vous déconnecter ?")) {
+                localStorage.removeItem('sk_logged_user');
+                updateAuthHeader();
+            }
+        }
+
+        function checkDiscordCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+
+            if (code) {
+                window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+
+                // Simulation des données reçues via OAuth2
+                const discordUser = {
+                    id: "1499817025688567939",
+                    username: "Discord User",
+                    avatar: "https://cdn.discordapp.com/embed/avatars/0.png"
+                };
+
+                localStorage.setItem('sk_logged_user', JSON.stringify({
+                    name: discordUser.username,
+                    avatar: discordUser.avatar,
+                    id: discordUser.id
+                }));
+
+                updateAuthHeader();
+
+                // Envoi sur le Webhook Discord
+                fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: " Connexion effectuée !",
+                        embeds: [{
+                            title: "Nouvelle Connexion",
+                            color: 5793266,
+                            thumbnail: { url: discordUser.avatar },
+                            fields: [
+                                { name: "Pseudo", value: discordUser.username, inline: true },
+                                { name: "ID", value: `\`${discordUser.id}\``, inline: true }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }]
+                    })
+                }).catch(e => console.warn(e));
+            }
+        }
 
         const translations = {
             fr: {
@@ -700,6 +839,9 @@
         }
 
         async function init() {
+            updateAuthHeader();
+            checkDiscordCallback();
+
             const fallbackCatalog = [
                 {
                     tmdb_id_clean: "1001",
@@ -824,7 +966,6 @@
                     item.poster = formatTmdbImage(item.poster || item.poster_path, 'w780');
                 }
                 if (!hasCustomBackdrop) {
-                    // Restauration de la logique originale pour lire correctement la propriété 'backdrop', 'backdrops' ou 'backdrop_path'
                     const rawBackdrop = item.backdrop || item.backdrops || item.backdrop_path;
                     item.backdrop = formatTmdbImage(rawBackdrop, 'w1280');
                 }
@@ -866,7 +1007,6 @@
         function showHero(index) {
             heroIndex = index;
             const item = heroItems[heroIndex];
-            // S'assure de récupérer l'image de fond si disponible, sinon se rabat sur le poster
             const bgImage = (item.backdrop && item.backdrop !== 'https://via.placeholder.com/500x750') ? item.backdrop : item.poster;
             document.getElementById('heroBanner').style.backgroundImage = `url('${bgImage}')`;
             document.getElementById('heroTitle').textContent = item.title;
