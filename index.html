@@ -26,6 +26,13 @@
         .nav-item svg { width: 16px; height: 16px; fill: currentColor; }
         .nav-item:hover, .nav-item.active { color: #fff; border-bottom-color: #e50914; }
 
+        .btn-suggestion {
+            background: rgba(229, 9, 20, 0.15); color: #e50914; border: 1px solid #e50914;
+            padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;
+        }
+        .btn-suggestion:hover { background: #e50914; color: #fff; }
+
         .right-header { display: flex; align-items: center; gap: 12px; }
         .lang-switch { display: flex; gap: 6px; cursor: pointer; }
         .lang-switch img { width: 22px; height: 15px; border-radius: 2px; opacity: 0.4; transition: 0.2s; border: 1px solid transparent; }
@@ -102,6 +109,7 @@
         .hero-content { position: relative; z-index: 10; max-width: 550px; }
         .hero-tag { color: #e50914; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
         .hero-title { font-size: 38px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .hero-title-logo { max-width: 280px; max-height: 90px; object-fit: contain; margin-bottom: 12px; display: block; filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.8)); }
         .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 15px; color: #ddd; font-weight: bold; }
         .badge { background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; }
         .badge-rating { background: #ffc107; color: #000; }
@@ -123,19 +131,20 @@
 
         .hero-progress-bar-container {
             position: absolute; bottom: 20px; left: 40px; right: 40px;
-            display: flex; align-items: center; gap: 15px; z-index: 20;
-            background: rgba(0, 0, 0, 0.5); padding: 8px 16px; border-radius: 20px;
+            display: flex; align-items: center; gap: 12px; z-index: 20;
+            background: rgba(0, 0, 0, 0.5); padding: 6px 14px; border-radius: 20px;
             backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 320px;
         }
-        .hero-dots { display: flex; align-items: center; gap: 8px; }
+        .hero-dots { display: flex; align-items: center; gap: 6px; }
         .hero-dot {
-            width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
+            width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
             cursor: pointer; transition: 0.3s;
         }
-        .hero-dot.active { background: #fff; width: 24px; border-radius: 10px; }
-        .hero-divider { width: 1px; height: 16px; background: rgba(255, 255, 255, 0.2); }
+        .hero-dot.active { background: #fff; width: 18px; border-radius: 10px; }
+        .hero-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.2); }
         .hero-progress-track {
-            flex: 1; height: 4px; background: #222; border-radius: 2px;
+            flex: 1; height: 3px; background: #222; border-radius: 2px;
             overflow: hidden; position: relative;
         }
         .hero-progress-fill {
@@ -304,13 +313,37 @@
         .trailer-embed { width: 100%; aspect-ratio: 16/9; background: #15151a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
         .trailer-embed iframe { width: 100%; height: 100%; border: none; }
 
-        .source-buttons { display: flex; gap: 10px; margin-top: 25px; margin-bottom: 15px; flex-wrap: wrap; }
-        .btn-source { background: #222; border: 1px solid #444; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
-        .btn-source:hover { background: #333; }
-        .btn-source.active { background: #e50914; border-color: #e50914; }
-
         .player-wrapper { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden; position: relative; margin-bottom: 40px; }
         .player-wrapper iframe { width: 100%; height: 100%; border: none; position: absolute; inset: 0; }
+
+        /* SOURCING LATERAL & MENU TAP */
+        .player-container-box { position: relative; width: 100%; }
+        .btn-toggle-sources {
+            position: absolute; top: 12px; right: 12px; z-index: 100;
+            background: rgba(19, 19, 26, 0.9); border: 1px solid #e50914; color: #fff;
+            padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: bold;
+            cursor: pointer; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6); transition: 0.2s;
+        }
+        .btn-toggle-sources:hover { background: #e50914; }
+
+        .source-sidebar {
+            position: absolute; top: 0; right: -280px; width: 260px; height: 100%;
+            background: rgba(13, 13, 20, 0.96); border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 95; padding: 15px; display: flex; flex-direction: column; gap: 10px;
+            transition: right 0.3s ease-in-out; backdrop-filter: blur(12px); overflow-y: auto;
+        }
+        .source-sidebar.open { right: 0; }
+        .source-sidebar-title { font-size: 13px; font-weight: 800; color: #aaa; text-transform: uppercase; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        
+        .btn-source-item {
+            background: #181822; border: 1px solid #2a2a38; color: #fff;
+            padding: 10px 12px; border-radius: 8px; font-size: 12px; font-weight: bold;
+            cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;
+            transition: 0.2s;
+        }
+        .btn-source-item:hover, .btn-source-item.active { background: #e50914; border-color: #e50914; }
+        .btn-source-item .lang-flag { font-size: 14px; }
 
         .admin-modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 6000;
@@ -342,7 +375,14 @@
         .movie-select-row:hover { background: #22222e; }
         .movie-select-poster { width: 35px; height: 50px; object-fit: cover; border-radius: 4px; background: #222; }
         .movie-select-title { font-size: 13px; color: #fff; font-weight: bold; flex: 1; }
-        .movie-select-btn { color: #e50914; font-weight: bold; font-size: 12px; }
+        .movie-select-btn { color: #e50914; font-weight: bold; font-size: 12px; white-space: nowrap; }
+
+        .add-movie-columns { display: flex; gap: 15px; flex-wrap: wrap; }
+        .add-movie-col { flex: 1; min-width: 240px; }
+        .add-movie-col-title { font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
+        .add-movie-col-title.red-title { color: #e50914; }
+        .pending-movie-row { background: #1c1c24; }
+        .pending-movie-row .movie-select-btn { color: #10b981; }
 
         .custom-confirm-card {
             background: #13131a; border: 1px solid #e50914; border-radius: 12px;
@@ -410,6 +450,9 @@
             <button class="nav-item" id="btn-anime" onclick="switchTab('anime')">
                 <svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg> <span data-i18n="nav_anime">Anime</span>
             </button>
+            <button class="btn-suggestion" onclick="openSuggestionModal()">
+                💡 Suggestions / Bugs
+            </button>
         </nav>
         
         <div class="right-header">
@@ -447,6 +490,18 @@
         </div>
     </div>
 
+    <div class="admin-modal" id="suggestionModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-title">💡 Proposer une Suggestion ou Signalement</div>
+            <p style="font-size:12px; color:#aaa; margin-bottom:12px;">Un bug ? Un film manquant ? Dis-nous tout pour améliorer le site !</p>
+            <textarea class="admin-input" id="suggestionText" rows="4" placeholder="Écris ton message ici..."></textarea>
+            <div class="admin-btn-group">
+                <button class="btn-saga-action" onclick="closeSuggestionModal()">Annuler</button>
+                <button class="btn-saga-action" style="background:#e50914;" onclick="sendSuggestionToDiscord()">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
     <div class="admin-modal" id="customConfirmModal">
         <div class="custom-confirm-card">
             <div class="custom-confirm-title" id="customConfirmTitle">Confirmation</div>
@@ -473,7 +528,9 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-tag" data-i18n="hero_tag">🔥 TENDANCE ACTUELLE</div>
-            <h1 class="hero-title" id="heroTitle">---</h1>
+            <div id="heroTitleContainer">
+                <h1 class="hero-title" id="heroTitle">---</h1>
+            </div>
             <div class="hero-meta">
                 <span class="badge" id="heroType">FILM</span>
                 <span id="heroYear">2026</span>
@@ -653,12 +710,30 @@
                 </div>
             </div>
 
-            <div class="source-buttons">
-                <button class="btn-source active" id="btn-vf" onclick="loadSource('vf')">▶ VF (Frembed)</button>
-                <button class="btn-source" id="btn-vostfr" onclick="loadSource('vostfr')">▶ VOSTFR (2embed)</button>
+            <div class="player-container-box">
+                <button class="btn-toggle-sources" onclick="toggleSourceSidebar()">
+                    ☰ Sources Video
+                </button>
+                <div class="source-sidebar" id="sourceSidebar">
+                    <div class="source-sidebar-title">Choix des Lecteurs</div>
+                    <button class="btn-source-item active" id="btn-src-frembed" onclick="selectSource('frembed')">
+                        <span>Frembed</span> <span class="lang-flag">🇫🇷 VF</span>
+                    </button>
+                    <button class="btn-source-item" id="btn-src-movix" onclick="selectSource('movix')">
+                        <span>Movix</span> <span class="lang-flag">🇫🇷 VF</span>
+                    </button>
+                    <button class="btn-source-item" id="btn-src-multiembed" onclick="selectSource('multiembed')">
+                        <span>MultiEmbed</span> <span class="lang-flag">🇫🇷 VF</span>
+                    </button>
+                    <button class="btn-source-item" id="btn-src-vidlink" onclick="selectSource('vidlink')">
+                        <span>VidLink</span> <span class="lang-flag">🇬🇧 VO / Multi</span>
+                    </button>
+                    <button class="btn-source-item" id="btn-src-2embed" onclick="selectSource('2embed')">
+                        <span>2embed</span> <span class="lang-flag">💬 VOSTFR</span>
+                    </button>
+                </div>
+                <div class="player-wrapper" id="videoContainer"></div>
             </div>
-
-            <div class="player-wrapper" id="videoContainer"></div>
         </div>
     </div>
 
@@ -674,6 +749,7 @@
             <div id="heroMovieSelectList" style="max-height: 150px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px; display:none;"></div>
             
             <input type="text" class="admin-input" id="heroEditImage" placeholder="Lien TMDB pour l'image (ex: /t/p/w1280/...) ou URL complète">
+            <input type="text" class="admin-input" id="heroEditLogo" placeholder="Remplacer le titre par Logos (Lien URL de l'image logo PNG)">
             <input type="hidden" id="heroEditTmdbId">
             <textarea class="admin-input" id="heroEditDesc" placeholder="Description du film (remplissage auto)" rows="2"></textarea>
             
@@ -698,12 +774,22 @@
     </div>
 
     <div class="admin-modal" id="addMovieModal">
-        <div class="admin-modal-content">
-            <div class="admin-modal-title">Ajouter un film à la Saga</div>
-            <input type="text" class="admin-input" id="searchMovieForSaga" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForSaga(this.value)">
-            <div id="movieSelectList" style="max-height: 250px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
+        <div class="admin-modal-content" style="max-width:720px;">
+            <div class="admin-modal-title">Ajouter des films à la Saga</div>
+            <div class="add-movie-columns">
+                <div class="add-movie-col">
+                    <div class="add-movie-col-title">🔎 Catalogue</div>
+                    <input type="text" class="admin-input" id="searchMovieForSaga" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForSaga(this.value)">
+                    <div id="movieSelectList" style="max-height: 260px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
+                </div>
+                <div class="add-movie-col">
+                    <div class="add-movie-col-title red-title">🎬 Films sélectionnés</div>
+                    <div id="pendingMovieList" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
+                </div>
+            </div>
             <div class="admin-btn-group">
                 <button class="btn-saga-action" onclick="closeAdminModals()">Fermer</button>
+                <button class="btn-saga-action" style="background:#e50914;" onclick="applyPendingSagaMovies()">✅ Appliquer</button>
             </div>
         </div>
     </div>
@@ -713,6 +799,7 @@
         const FIREBASE_DB_URL = "https://sk-stream-default-rtdb.europe-west1.firebasedatabase.app";
         const ADMIN_SECRET = "SkstreamTastycrousty62410";
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1526689378087206974/-zDtM-nloEoxB79enr-FF3cocR0YIKHHHk6m7i70-V0I0iDGlW9ZTDTfO2fF8u1kWmP2";
+        const SUGGESTION_WEBHOOK_URL = "https://discord.com/api/webhooks/1541540719053897840/44Q_iPJ898-jaXmaBJ_606okz2JCk5elf6Op0yUbX5hRKBhg1FaGs6WAUkkT0W885JhY";
         const DISCORD_OAUTH_URL = "https://discord.com/oauth2/authorize?client_id=1499817025688567939&response_type=token&redirect_uri=https%3A%2F%2Fhesskahmdl.github.io%2Fmy-stream%2F&scope=identify+email";
         const DEV_DISCORD_ID = "1378818883414134965";
 
@@ -723,7 +810,9 @@
         let isAdmin = false;
         let customConfirmCallback = null;
         let editingHeroIndex = null;
-        const SLIDE_DURATION = 5000;
+        let pendingSagaMovies = [];
+        const SLIDE_DURATION = 3900;
+        let currentSourceKey = 'frembed';
 
         function openCustomConfirm(title, text, callback) {
             document.getElementById('customConfirmTitle').textContent = title;
@@ -739,7 +828,38 @@
 
         function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
         function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
+        function openSuggestionModal() { document.getElementById('suggestionModal').style.display = 'flex'; }
+        function closeSuggestionModal() { document.getElementById('suggestionModal').style.display = 'none'; document.getElementById('suggestionText').value = ''; }
         function loginWithDiscord() { window.location.href = DISCORD_OAUTH_URL; }
+
+        async function sendSuggestionToDiscord() {
+            const text = document.getElementById('suggestionText').value.trim();
+            if (!text) return;
+
+            const savedUser = JSON.parse(localStorage.getItem('sk_logged_user') || '{}');
+            const userName = savedUser.name || localStorage.getItem('sk_user_id') || 'Utilisateur Anonyme';
+
+            try {
+                await fetch(SUGGESTION_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: `💡 **Nouvelle Suggestion / Signalement Bug**`,
+                        embeds: [{
+                            title: "Message d'un utilisateur",
+                            color: 15009812,
+                            description: text,
+                            fields: [{ name: "Auteur", value: userName, inline: true }],
+                            timestamp: new Date().toISOString()
+                        }]
+                    })
+                });
+                alert("Merci ! Ton message a été transmis à l'équipe.");
+                closeSuggestionModal();
+            } catch(e) {
+                alert("Erreur lors de l'envoi.");
+            }
+        }
 
         function updateAuthHeader() {
             const saved = localStorage.getItem('sk_logged_user');
@@ -1083,7 +1203,14 @@
             const item = heroItems[heroIndex];
             const bgImage = formatTmdbImage(item.backdrop || item.poster, 'w1280');
             document.getElementById('heroBanner').style.backgroundImage = `url('${bgImage}')`;
-            document.getElementById('heroTitle').textContent = item.title;
+
+            const titleContainer = document.getElementById('heroTitleContainer');
+            if (item.logo) {
+                titleContainer.innerHTML = `<img class="hero-title-logo" src="${item.logo}" alt="${item.title}">`;
+            } else {
+                titleContainer.innerHTML = `<h1 class="hero-title" id="heroTitle">${item.title}</h1>`;
+            }
+
             document.getElementById('heroYear').textContent = item.year || '2026';
             document.getElementById('heroRating').textContent = `⭐ ${parseFloat(item.rating || 0).toFixed(1)}`;
             document.getElementById('heroOverview').textContent = item.overview || "";
@@ -1257,8 +1384,8 @@
             if (!currentSaga.exactTitles) currentSaga.exactTitles = [];
 
             const sagaMovies = catalog.filter(item => {
-                const titleLower = (item.title || '').toLowerCase();
-                return currentSaga.exactTitles.some(exact => titleLower.includes(exact.toLowerCase()));
+                const titleLower = (item.title || '').toLowerCase().trim();
+                return currentSaga.exactTitles.some(exact => titleLower === (exact || '').toLowerCase().trim());
             });
 
             document.getElementById('sagaMovieCount').textContent = `🎬 ${sagaMovies.length} film${sagaMovies.length > 1 ? 's' : ''}`;
@@ -1449,25 +1576,49 @@
             document.getElementById('modalOverview').textContent = item.overview || "Synopsis indisponible.";
 
             updateMovieWatchlistBtn(isSavedInWatchlist(idClean));
-            loadSource('vf');
+            selectSource('frembed');
             document.getElementById('playerModal').style.display = 'block';
         }
 
-        function loadSource(s) {
+        function toggleSourceSidebar() {
+            const sidebar = document.getElementById('sourceSidebar');
+            if (sidebar) sidebar.classList.toggle('open');
+        }
+
+        function selectSource(key) {
+            currentSourceKey = key;
+            document.querySelectorAll('.btn-source-item').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-src-${key}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
             if (!currentItem) return;
             const id = currentItem.tmdb_id_clean || currentItem.tmdb_id;
             const isTv = (currentItem.type === 'tv' || isAnimeItem(currentItem));
-            let url = (s === 'vf') 
-                ? (isTv ? `https://frembed.casa/api/serie.php?id=${id}&sa=1&epi=1` : `https://frembed.casa/api/film.php?id=${id}`)
-                : (isTv ? `https://www.2embed.cc/embedtv/${id}&s=1&e=1` : `https://www.2embed.cc/embed/${id}`);
+            let url = "";
+
+            if (key === 'frembed') {
+                url = isTv ? `https://frembed.casa/api/serie.php?id=${id}&sa=1&epi=1` : `https://frembed.casa/api/film.php?id=${id}`;
+            } else if (key === 'movix') {
+                url = isTv ? `https://movix.cash/watch/tv/${id}/s/1/e/1` : `https://movix.cash/watch/movie/${id}`;
+            } else if (key === 'multiembed') {
+                url = `https://multiembed.mov/?video_id=${id}&tmdb=1`;
+            } else if (key === 'vidlink') {
+                url = isTv ? `https://vidlink.pro/tv/${id}/1/1` : `https://vidlink.pro/movie/${id}`;
+            } else if (key === '2embed') {
+                url = isTv ? `https://www.2embed.cc/embedtv/${id}&s=1&e=1` : `https://www.2embed.cc/embed/${id}`;
+            }
 
             document.getElementById('videoContainer').innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
+            const sidebar = document.getElementById('sourceSidebar');
+            if (sidebar) sidebar.classList.remove('open');
         }
 
         function closePlayer() {
             document.getElementById('playerModal').style.display = 'none';
             document.getElementById('videoContainer').innerHTML = '';
             document.body.style.overflow = 'auto';
+            const sidebar = document.getElementById('sourceSidebar');
+            if (sidebar) sidebar.classList.remove('open');
         }
 
         function scrollCarousel(id, amount) {
@@ -1530,6 +1681,7 @@
             document.getElementById('btnSubmitHeroForm').textContent = "Ajouter au Carrousel";
             document.getElementById('heroEditTitle').value = '';
             document.getElementById('heroEditImage').value = '';
+            document.getElementById('heroEditLogo').value = '';
             document.getElementById('heroEditTmdbId').value = '';
             document.getElementById('heroEditDesc').value = '';
             document.getElementById('heroMovieSelectList').style.display = 'none';
@@ -1544,6 +1696,7 @@
             document.getElementById('btnSubmitHeroForm').textContent = "Enregistrer les modifications";
             document.getElementById('heroEditTitle').value = item.title || '';
             document.getElementById('heroEditImage').value = item.backdrop || item.poster || '';
+            document.getElementById('heroEditLogo').value = item.logo || '';
             document.getElementById('heroEditTmdbId').value = item.tmdb_id_clean || item.tmdb_id || '';
             document.getElementById('heroEditDesc').value = item.overview || '';
             document.getElementById('heroMovieSelectList').style.display = 'none';
@@ -1567,7 +1720,7 @@
                 startHeroProgress();
             } else {
                 document.getElementById('heroBanner').style.backgroundImage = 'none';
-                document.getElementById('heroTitle').textContent = 'Aucun élément';
+                document.getElementById('heroTitleContainer').innerHTML = '<h1 class="hero-title">Aucun élément</h1>';
             }
         }
 
@@ -1575,6 +1728,7 @@
             if (!isAdmin) return;
             const title = document.getElementById('heroEditTitle').value.trim();
             let image = document.getElementById('heroEditImage').value.trim();
+            const logo = document.getElementById('heroEditLogo').value.trim();
             const tmdbId = document.getElementById('heroEditTmdbId').value.trim();
             const desc = document.getElementById('heroEditDesc').value.trim();
 
@@ -1589,6 +1743,7 @@
                 title: title,
                 backdrop: formatTmdbImage(image, 'w1280'),
                 poster: formatTmdbImage(image, 'w780'),
+                logo: logo || "",
                 tmdb_id_clean: tmdbId || (foundInCat ? foundInCat.tmdb_id_clean : "1001"),
                 overview: desc || (foundInCat ? foundInCat.overview : ""),
                 rating: isEdit ? (heroItems[editingHeroIndex].rating || "8.5") : (foundInCat ? foundInCat.rating : "8.5"),
@@ -1615,6 +1770,7 @@
             document.getElementById('addMovieModal').style.display = 'none';
             document.getElementById('editHeroModal').style.display = 'none';
             resetHeroForm();
+            pendingSagaMovies = [];
         }
 
         async function submitNewSaga() {
@@ -1642,29 +1798,95 @@
 
         function openAddMovieToSagaModal() {
             if (!currentSaga || !isAdmin) return;
+            pendingSagaMovies = [];
             document.getElementById('addMovieModal').style.display = 'flex';
+            document.getElementById('searchMovieForSaga').value = '';
             filterMoviesForSaga('');
+            renderPendingMovieList();
         }
 
         function filterMoviesForSaga(query) {
             const listDiv = document.getElementById('movieSelectList');
             const q = query.toLowerCase();
-            const filtered = catalog.filter(m => (m.title || '').toLowerCase().includes(q)).slice(0, 15);
+            const filtered = catalog.filter(m => (m.title || '').toLowerCase().includes(q)).slice(0, 20);
 
-            listDiv.innerHTML = filtered.map(m => `
-                <div class="movie-select-row" onclick="addMovieToCurrentSaga('${m.title.replace(/'/g, "\\'")}')">
-                    <img class="movie-select-poster" src="${m.poster || 'https://via.placeholder.com/50'}" alt="Poster">
-                    <span class="movie-select-title">${m.title} (${m.year || 'N/A'})</span>
-                    <span class="movie-select-btn">+ Ajouter</span>
-                </div>
-            `).join('');
+            listDiv.innerHTML = filtered.map(m => {
+                const titleLower = (m.title || '').toLowerCase().trim();
+                const alreadyInSaga = currentSaga && currentSaga.exactTitles && currentSaga.exactTitles.includes(titleLower);
+                const isPending = pendingSagaMovies.includes(titleLower);
+                let statusLabel = '+ Ajouter';
+                if (alreadyInSaga) statusLabel = '✔ Déjà dans la saga';
+                else if (isPending) statusLabel = '✓ Retirer';
+
+                return `
+                    <div class="movie-select-row" onclick="togglePendingSagaMovie('${m.title.replace(/'/g, "\\'")}')">
+                        <img class="movie-select-poster" src="${m.poster || 'https://via.placeholder.com/50'}" alt="Poster">
+                        <span class="movie-select-title">${m.title} (${m.year || 'N/A'})</span>
+                        <span class="movie-select-btn" style="${alreadyInSaga ? 'color:#666;' : (isPending ? 'color:#10b981;' : '')}">${statusLabel}</span>
+                    </div>
+                `;
+            }).join('') || '<span style="color:#777; font-size:12px; padding:8px; display:block;">Aucun résultat.</span>';
+        }
+
+        function togglePendingSagaMovie(title) {
+            if (!currentSaga || !isAdmin) return;
+            const titleLower = (title || '').toLowerCase().trim();
+
+            if (currentSaga.exactTitles && currentSaga.exactTitles.includes(titleLower)) return;
+
+            const idx = pendingSagaMovies.indexOf(titleLower);
+            if (idx !== -1) pendingSagaMovies.splice(idx, 1);
+            else pendingSagaMovies.push(titleLower);
+
+            filterMoviesForSaga(document.getElementById('searchMovieForSaga').value);
+            renderPendingMovieList();
+        }
+
+        function renderPendingMovieList() {
+            const container = document.getElementById('pendingMovieList');
+            if (!container) return;
+
+            if (pendingSagaMovies.length === 0) {
+                container.innerHTML = `<span style="color:#777; font-size:12px; padding:8px; display:block;">Aucun film sélectionné pour le moment.</span>`;
+                return;
+            }
+
+            container.innerHTML = pendingSagaMovies.map(titleLower => {
+                const m = catalog.find(item => (item.title || '').toLowerCase().trim() === titleLower);
+                const displayTitle = m ? m.title : titleLower;
+                const poster = m ? (m.poster || 'https://via.placeholder.com/50') : 'https://via.placeholder.com/50';
+                const year = m ? (m.year || 'N/A') : '';
+
+                return `
+                    <div class="movie-select-row pending-movie-row" onclick="togglePendingSagaMovie('${displayTitle.replace(/'/g, "\\'")}')">
+                        <img class="movie-select-poster" src="${poster}" alt="Poster">
+                        <span class="movie-select-title">${displayTitle}${year ? ' (' + year + ')' : ''}</span>
+                        <span class="movie-select-btn" style="color:#e50914;">✕ Retirer</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function applyPendingSagaMovies() {
+            if (!currentSaga || !isAdmin) return;
+            if (!currentSaga.exactTitles) currentSaga.exactTitles = [];
+
+            pendingSagaMovies.forEach(t => {
+                if (!currentSaga.exactTitles.includes(t)) currentSaga.exactTitles.push(t);
+            });
+
+            await saveSagaToFirebase(currentSaga);
+            pendingSagaMovies = [];
+            closeAdminModals();
+            openSagaView(currentSaga.id);
         }
 
         async function addMovieToCurrentSaga(movieTitle) {
             if (!currentSaga || !isAdmin) return;
             if (!currentSaga.exactTitles) currentSaga.exactTitles = [];
-            if (!currentSaga.exactTitles.includes(movieTitle.toLowerCase())) {
-                currentSaga.exactTitles.push(movieTitle.toLowerCase());
+            const titleLower = movieTitle.toLowerCase().trim();
+            if (!currentSaga.exactTitles.includes(titleLower)) {
+                currentSaga.exactTitles.push(titleLower);
                 await saveSagaToFirebase(currentSaga);
                 openSagaView(currentSaga.id);
                 closeAdminModals();
@@ -1674,7 +1896,7 @@
         async function removeMovieFromCurrentSaga(e, movieTitle) {
             e.stopPropagation();
             if (!currentSaga || !isAdmin) return;
-            currentSaga.exactTitles = currentSaga.exactTitles.filter(t => t !== movieTitle.toLowerCase());
+            currentSaga.exactTitles = currentSaga.exactTitles.filter(t => t !== movieTitle.toLowerCase().trim());
             await saveSagaToFirebase(currentSaga);
             openSagaView(currentSaga.id);
         }
