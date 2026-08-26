@@ -6,7 +6,26 @@
     <title>SK Stream</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0b0b0e; color: #fff; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0b0b0e; color: #fff; overflow-x: hidden; cursor: default; }
+
+        /* EFFET DE CURSEUR LUMIÈRE ET CUBES */
+        .cursor-glow {
+            position: fixed; top: 0; left: 0; width: 20px; height: 20px;
+            background: rgba(229, 9, 20, 0.8); border-radius: 50%;
+            pointer-events: none; transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #e50914, 0 0 30px #e50914, 0 0 45px #e50914;
+            z-index: 99999; transition: transform 0.05s linear;
+        }
+        .cube-particle {
+            position: fixed; pointer-events: none; width: 10px; height: 10px;
+            background: rgba(229, 9, 20, 0.6); border: 1px solid #ff0f1a;
+            box-shadow: 0 0 8px #e50914; z-index: 99998;
+            animation: fadeCube 0.8s forwards ease-out;
+        }
+        @keyframes fadeCube {
+            0% { opacity: 1; transform: scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: scale(0.2) rotate(45deg) translateY(20px); }
+        }
 
         header {
             display: flex; align-items: center; justify-content: space-between;
@@ -14,7 +33,7 @@
             position: fixed; top: 0; width: 100%; z-index: 5000; backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .logo { font-size: 22px; font-weight: 900; color: #e50914; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+        .logo { font-size: 22px; font-weight: 900; color: #e50914; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; }
 
         nav { display: flex; gap: 20px; align-items: center; overflow-x: auto; scrollbar-width: none; }
         nav::-webkit-scrollbar { display: none; }
@@ -24,11 +43,29 @@
             position: relative; transition: color 0.2s; border-bottom: 2px solid transparent; white-space: nowrap;
             text-decoration: none;
         }
-        .nav-item svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        /* ICÔNES SVG À INTÉRIEUR TRANSPARENT */
+        .nav-item svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .nav-item:hover, .nav-item.active { color: #fff; border-bottom-color: #e50914; }
-        .nav-item.disabled { color: #555; cursor: not-allowed; border-bottom-color: transparent !important; }
-        .nav-item.disabled:hover { color: #555; }
-        .badge-soon { background: #e50914; color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; margin-left: 4px; }
+
+        /* MENU DÉROULANT EXPLORER */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none; position: absolute; top: 100%; left: 0;
+            background-color: rgba(19, 19, 26, 0.98); min-width: 210px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 5001;
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+            padding: 8px 0; backdrop-filter: blur(10px); margin-top: 5px;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-item {
+            color: #ccc; padding: 10px 16px; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; font-size: 13px;
+            font-weight: 600; transition: background 0.2s, color 0.2s; cursor: pointer;
+        }
+        .dropdown-item:hover { background-color: rgba(229, 9, 20, 0.15); color: #fff; }
+        .dropdown-item.disabled { color: #555; cursor: not-allowed; opacity: 0.6; }
+        .dropdown-item.disabled:hover { background-color: transparent; color: #555; }
+        .badge-soon { background: #333; color: #aaa; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: auto; }
 
         .btn-suggestion {
             background: rgba(229, 9, 20, 0.15); color: #e50914; border: 1px solid #e50914;
@@ -180,10 +217,9 @@
         
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; padding: 15px 0; }
 
-        /* Style Carte avec contours transparents */
         .card {
-            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: transparent;
-            border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: #13131a;
+            border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
             flex: 0 0 180px; height: 270px; position: relative;
         }
         .movie-grid .card { flex: none; height: 270px; }
@@ -211,10 +247,10 @@
         .card-hover-overlay {
             position: absolute; inset: 0; background: rgba(11, 11, 14, 0.92);
             padding: 14px; display: flex; flex-direction: column; justify-content: flex-end;
-            opacity: 0; transition: opacity 0.3s ease; border-radius: 12px; border: 2px solid #e50914;
+            opacity: 0; transition: opacity 0.3s ease; border-radius: 12px; border: 1px solid #e50914;
         }
         .card:hover .card-hover-overlay { opacity: 1; }
-        .card:hover { transform: translateY(-6px) scale(1.03); z-index: 10; box-shadow: 0 10px 25px rgba(229,9,20,0.3); }
+        .card:hover { transform: translateY(-6px) scale(1.03); z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
 
         .saga-badge {
             position: absolute; top: 10px; left: 10px;
@@ -339,6 +375,7 @@
         }
         .btn-toggle-sources:hover { background: #e50914; }
 
+        /* PANNEAU LATÉRAL COULISSANT DES SOURCES */
         .source-sidebar {
             position: absolute; top: 0; right: -280px; width: 260px; height: 100%;
             background: rgba(13, 13, 20, 0.96); border-left: 1px solid rgba(255,255,255,0.1);
@@ -357,6 +394,7 @@
         .btn-source-item:hover, .btn-source-item.active { background: #e50914; border-color: #e50914; }
         .btn-source-item .lang-flag { font-size: 14px; }
 
+        /* CARTES SAISONS & ÉPISODES TMDB (AFFICHAGE EN GRILLE AVEC WRAP) */
         .tv-seasons-container { margin-top: 25px; display: none; }
         .seasons-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 
@@ -465,11 +503,11 @@
 </head>
 <body>
 
+    <!-- ÉLÉMENT CURSEUR LUMINEUX ROUGE -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <header>
-        <div class="logo" onclick="switchTab('all')">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg>
-            SK STREAM
-        </div>
+        <div class="logo" onclick="switchTab('all')">SK STREAM</div>
         <nav>
             <button class="nav-item active" id="btn-all" onclick="switchTab('all')">
                 <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> <span data-i18n="nav_home">Accueil</span>
@@ -481,20 +519,32 @@
                 <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> <span data-i18n="nav_watchlist">Ma Watchlist</span>
             </button>
             <button class="nav-item" id="btn-movie" onclick="switchTab('movie')">
-                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg> <span data-i18n="nav_movies">Films</span>
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg> <span data-i18n="nav_movies">Films</span>
             </button>
-            <button class="nav-item disabled" id="btn-tv" title="Disponible très prochainement !">
-                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg> <span>TRUC TV</span><span class="badge-soon">Bientôt</span>
+            <button class="nav-item" id="btn-tv" onclick="switchTab('tv')">
+                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg> <span data-i18n="nav_series">Séries</span>
             </button>
             <button class="nav-item" id="btn-anime" onclick="switchTab('anime')">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> <span data-i18n="nav_anime">Anime</span>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> <span data-i18n="nav_anime">Anime</span>
             </button>
-            <a href="https://Hesskahmdl.github.io/my-stream/watch-party.html" class="btn-watch-party">
-                👥 Watch Party
-            </a>
-            <button class="btn-suggestion" onclick="openSuggestionModal()">
-                💡 Roulette / Bugs
-            </button>
+            
+            <!-- MENU EXPLORER -->
+            <div class="dropdown">
+                <button class="nav-item" id="btn-explorer">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg> <span>Explorer</span>
+                </button>
+                <div class="dropdown-content">
+                    <a href="https://Hesskahmdl.github.io/my-stream/watch-party.html" class="dropdown-item">
+                        👥 Watch party
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="openSuggestionModal(); return false;">
+                        💡 Signalement/ajouts
+                    </a>
+                    <div class="dropdown-item disabled">
+                        📺 TV en direct <span class="badge-soon">bientôt</span>
+                    </div>
+                </div>
+            </div>
         </nav>
         
         <div class="right-header">
@@ -534,9 +584,9 @@
 
     <div class="admin-modal" id="suggestionModal">
         <div class="admin-modal-content">
-            <div class="admin-modal-title">🎰 Roulette / Signalement Bug</div>
-            <p style="font-size:12px; color:#aaa; margin-bottom:12px;">Tu ne sais pas quoi regarder ou tu as un bug à nous remonter ? Laisse un message !</p>
-            <textarea class="admin-input" id="suggestionText" rows="4" placeholder="Tape ici un bug ou ton avis sur la roulette..."></textarea>
+            <div class="admin-modal-title">💡 Proposer une Suggestion ou Signalement</div>
+            <p style="font-size:12px; color:#aaa; margin-bottom:12px;">Un bug ? Un film manquant ? Dis-nous tout pour améliorer le site !</p>
+            <textarea class="admin-input" id="suggestionText" rows="4" placeholder="Écris ton message ici..."></textarea>
             <div class="admin-btn-group">
                 <button class="btn-saga-action" onclick="closeSuggestionModal()">Annuler</button>
                 <button class="btn-saga-action" style="background:#e50914;" onclick="sendSuggestionToDiscord()">Envoyer</button>
@@ -807,6 +857,7 @@
                 </div>
                 <div class="player-wrapper" id="videoContainer"></div>
 
+                <!-- AFFICHAGE DYNAMIQUE DES SAISONS & ÉPISODES (TMDB) EN GRILLE -->
                 <div class="tv-seasons-container" id="tvSeasonsContainer">
                     <div class="seasons-title">Saisons</div>
                     <div class="seasons-grid" id="seasonsList"></div>
@@ -876,6 +927,23 @@
     </div>
 
     <script>
+        // ANIMATION DU CURSEUR LUMIÈRE + CUBES
+        const cursorGlow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+
+            if (Math.random() < 0.35) {
+                const cube = document.createElement('div');
+                cube.className = 'cube-particle';
+                cube.style.left = (e.clientX + (Math.random() * 16 - 8)) + 'px';
+                cube.style.top = (e.clientY + (Math.random() * 16 - 8)) + 'px';
+                document.body.appendChild(cube);
+
+                setTimeout(() => { cube.remove(); }, 800);
+            }
+        });
+
         const API_KEY = "89dc647004be44c785266ccd4d69576a";
         const FIREBASE_DB_URL = "https://sk-stream-default-rtdb.europe-west1.firebasedatabase.app";
         const ADMIN_SECRET = "SkstreamTastycrousty62410";
@@ -1588,7 +1656,6 @@
         }
 
         function switchTab(type, updateUrl = true) {
-            if (type === 'tv') return;
             currentCategoryType = type;
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             const targetBtn = document.getElementById(`btn-${type}`);
@@ -1610,6 +1677,7 @@
 
                 if (type === 'saga') currentFilteredList = SAGAS_DATABASE;
                 else if (type === 'movie') currentFilteredList = catalog.filter(i => (i.type === 'movie' || !i.type) && !isAnimeItem(i));
+                else if (type === 'tv') currentFilteredList = catalog.filter(i => i.type === 'tv' && !isAnimeItem(i));
                 else if (type === 'anime') currentFilteredList = catalog.filter(i => isAnimeItem(i));
                 else if (type === 'watchlist') {
                     const saved = JSON.parse(localStorage.getItem('sk_watchlist') || '[]');
@@ -1657,68 +1725,38 @@
                 : '<p style="color:#aaa; padding:30px;">Aucun contenu disponible.</p>';
 
             const btnLoad = document.getElementById('btnLoadMore');
-            if (btnLoad) {
-                btnLoad.style.display = currentFilteredList.length > itemsToDisplay.length ? 'block' : 'none';
-            }
+            if (itemsToDisplay.length < currentFilteredList.length) btnLoad.style.display = 'block';
+            else btnLoad.style.display = 'none';
         }
 
-        function loadMoreItems() {
-            currentPage++;
-            renderPaginatedGrid();
-        }
+        function loadMoreItems() { currentPage++; renderPaginatedGrid(); }
 
-        function scrollCarousel(id, amount) {
-            const el = document.getElementById(id);
-            if (el) el.scrollBy({ left: amount, behavior: 'smooth' });
-        }
-
-        async function openDetails(item, updateUrl = true) {
+        function openDetails(item, updateUrl = true) {
             currentItem = item;
             const tmdbId = item.tmdb_id_clean || item.tmdb_id;
-
-            if (updateUrl && tmdbId) {
-                history.pushState(null, null, `#watch-${slugify(item.title)}-${tmdbId}`);
-            }
 
             document.getElementById('modalTitle').textContent = item.title;
             document.getElementById('modalPoster').src = item.poster || 'https://via.placeholder.com/500x750';
             document.getElementById('modalRating').textContent = `⭐ ${parseFloat(item.rating || 0).toFixed(1)}`;
             document.getElementById('modalYear').textContent = item.year || '2026';
-            document.getElementById('modalType').textContent = (item.type === 'tv' ? 'SÉRIE' : 'FILM');
-            document.getElementById('modalOverview').textContent = item.overview || "Résumé non disponible.";
+            document.getElementById('modalType').textContent = (item.type || 'MOVIE').toUpperCase();
+            document.getElementById('modalOverview').textContent = item.overview || "Synopsis indisponible.";
 
             updateMovieWatchlistBtn(isSavedInWatchlist(tmdbId));
+
+            const isTv = item.type === 'tv';
+            document.getElementById('tvSeasonsContainer').style.display = isTv ? 'block' : 'none';
+
+            selectSource('vidzy');
+            loadTmdbExtraDetails(item);
+
+            if (isTv) loadTvSeasons(tmdbId);
+
             document.getElementById('playerModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
 
-            selectSource(currentSourceKey);
-            
-            if (tmdbId) {
-                try {
-                    const res = await fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${API_KEY}&language=fr-FR&append_to_response=videos,credits`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        
-                        if (data.videos && data.videos.results.length > 0) {
-                            const trailer = data.videos.results.find(v => v.type === 'Trailer') || data.videos.results[0];
-                            document.getElementById('trailerContainer').innerHTML = `<iframe src="https://www.youtube.com/embed/${trailer.key}" allowfullscreen></iframe>`;
-                        } else {
-                            document.getElementById('trailerContainer').innerHTML = '<div style="color:#aaa; font-size:12px; padding:20px;">Pas de bande-annonce.</div>';
-                        }
-
-                        if (data.credits && data.credits.cast) {
-                            document.getElementById('castList').innerHTML = data.credits.cast.slice(0, 6).map(c => `
-                                <div class="cast-item">
-                                    <img class="cast-img" src="${c.profile_path ? 'https://image.tmdb.org/t/p/w185' + c.profile_path : 'https://via.placeholder.com/185'}" alt="${c.name}">
-                                    <div class="cast-name">${c.name}</div>
-                                </div>
-                            `).join('');
-                        }
-
-                        if (data.production_companies) {
-                            document.getElementById('movieProducersInfo').innerHTML = data.production_companies.map(p => `<span class="badge" style="margin-right:5px; margin-bottom:5px; display:inline-block;">${p.name}</span>`).join('');
-                        }
-                    }
-                } catch(e) {}
+            if (updateUrl && tmdbId) {
+                history.pushState(null, null, `#watch-${slugify(item.title)}-${tmdbId}`);
             }
         }
 
@@ -1726,7 +1764,7 @@
             document.getElementById('playerModal').style.display = 'none';
             document.getElementById('videoContainer').innerHTML = '';
             document.getElementById('trailerContainer').innerHTML = '';
-            currentItem = null;
+            document.body.style.overflow = 'auto';
         }
 
         function toggleSourceSidebar() {
@@ -1736,102 +1774,153 @@
         function selectSource(sourceKey) {
             currentSourceKey = sourceKey;
             document.querySelectorAll('.btn-source-item').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-src-${sourceKey}`);
-            if (activeBtn) activeBtn.classList.add('active');
+            const btn = document.getElementById(`btn-src-${sourceKey}`);
+            if (btn) btn.classList.add('active');
 
+            renderPlayerIframe();
+        }
+
+        function renderPlayerIframe() {
             if (!currentItem) return;
             const tmdbId = currentItem.tmdb_id_clean || currentItem.tmdb_id;
-            let playerUrl = '';
+            const isTv = currentItem.type === 'tv';
+            let embedUrl = "";
 
-            if (sourceKey === 'vidzy') playerUrl = `https://vidsrc.to/embed/movie/${tmdbId}`;
-            else if (sourceKey === 'frembed') playerUrl = `https://frembed.live/api/film.php?id=${tmdbId}`;
-            else if (sourceKey === 'movix') playerUrl = `https://movix.click/movie/${tmdbId}`;
-            else if (sourceKey === 'multiembed') playerUrl = `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1`;
-            else if (sourceKey === 'vidlink') playerUrl = `https://vidlink.pro/movie/${tmdbId}`;
-            else if (sourceKey === '2embed') playerUrl = `https://www.2embed.cc/embed/${tmdbId}`;
+            if (currentSourceKey === 'vidzy') {
+                embedUrl = isTv 
+                    ? `https://vidzy.org/embed-tv/${tmdbId}/${currentSeason}/${currentEpisode}`
+                    : `https://vidzy.org/embed-movie/${tmdbId}`;
+            } else if (currentSourceKey === 'frembed') {
+                embedUrl = isTv 
+                    ? `https://frembed.live/api/serie.php?id=${tmdbId}&s=${currentSeason}&e=${currentEpisode}`
+                    : `https://frembed.live/api/film.php?id=${tmdbId}`;
+            } else if (currentSourceKey === 'movix') {
+                embedUrl = isTv 
+                    ? `https://movix.site/embed/tv/${tmdbId}/${currentSeason}/${currentEpisode}`
+                    : `https://movix.site/embed/movie/${tmdbId}`;
+            } else if (currentSourceKey === 'multiembed') {
+                embedUrl = isTv 
+                    ? `https://multiembed.mov/?video_id=${tmdbId}&s=${currentSeason}&e=${currentEpisode}`
+                    : `https://multiembed.mov/?video_id=${tmdbId}`;
+            } else if (currentSourceKey === 'vidlink') {
+                embedUrl = isTv 
+                    ? `https://vidlink.pro/tv/${tmdbId}/${currentSeason}/${currentEpisode}`
+                    : `https://vidlink.pro/movie/${tmdbId}`;
+            } else if (currentSourceKey === '2embed') {
+                embedUrl = isTv 
+                    ? `https://www.2embed.cc/embedtv/${tmdbId}&s=${currentSeason}&e=${currentEpisode}`
+                    : `https://www.2embed.cc/embed/${tmdbId}`;
+            }
 
-            document.getElementById('videoContainer').innerHTML = `<iframe src="${playerUrl}" allowfullscreen allow="autoplay"></iframe>`;
+            document.getElementById('videoContainer').innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
         }
 
-        function openEditHeroModal() {
-            renderHeroListManager();
-            document.getElementById('editHeroModal').style.display = 'flex';
-        }
-
-        function renderHeroListManager() {
-            const container = document.getElementById('heroListManager');
-            container.innerHTML = heroItems.map((item, idx) => `
-                <div class="hero-list-item">
-                    <div class="hero-item-info">
-                        <img class="hero-item-img" src="${formatTmdbImage(item.backdrop || item.poster, 'w185')}" alt="${item.title}">
-                        <div class="hero-item-title">${item.title}</div>
-                    </div>
-                    <div class="hero-item-actions">
-                        <button class="btn-del-hero-item" onclick="deleteHeroItem(${idx})">🗑️</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function deleteHeroItem(index) {
-            heroItems.splice(index, 1);
-            saveHeroListToFirebase();
-            renderHeroListManager();
-            setupHeroSlider();
-        }
-
-        function filterMoviesForHero(text) {
-            const listEl = document.getElementById('heroMovieSelectList');
-            if (!text.trim()) { listEl.style.display = 'none'; return; }
+        async function loadTmdbExtraDetails(item) {
+            const tmdbId = item.tmdb_id_clean || item.tmdb_id;
+            const mediaType = item.type === 'tv' ? 'tv' : 'movie';
             
-            const matches = catalog.filter(i => (i.title || '').toLowerCase().includes(text.toLowerCase())).slice(0, 5);
-            listEl.innerHTML = matches.map(i => `
-                <div class="movie-select-row" onclick="selectMovieForHero('${i.tmdb_id_clean || i.tmdb_id}', '${i.title.replace(/'/g, "\\'")}')">
-                    <img class="movie-select-poster" src="${i.poster || ''}">
-                    <div class="movie-select-title">${i.title}</div>
-                </div>
-            `).join('');
-            listEl.style.display = 'block';
+            if (!tmdbId) return;
+
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/${mediaType}/${tmdbId}?api_key=${API_KEY}&language=fr-FR&append_to_response=videos,credits`);
+                if (res.ok) {
+                    const data = await res.json();
+                    
+                    const trailer = data.videos?.results?.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+                    if (trailer) {
+                        document.getElementById('trailerContainer').innerHTML = `<iframe src="https://www.youtube.com/embed/${trailer.key}" allowfullscreen></iframe>`;
+                    } else {
+                        document.getElementById('trailerContainer').innerHTML = '<div style="padding:20px; font-size:12px; color:#aaa;">Bande-annonce non disponible.</div>';
+                    }
+
+                    if (data.credits && data.credits.cast) {
+                        document.getElementById('castList').innerHTML = data.credits.cast.slice(0, 8).map(actor => `
+                            <div class="cast-item">
+                                <img class="cast-img" src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w185' + actor.profile_path : 'https://via.placeholder.com/185'}" alt="${actor.name}">
+                                <div class="cast-name">${actor.name}</div>
+                            </div>
+                        `).join('');
+                    }
+
+                    const producers = data.production_companies ? data.production_companies.map(p => p.name).join(', ') : 'N/A';
+                    document.getElementById('movieProducersInfo').innerHTML = `
+                        <div class="info-list-item"><span>Sociétés:</span> <span>${producers || 'N/A'}</span></div>
+                        <div class="info-list-item"><span>Statut:</span> <span>${data.status || 'N/A'}</span></div>
+                        <div class="info-list-item"><span>Langue d'origine:</span> <span>${(data.original_language || '').toUpperCase()}</span></div>
+                    `;
+                }
+            } catch(e) {}
         }
 
-        function selectMovieForHero(id, title) {
-            document.getElementById('heroEditTitle').value = title;
-            document.getElementById('heroEditTmdbId').value = id;
-            document.getElementById('heroMovieSelectList').style.display = 'none';
+        async function loadTvSeasons(tmdbId) {
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${API_KEY}&language=fr-FR`);
+                if (res.ok) {
+                    const data = await res.json();
+                    tvSeasonsData = data.seasons || [];
+                    
+                    document.getElementById('seasonsList').innerHTML = tvSeasonsData.map(s => `
+                        <div class="season-card ${s.season_number === currentSeason ? 'active' : ''}" onclick="selectSeason(${s.season_number})">
+                            <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w300' + s.poster_path : 'https://via.placeholder.com/300'}" alt="${s.name}">
+                            <div class="season-info">
+                                <div class="season-info-title">${s.name}</div>
+                                <div class="season-info-sub"><span>${s.episode_count} ép.</span></div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    loadTvEpisodes(tmdbId, currentSeason);
+                }
+            } catch(e) {}
         }
 
-        async function submitHeroEdit() {
-            const title = document.getElementById('heroEditTitle').value.trim();
-            const tmdbId = document.getElementById('heroEditTmdbId').value;
-            const img = document.getElementById('heroEditImage').value.trim();
-            const logo = document.getElementById('heroEditLogo').value.trim();
-            const desc = document.getElementById('heroEditDesc').value.trim();
+        async function loadTvEpisodes(tmdbId, seasonNum) {
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNum}?api_key=${API_KEY}&language=fr-FR`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const episodes = data.episodes || [];
 
-            if (!title) return;
-
-            const newItem = {
-                title: title,
-                tmdb_id_clean: tmdbId,
-                backdrop: img,
-                logo: logo,
-                overview: desc,
-                rating: "8.5",
-                year: "2026"
-            };
-
-            heroItems.push(newItem);
-            await saveHeroListToFirebase();
-            setupHeroSlider();
-            closeAdminModals();
+                    document.getElementById('episodesList').innerHTML = episodes.map(e => `
+                        <div class="episode-card ${e.episode_number === currentEpisode ? 'active' : ''}" onclick="selectEpisode(${e.episode_number})">
+                            <img src="${e.still_path ? 'https://image.tmdb.org/t/p/w300' + e.still_path : 'https://via.placeholder.com/300'}" alt="${e.name}">
+                            <div class="episode-info">
+                                <div class="season-info-title">Ép. ${e.episode_number}: ${e.name}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch(e) {}
         }
 
-        function openCreateSagaModal() { document.getElementById('createSagaModal').style.display = 'flex'; }
-        function openAddMovieToSagaModal() { document.getElementById('addMovieModal').style.display = 'flex'; }
-        
+        function selectSeason(seasonNum) {
+            currentSeason = seasonNum;
+            currentEpisode = 1;
+            document.querySelectorAll('.season-card').forEach(c => c.classList.remove('active'));
+            if (currentItem) {
+                const tmdbId = currentItem.tmdb_id_clean || currentItem.tmdb_id;
+                loadTvEpisodes(tmdbId, seasonNum);
+                renderPlayerIframe();
+            }
+        }
+
+        function selectEpisode(epNum) {
+            currentEpisode = epNum;
+            document.querySelectorAll('.episode-card').forEach(c => c.classList.remove('active'));
+            renderPlayerIframe();
+        }
+
+        function scrollCarousel(id, offset) {
+            const el = document.getElementById(id);
+            if (el) el.scrollBy({ left: offset, behavior: 'smooth' });
+        }
+
         function closeAdminModals() {
             document.querySelectorAll('.admin-modal').forEach(m => m.style.display = 'none');
         }
 
+        function openCreateSagaModal() { document.getElementById('createSagaModal').style.display = 'flex'; }
+        
         async function submitNewSaga() {
             const name = document.getElementById('newSagaName').value.trim();
             const poster = document.getElementById('newSagaPoster').value.trim();
@@ -1839,81 +1928,85 @@
 
             if (!name) return;
 
-            const newSaga = {
+            const sagaObj = {
                 id: slugify(name),
                 title: `${name} - Saga`,
                 poster: poster || 'https://via.placeholder.com/500x750',
-                desc: desc,
-                exactTitles: []
+                exactTitles: [],
+                desc: desc || 'Saga personnalisée.'
             };
 
-            SAGAS_DATABASE.push(newSaga);
-            await saveSagaToFirebase(newSaga);
-            renderSections();
+            SAGAS_DATABASE.push(sagaObj);
+            await saveSagaToFirebase(sagaObj);
+
             closeAdminModals();
+            renderSections();
+            if (currentCategoryType === 'saga') renderPaginatedGrid();
         }
 
-        function filterMoviesForSaga(text) {
-            const listEl = document.getElementById('movieSelectList');
-            if (!text.trim()) { listEl.innerHTML = ''; return; }
+        function openAddMovieToSagaModal() {
+            if (!currentSaga) return;
+            pendingSagaMovies = [...(currentSaga.exactTitles || [])];
+            renderPendingSagaMovies();
+            document.getElementById('addMovieModal').style.display = 'flex';
+        }
 
-            const matches = catalog.filter(i => (i.title || '').toLowerCase().includes(text.toLowerCase())).slice(0, 8);
-            listEl.innerHTML = matches.map(i => `
-                <div class="movie-select-row" onclick="addPendingMovieToSaga('${i.title.replace(/'/g, "\\'")}')">
-                    <img class="movie-select-poster" src="${i.poster || ''}">
-                    <div class="movie-select-title">${i.title}</div>
-                    <div class="movie-select-btn">+ Ajouter</div>
+        function filterMoviesForSaga(query) {
+            const container = document.getElementById('movieSelectList');
+            const q = query.toLowerCase().trim();
+            if (!q) { container.innerHTML = ''; return; }
+
+            const matches = catalog.filter(m => (m.title || '').toLowerCase().includes(q)).slice(0, 10);
+            container.innerHTML = matches.map(m => `
+                <div class="movie-select-row" onclick="addMovieToPending('${m.title.replace(/'/g, "\\'")}')">
+                    <img class="movie-select-poster" src="${m.poster}" alt="${m.title}">
+                    <div class="movie-select-title">${m.title}</div>
+                    <div class="movie-select-btn">➕ Ajouter</div>
                 </div>
             `).join('');
         }
 
-        function addPendingMovieToSaga(title) {
+        function addMovieToPending(title) {
             if (!pendingSagaMovies.includes(title)) {
                 pendingSagaMovies.push(title);
                 renderPendingSagaMovies();
             }
         }
 
+        function removeMovieFromPending(title) {
+            pendingSagaMovies = pendingSagaMovies.filter(t => t !== title);
+            renderPendingSagaMovies();
+        }
+
         function renderPendingSagaMovies() {
-            const listEl = document.getElementById('pendingMovieList');
-            listEl.innerHTML = pendingSagaMovies.map((t, idx) => `
+            const container = document.getElementById('pendingMovieList');
+            container.innerHTML = pendingSagaMovies.map(t => `
                 <div class="movie-select-row pending-movie-row">
                     <div class="movie-select-title">${t}</div>
-                    <div class="movie-select-btn" onclick="removePendingSagaMovie(${idx})">✕</div>
+                    <div class="movie-select-btn" onclick="removeMovieFromPending('${t.replace(/'/g, "\\'")}')">✕ Retirer</div>
                 </div>
             `).join('');
         }
 
-        function removePendingSagaMovie(idx) {
-            pendingSagaMovies.splice(idx, 1);
-            renderPendingSagaMovies();
-        }
-
         async function applyPendingSagaMovies() {
             if (!currentSaga) return;
-            if (!currentSaga.exactTitles) currentSaga.exactTitles = [];
-            
-            pendingSagaMovies.forEach(t => {
-                if (!currentSaga.exactTitles.includes(t)) currentSaga.exactTitles.push(t);
-            });
-
+            currentSaga.exactTitles = [...pendingSagaMovies];
             await saveSagaToFirebase(currentSaga);
-            renderSagaMovies();
-            pendingSagaMovies = [];
             closeAdminModals();
+            renderSagaMovies();
         }
 
-        async function removeMovieFromCurrentSaga(e, movieTitle) {
+        async function removeMovieFromCurrentSaga(e, title) {
             e.stopPropagation();
-            if (!currentSaga || !isAdmin) return;
-            currentSaga.exactTitles = currentSaga.exactTitles.filter(t => t.toLowerCase().trim() !== movieTitle.toLowerCase().trim());
+            if (!currentSaga) return;
+            currentSaga.exactTitles = currentSaga.exactTitles.filter(t => t !== title);
             await saveSagaToFirebase(currentSaga);
             renderSagaMovies();
         }
 
         async function deleteCurrentSaga() {
-            if (!currentSaga || !isAdmin) return;
-            openCustomConfirm("Supprimer la Saga", "Es-tu sûr de vouloir supprimer définitivement cette saga ?", async (res) => {
+            if (!currentSaga) return;
+            openCustomConfirm("Suppression", `Voulez-vous supprimer la saga ${currentSaga.title} ?`, async (res) => {
                 if (res) {
                     const sagaId = currentSaga.id;
                     SAGAS_DATABASE = SAGAS_DATABASE.filter(s => s.id !== sagaId);
@@ -1924,6 +2017,82 @@
                     renderSections();
                 }
             });
+        }
+
+        function openEditHeroModal() {
+            renderHeroManagerList();
+            document.getElementById('editHeroModal').style.display = 'flex';
+        }
+
+        function renderHeroManagerList() {
+            const container = document.getElementById('heroListManager');
+            container.innerHTML = heroItems.map((item, idx) => `
+                <div class="hero-list-item">
+                    <div class="hero-item-info">
+                        <img class="hero-item-img" src="${formatTmdbImage(item.backdrop || item.poster, 'w300')}" alt="${item.title}">
+                        <div class="hero-item-title">${item.title}</div>
+                    </div>
+                    <div class="hero-item-actions">
+                        <button class="btn-del-hero-item" onclick="deleteHeroItem(${idx})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterMoviesForHero(query) {
+            const container = document.getElementById('heroMovieSelectList');
+            const q = query.toLowerCase().trim();
+            if (!q) { container.style.display = 'none'; return; }
+
+            const matches = catalog.filter(m => (m.title || '').toLowerCase().includes(q)).slice(0, 5);
+            container.style.display = 'block';
+            container.innerHTML = matches.map(m => `
+                <div class="movie-select-row" onclick="selectMovieForHero(${JSON.stringify(m).replace(/"/g, '&quot;')})">
+                    <img class="movie-select-poster" src="${m.poster}" alt="${m.title}">
+                    <div class="movie-select-title">${m.title}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectMovieForHero(item) {
+            document.getElementById('heroEditTitle').value = item.title;
+            document.getElementById('heroEditImage').value = item.backdrop || item.poster;
+            document.getElementById('heroEditDesc').value = item.overview || '';
+            document.getElementById('heroEditTmdbId').value = item.tmdb_id_clean || item.tmdb_id;
+            document.getElementById('heroMovieSelectList').style.display = 'none';
+        }
+
+        async function submitHeroEdit() {
+            const title = document.getElementById('heroEditTitle').value.trim();
+            const img = document.getElementById('heroEditImage').value.trim();
+            const logo = document.getElementById('heroEditLogo').value.trim();
+            const desc = document.getElementById('heroEditDesc').value.trim();
+            const tmdbId = document.getElementById('heroEditTmdbId').value;
+
+            if (!title) return;
+
+            const newItem = {
+                title: title,
+                backdrop: img,
+                poster: img,
+                logo: logo,
+                overview: desc,
+                tmdb_id_clean: tmdbId,
+                rating: "8.5",
+                year: "2026"
+            };
+
+            heroItems.push(newItem);
+            await saveHeroListToFirebase();
+            setupHeroSlider();
+            closeAdminModals();
+        }
+
+        async function deleteHeroItem(idx) {
+            heroItems.splice(idx, 1);
+            await saveHeroListToFirebase();
+            renderHeroManagerList();
+            setupHeroSlider();
         }
 
         window.onload = init;
