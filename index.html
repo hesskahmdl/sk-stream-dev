@@ -8,7 +8,7 @@
         :root {
             --red: #e50914;
             --red-bright: #ff0f1a;
-            --red-glow: rgba(229, 9, 20, 0.5);
+            --red-glow: rgba(229, 9, 20, 0.45);
             --green: #10b981;
             --bg-0: #07070a;
             --bg-1: #0b0b0e;
@@ -24,7 +24,6 @@
             --radius-sm: 8px;
             --radius: 14px;
             --radius-lg: 20px;
-            --radius-xl: 28px;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
             --shadow: 0 8px 24px rgba(0,0,0,0.5);
             --shadow-lg: 0 20px 50px rgba(0,0,0,0.7);
@@ -44,10 +43,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             line-height: 1.5;
-            background-image:
-                radial-gradient(ellipse at top left, rgba(229,9,20,0.08), transparent 50%),
-                radial-gradient(ellipse at top right, rgba(16,185,129,0.04), transparent 50%);
-            background-attachment: fixed;
         }
 
         ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -59,20 +54,24 @@
         }
         ::-webkit-scrollbar-thumb:hover { background: var(--red-bright); }
 
+        svg.icon { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+        svg.icon-lg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+        svg.icon-sm { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+
         /* ==================== HEADER ==================== */
         header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 34px;
-            background: rgba(7, 7, 10, 0.85);
+            padding: 12px 30px;
+            background: rgba(7, 7, 10, 0.92);
             position: fixed; top: 0; width: 100%; z-index: 5000;
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
-            transition: all 0.3s var(--ease);
+            gap: 14px;
         }
 
         .logo {
-            font-size: 24px; font-weight: 900;
+            font-size: 22px; font-weight: 900;
             background: linear-gradient(135deg, #ffffff 0%, var(--red) 60%, #8a0610 100%);
             -webkit-background-clip: text;
             background-clip: text;
@@ -80,93 +79,153 @@
             letter-spacing: -0.5px;
             cursor: pointer;
             text-transform: uppercase;
-            position: relative;
-            transition: transform 0.3s var(--ease-out);
-            filter: drop-shadow(0 0 20px var(--red-glow));
+            flex-shrink: 0;
+            transition: transform 0.25s var(--ease-out);
         }
         .logo:hover { transform: scale(1.04); }
 
         nav {
-            display: flex; gap: 6px; align-items: center;
-            overflow-x: auto; scrollbar-width: none;
-            padding: 2px;
+            display: flex; gap: 4px; align-items: center;
+            overflow: visible; scrollbar-width: none;
+            flex: 1;
+            min-width: 0;
         }
         nav::-webkit-scrollbar { display: none; }
 
         .nav-item {
             background: transparent; border: none; color: var(--text-2);
-            font-size: 13.5px; cursor: pointer;
-            display: flex; align-items: center; gap: 7px;
-            font-weight: 600; padding: 8px 14px;
-            position: relative; transition: all 0.25s var(--ease);
+            font-size: 13px; cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
+            font-weight: 600; padding: 8px 12px;
+            position: relative; transition: color 0.2s, background 0.2s;
             border-radius: 999px; white-space: nowrap;
             text-decoration: none;
-            letter-spacing: 0.2px;
+            font-family: inherit;
         }
-        .nav-item svg { width: 15px; height: 15px; fill: currentColor; transition: transform 0.25s; }
         .nav-item:hover {
             color: var(--text-0);
             background: rgba(255,255,255,0.05);
         }
-        .nav-item:hover svg { transform: scale(1.1); }
         .nav-item.active {
             color: var(--text-0);
-            background: linear-gradient(135deg, rgba(229,9,20,0.18), rgba(229,9,20,0.05));
-            box-shadow: inset 0 0 0 1px rgba(229,9,20,0.3), 0 4px 15px rgba(229,9,20,0.15);
+            background: rgba(229,9,20,0.14);
         }
-        .nav-item.active::before {
+        .nav-item.active::after {
             content: '';
             position: absolute;
-            bottom: -1px; left: 20%; right: 20%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--red), transparent);
+            bottom: -14px; left: 25%; right: 25%; height: 2px;
+            background: var(--red);
             border-radius: 2px;
         }
 
-        .btn-suggestion {
-            background: linear-gradient(135deg, rgba(229,9,20,0.12), rgba(229,9,20,0.05));
-            color: #ff4d57; border: 1px solid rgba(229,9,20,0.4);
-            padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: all 0.25s var(--ease);
-            display: flex; align-items: center; gap: 6px;
+        /* ==================== EXPLORER DROPDOWN ==================== */
+        .explorer-wrap { position: relative; }
+
+        .explorer-btn {
+            background: linear-gradient(135deg, rgba(229,9,20,0.14), rgba(229,9,20,0.05));
+            color: #fff; border: 1px solid rgba(229,9,20,0.35);
+            padding: 8px 14px; border-radius: 999px;
+            font-size: 13px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: all 0.2s var(--ease);
+            font-family: inherit;
         }
-        .btn-suggestion:hover {
-            background: var(--red); color: #fff; border-color: var(--red);
-            box-shadow: 0 0 25px var(--red-glow);
-            transform: translateY(-1px);
+        .explorer-btn:hover, .explorer-btn.open {
+            background: var(--red); border-color: var(--red);
+            box-shadow: 0 4px 18px rgba(229,9,20,0.4);
+        }
+        .explorer-btn svg.chevron {
+            width: 12px; height: 12px;
+            transition: transform 0.25s var(--ease);
+        }
+        .explorer-btn.open svg.chevron { transform: rotate(180deg); }
+
+        .explorer-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            min-width: 240px;
+            background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius);
+            padding: 8px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .explorer-menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        .btn-watch-party {
-            background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04));
-            color: #34d399; border: 1px solid rgba(16,185,129,0.4);
-            padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: all 0.25s var(--ease);
-            display: flex; align-items: center; gap: 6px;
-            text-decoration: none; white-space: nowrap;
+        .explorer-item {
+            background: transparent;
+            border: none;
+            color: var(--text-1);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+            font-family: inherit;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+            width: 100%;
         }
-        .btn-watch-party:hover {
-            background: var(--green); color: #fff; border-color: var(--green);
-            box-shadow: 0 0 25px rgba(16,185,129,0.4);
-            transform: translateY(-1px);
+        .explorer-item:hover {
+            background: rgba(229,9,20,0.12);
+            color: #fff;
+        }
+        .explorer-item svg.icon { width: 14px; height: 14px; opacity: 0.85; }
+        .explorer-item .explorer-badge {
+            margin-left: auto;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(16,185,129,0.15);
+            color: var(--green);
+            letter-spacing: 0.5px;
         }
 
-        .right-header { display: flex; align-items: center; gap: 14px; }
+        .explorer-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 6px 4px;
+        }
+
+        .explorer-item.watchparty svg { color: #34d399; }
+        .explorer-item.suggest svg { color: #ff8c42; }
+        .explorer-item.dashboard svg { color: #60a5fa; }
+
+        /* ==================== RIGHT HEADER ==================== */
+        .right-header { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
         .lang-switch {
-            display: flex; gap: 6px; cursor: pointer;
-            padding: 4px; border-radius: 999px;
+            display: flex; gap: 4px; cursor: pointer;
+            padding: 3px; border-radius: 999px;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
         }
         .lang-switch img {
             width: 22px; height: 15px; border-radius: 3px;
-            opacity: 0.4; transition: all 0.25s var(--ease);
+            opacity: 0.4; transition: all 0.2s var(--ease);
             border: 1px solid transparent;
         }
         .lang-switch img.active {
             opacity: 1; border-color: var(--red);
-            box-shadow: 0 0 12px var(--red-glow);
         }
-        .lang-switch img:hover { opacity: 0.85; }
 
         .search-box input {
             background: rgba(255,255,255,0.04);
@@ -174,8 +233,8 @@
             color: var(--text-0);
             padding: 8px 14px 8px 34px;
             border-radius: 999px; outline: none;
-            font-size: 13px; width: 200px;
-            transition: all 0.3s var(--ease);
+            font-size: 13px; width: 190px;
+            transition: width 0.25s var(--ease), border-color 0.2s, background-color 0.2s;
             font-family: inherit;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%238a8a9e'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -183,60 +242,56 @@
         }
         .search-box input::placeholder { color: var(--text-3); }
         .search-box input:focus {
-            width: 280px;
+            width: 250px;
             border-color: var(--red);
             background-color: rgba(229,9,20,0.05);
-            box-shadow: 0 0 0 3px rgba(229,9,20,0.12);
         }
 
         .btn-header-login {
             background: linear-gradient(135deg, var(--red-bright), var(--red));
-            color: #fff; border: none; padding: 9px 18px;
-            border-radius: 999px; font-size: 13px; font-weight: 700;
-            cursor: pointer; transition: all 0.25s var(--ease);
+            color: #fff; border: none; padding: 8px 16px;
+            border-radius: 999px; font-size: 12.5px; font-weight: 700;
+            cursor: pointer; transition: transform 0.15s var(--ease), box-shadow 0.2s;
             white-space: nowrap; display: flex; align-items: center; gap: 6px;
-            box-shadow: 0 4px 15px rgba(229,9,20,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+            box-shadow: 0 3px 12px rgba(229,9,20,0.35);
+            font-family: inherit;
         }
         .btn-header-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 22px rgba(229,9,20,0.55), inset 0 1px 0 rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 18px rgba(229,9,20,0.5);
         }
 
         .btn-dashboard-link {
             background: linear-gradient(135deg, var(--green), #059669);
-            color: #fff; border: none; padding: 9px 15px;
+            color: #fff; border: none; padding: 8px 14px;
             border-radius: 999px; font-size: 12px; font-weight: 800;
-            cursor: pointer; transition: all 0.25s var(--ease);
+            cursor: pointer; transition: transform 0.15s var(--ease);
             text-decoration: none; display: none; align-items: center; gap: 5px;
-            box-shadow: 0 4px 15px rgba(16,185,129,0.35);
+            box-shadow: 0 3px 12px rgba(16,185,129,0.35);
+            font-family: inherit;
         }
-        .btn-dashboard-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 22px rgba(16,185,129,0.5);
-        }
+        .btn-dashboard-link:hover { transform: translateY(-1px); }
 
         .user-profile-badge {
             display: flex; align-items: center; gap: 8px;
             background: rgba(255,255,255,0.04);
             border: 1px solid var(--border-strong);
-            padding: 4px 14px 4px 5px; border-radius: 999px;
+            padding: 3px 12px 3px 4px; border-radius: 999px;
             cursor: pointer; position: relative;
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, border-color 0.2s;
         }
         .user-profile-badge:hover {
             background: rgba(229,9,20,0.08);
             border-color: rgba(229,9,20,0.4);
-            transform: translateY(-1px);
         }
         .user-profile-badge img {
-            width: 28px; height: 28px; border-radius: 50%;
+            width: 26px; height: 26px; border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--red);
-            box-shadow: 0 0 12px var(--red-glow);
         }
         .user-profile-badge span {
-            font-size: 12.5px; font-weight: 700; color: var(--text-0);
-            max-width: 100px; overflow: hidden;
+            font-size: 12px; font-weight: 700; color: var(--text-0);
+            max-width: 90px; overflow: hidden;
             text-overflow: ellipsis; white-space: nowrap;
         }
 
@@ -246,15 +301,15 @@
             background: rgba(3,3,6,0.85);
             z-index: 7000;
             display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            animation: fadeIn 0.25s var(--ease);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: fadeIn 0.2s var(--ease);
             padding: 20px;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
@@ -262,53 +317,53 @@
             background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
             border: 1px solid var(--border-strong);
             border-radius: var(--radius-lg);
-            padding: 32px;
-            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.02) inset;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
             position: relative;
-            animation: slideUp 0.35s var(--ease-out);
+            animation: slideUp 0.3s var(--ease-out);
         }
         .auth-modal-card { width: 90%; max-width: 400px; text-align: center; }
         .admin-modal-content { width: 90%; max-width: 520px; }
         .remote-popup-card {
             border: 2px solid var(--red);
-            padding: 40px 30px; width: 90%; max-width: 440px;
+            padding: 38px 28px; width: 90%; max-width: 440px;
             text-align: center;
-            box-shadow: 0 0 80px rgba(229,9,20,0.35), var(--shadow-lg);
+            box-shadow: 0 0 60px rgba(229,9,20,0.35), var(--shadow-lg);
         }
 
         .auth-modal-title {
-            font-size: 22px; font-weight: 900;
-            margin-bottom: 22px; text-transform: uppercase;
+            font-size: 20px; font-weight: 900;
+            margin-bottom: 20px; text-transform: uppercase;
             letter-spacing: 1px;
-            background: linear-gradient(135deg, #fff, #ffb3b8);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
         }
         .remote-popup-title {
-            font-size: 24px; font-weight: 900;
-            color: #fff; margin-bottom: 14px;
-            text-shadow: 0 0 30px var(--red-glow);
+            font-size: 22px; font-weight: 900;
+            color: #fff; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
+        .remote-popup-title svg { width: 26px; height: 26px; fill: var(--red); }
         .remote-popup-text {
             font-size: 14px; color: var(--text-1);
-            margin-bottom: 28px; line-height: 1.6;
+            margin-bottom: 24px; line-height: 1.6;
         }
 
         .btn-discord-login {
             width: 100%;
             background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
-            color: #fff; border: none; padding: 15px;
+            color: #fff; border: none; padding: 14px;
             border-radius: var(--radius);
-            font-size: 15px; font-weight: 800;
+            font-size: 14px; font-weight: 800;
             cursor: pointer; display: flex; align-items: center;
             justify-content: center; gap: 10px;
-            transition: all 0.25s var(--ease);
+            transition: transform 0.15s var(--ease), box-shadow 0.2s;
             text-decoration: none;
-            box-shadow: 0 6px 20px rgba(88,101,242,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+            box-shadow: 0 5px 18px rgba(88,101,242,0.35);
+            font-family: inherit;
         }
         .btn-discord-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(88,101,242,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(88,101,242,0.5);
         }
 
         /* ==================== HERO ==================== */
@@ -317,52 +372,40 @@
             height: 78vh; min-height: 520px;
             background-size: cover;
             background-position: center 20%;
-            transition: background-image 1s var(--ease);
+            transition: background-image 0.8s var(--ease);
             display: flex; align-items: center;
-            padding: 0 60px;
+            padding: 0 55px;
             margin-top: 60px;
+            will-change: background-image;
         }
         .hero-overlay {
             position: absolute; inset: 0;
             background:
-                linear-gradient(90deg, var(--bg-1) 5%, rgba(11,11,14,0.92) 30%, rgba(11,11,14,0.4) 65%, transparent 100%),
-                linear-gradient(0deg, var(--bg-1) 0%, transparent 45%),
-                radial-gradient(ellipse at 20% 50%, rgba(229,9,20,0.12), transparent 60%);
+                linear-gradient(90deg, var(--bg-1) 5%, rgba(11,11,14,0.9) 30%, rgba(11,11,14,0.35) 65%, transparent 100%),
+                linear-gradient(0deg, var(--bg-1) 0%, transparent 45%);
         }
         .hero-content {
             position: relative; z-index: 10;
             max-width: 620px;
-            animation: slideUp 0.6s var(--ease-out);
         }
 
         .hero-tag {
-            color: #ff4d57; font-size: 12px; font-weight: 800;
+            color: #ff4d57; font-size: 11px; font-weight: 800;
             letter-spacing: 3px; text-transform: uppercase;
             margin-bottom: 14px;
             display: inline-flex; align-items: center; gap: 8px;
             padding: 6px 14px;
-            background: rgba(229,9,20,0.1);
+            background: rgba(229,9,20,0.12);
             border: 1px solid rgba(229,9,20,0.3);
             border-radius: 999px;
-            backdrop-filter: blur(10px);
         }
-        .hero-tag::before {
-            content: '';
-            width: 6px; height: 6px; border-radius: 50%;
-            background: var(--red);
-            box-shadow: 0 0 10px var(--red);
-            animation: pulse 1.6s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
-        }
+        .hero-tag svg { width: 12px; height: 12px; fill: var(--red); }
 
         .hero-title {
-            font-size: 52px; font-weight: 900;
+            font-size: 50px; font-weight: 900;
             line-height: 1.05; margin-bottom: 16px;
             letter-spacing: -1.5px;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.9);
+            text-shadow: 0 4px 24px rgba(0,0,0,0.9);
         }
         .hero-title-logo {
             max-width: 340px; max-height: 110px;
@@ -383,14 +426,14 @@
             font-size: 11px; font-weight: 800;
             letter-spacing: 0.5px;
             border: 1px solid var(--border-strong);
-            backdrop-filter: blur(10px);
         }
         .badge-rating {
             background: linear-gradient(135deg, #ffc107, #ff9800);
             color: #000;
             border-color: transparent;
-            box-shadow: 0 0 15px rgba(255,193,7,0.4);
+            display: inline-flex; align-items: center; gap: 4px;
         }
+        .badge-rating svg { width: 11px; height: 11px; fill: #000; }
 
         .hero-overview {
             font-size: 15px; color: var(--text-1);
@@ -403,58 +446,55 @@
         .btn-watch {
             background: linear-gradient(135deg, var(--red-bright), var(--red));
             color: #fff; border: none;
-            padding: 15px 38px; border-radius: 999px;
-            font-size: 15px; font-weight: 800;
+            padding: 14px 34px; border-radius: 999px;
+            font-size: 14px; font-weight: 800;
             cursor: pointer; display: inline-flex;
             align-items: center; gap: 10px;
-            transition: all 0.25s var(--ease);
-            box-shadow: 0 8px 30px rgba(229,9,20,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: transform 0.15s var(--ease), box-shadow 0.2s;
+            box-shadow: 0 6px 24px rgba(229,9,20,0.45);
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            font-family: inherit;
         }
         .btn-watch:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(229,9,20,0.7), inset 0 1px 0 rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(229,9,20,0.6);
         }
+        .btn-watch svg { width: 14px; height: 14px; fill: #fff; }
 
         .btn-edit-hero {
             background: rgba(255,255,255,0.08);
             color: #fff;
             border: 1px solid rgba(255,255,255,0.25);
-            padding: 10px 20px; border-radius: 999px;
-            font-size: 12.5px; font-weight: 700;
+            padding: 10px 18px; border-radius: 999px;
+            font-size: 12px; font-weight: 700;
             cursor: pointer; margin-left: 12px;
-            backdrop-filter: blur(10px);
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, color 0.2s;
             display: none;
+            align-items: center; gap: 6px;
+            font-family: inherit;
         }
-        .btn-edit-hero:hover {
-            background: #fff; color: #000;
-            border-color: #fff;
-            transform: translateY(-2px);
-        }
+        .btn-edit-hero:hover { background: #fff; color: #000; }
 
         .hero-progress-bar-container {
-            position: absolute; bottom: 28px; left: 60px;
+            position: absolute; bottom: 26px; left: 55px;
             display: flex; align-items: center; gap: 14px;
             z-index: 20;
             background: rgba(0, 0, 0, 0.55);
-            padding: 8px 18px; border-radius: 999px;
-            backdrop-filter: blur(12px);
+            padding: 8px 16px; border-radius: 999px;
             border: 1px solid var(--border-strong);
         }
-        .hero-dots { display: flex; align-items: center; gap: 7px; }
+        .hero-dots { display: flex; align-items: center; gap: 6px; }
         .hero-dot {
-            width: 7px; height: 7px; border-radius: 50%;
+            width: 6px; height: 6px; border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            transition: all 0.35s var(--ease-out);
+            transition: width 0.25s var(--ease-out), background 0.2s;
         }
-        .hero-dot:hover { background: rgba(255,255,255,0.6); transform: scale(1.3); }
+        .hero-dot:hover { background: rgba(255,255,255,0.6); }
         .hero-dot.active {
             background: var(--red);
-            width: 22px; border-radius: 10px;
-            box-shadow: 0 0 12px var(--red-glow);
+            width: 20px; border-radius: 10px;
         }
         .hero-divider {
             width: 1px; height: 14px;
@@ -468,47 +508,45 @@
         }
         .hero-progress-fill {
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--red), #ff4d57);
+            background: var(--red);
             border-radius: 3px;
             transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--red-glow);
         }
 
         /* ==================== MAIN CONTENT ==================== */
         .main-content {
-            padding: 20px 40px 60px;
+            padding: 20px 35px 60px;
             position: relative; z-index: 10;
             margin-top: -50px;
         }
 
         .section-header {
             display: flex; justify-content: space-between;
-            align-items: center; margin: 30px 0 16px;
+            align-items: center; margin: 25px 0 14px;
             flex-wrap: wrap; gap: 12px;
         }
 
         .section-title {
-            font-size: 22px; font-weight: 800;
+            font-size: 20px; font-weight: 800;
             color: var(--text-0);
             letter-spacing: -0.3px;
-            margin-top: 40px;
-            margin-bottom: 18px;
+            margin-top: 35px;
+            margin-bottom: 16px;
             display: flex; align-items: center; gap: 10px;
             position: relative;
-            padding-left: 16px;
+            padding-left: 14px;
         }
         .section-title::before {
             content: '';
             position: absolute; left: 0; top: 50%;
             transform: translateY(-50%);
-            width: 4px; height: 22px;
-            background: linear-gradient(180deg, var(--red), var(--red-bright));
+            width: 3px; height: 20px;
+            background: var(--red);
             border-radius: 2px;
-            box-shadow: 0 0 15px var(--red-glow);
         }
+        .section-title svg { width: 18px; height: 18px; fill: var(--red); }
         .section-title span.red {
             color: var(--red);
-            text-shadow: 0 0 20px var(--red-glow);
         }
 
         .filter-select {
@@ -516,18 +554,17 @@
             border: 1px solid var(--border-strong);
             color: var(--text-0);
             padding: 8px 14px; border-radius: 999px;
-            font-size: 13px; font-weight: 600;
+            font-size: 12.5px; font-weight: 600;
             outline: none; cursor: pointer;
-            transition: all 0.25s var(--ease);
+            transition: border-color 0.2s;
             font-family: inherit;
         }
-        .filter-select:hover { border-color: var(--red); }
-        .filter-select:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(229,9,20,0.15); }
+        .filter-select:hover, .filter-select:focus { border-color: var(--red); }
 
         /* ==================== CAROUSELS ==================== */
         .carousel-wrapper { position: relative; }
         .carousel {
-            display: flex; gap: 18px;
+            display: flex; gap: 16px;
             overflow-x: auto; scroll-behavior: smooth;
             padding: 15px 0;
             scrollbar-width: none;
@@ -537,14 +574,14 @@
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 22px;
+            gap: 20px;
             padding: 15px 0;
         }
 
         /* ==================== CARDS ==================== */
         .card {
             cursor: pointer;
-            transition: all 0.35s var(--ease-out);
+            transition: transform 0.25s var(--ease-out), box-shadow 0.25s;
             background: var(--bg-2);
             border-radius: var(--radius);
             overflow: hidden;
@@ -552,106 +589,109 @@
             flex: 0 0 190px; height: 285px;
             position: relative;
             box-shadow: var(--shadow-sm);
+            transform: translateZ(0);
+            contain: layout style paint;
         }
         .movie-grid .card { flex: none; height: 285px; }
         .card img.poster-img {
             width: 100%; height: 100%;
             object-fit: cover; display: block;
             border-radius: var(--radius);
-            transition: transform 0.5s var(--ease-out);
+            transition: transform 0.35s var(--ease-out);
             image-rendering: -webkit-optimize-contrast;
         }
         .card:hover {
-            transform: translateY(-8px) scale(1.03);
+            transform: translateY(-6px) scale(1.02) translateZ(0);
             z-index: 10;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 30px rgba(229,9,20,0.2);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.65);
             border-color: rgba(229,9,20,0.5);
         }
-        .card:hover img.poster-img { transform: scale(1.06); }
+        .card:hover img.poster-img { transform: scale(1.05); }
 
         .card-add-saga {
             border: 2px dashed rgba(229, 9, 20, 0.5);
-            background: linear-gradient(135deg, rgba(19,19,26,0.9), rgba(229,9,20,0.05));
+            background: var(--bg-2);
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            gap: 14px; text-align: center; padding: 18px;
+            gap: 12px; text-align: center; padding: 18px;
         }
         .card-add-saga:hover {
             border-color: var(--red);
-            background: linear-gradient(135deg, rgba(229,9,20,0.15), rgba(229,9,20,0.08));
-            transform: translateY(-8px) scale(1.03);
+            background: rgba(229,9,20,0.08);
         }
 
         .add-saga-circle {
-            width: 60px; height: 60px; border-radius: 50%;
+            width: 55px; height: 55px; border-radius: 50%;
             background: linear-gradient(135deg, var(--red-bright), var(--red));
             color: #fff;
             display: flex; align-items: center; justify-content: center;
-            font-size: 30px; font-weight: 300;
-            box-shadow: 0 8px 25px rgba(229,9,20,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-            transition: transform 0.3s var(--ease-out);
+            box-shadow: 0 6px 18px rgba(229,9,20,0.45);
+            transition: transform 0.25s var(--ease-out);
         }
+        .add-saga-circle svg { width: 24px; height: 24px; fill: #fff; }
         .card-add-saga:hover .add-saga-circle {
-            transform: scale(1.12) rotate(90deg);
+            transform: scale(1.1) rotate(90deg);
         }
         .add-saga-text {
-            font-size: 13px; font-weight: 800;
+            font-size: 12.5px; font-weight: 800;
             color: #fff; text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .card-hover-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(11,11,14,0.4) 0%, rgba(11,11,14,0.98) 70%);
-            padding: 18px;
+            background: linear-gradient(180deg, rgba(11,11,14,0.3) 0%, rgba(11,11,14,0.96) 70%);
+            padding: 16px;
             display: flex; flex-direction: column;
             justify-content: flex-end;
-            opacity: 0; transition: opacity 0.3s var(--ease);
+            opacity: 0; transition: opacity 0.25s var(--ease);
             border-radius: var(--radius);
         }
         .card:hover .card-hover-overlay { opacity: 1; }
 
         .card-hover-title {
-            font-size: 15px; font-weight: 800;
-            color: #fff; margin-bottom: 6px;
+            font-size: 14px; font-weight: 800;
+            color: #fff; margin-bottom: 5px;
             line-height: 1.25;
         }
         .card-hover-rating {
-            font-size: 12px; color: #ffc107;
-            font-weight: 800; margin-bottom: 8px;
+            font-size: 11.5px; color: #ffc107;
+            font-weight: 800; margin-bottom: 7px;
             display: flex; align-items: center; gap: 4px;
         }
+        .card-hover-rating svg { width: 11px; height: 11px; fill: #ffc107; }
         .card-hover-desc {
-            font-size: 11.5px; color: var(--text-2);
+            font-size: 11px; color: var(--text-2);
             line-height: 1.5;
             display: -webkit-box; -webkit-line-clamp: 3;
             -webkit-box-orient: vertical; overflow: hidden;
         }
 
         .saga-badge {
-            position: absolute; top: 12px; left: 12px;
-            background: linear-gradient(135deg, #000, #1a1a1a);
+            position: absolute; top: 10px; left: 10px;
+            background: #000;
             color: #fff; font-size: 9px; font-weight: 900;
-            padding: 4px 10px; border-radius: 6px;
+            padding: 3px 9px; border-radius: 5px;
             letter-spacing: 1.5px; z-index: 5;
             border: 1px solid rgba(229,9,20,0.5);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            display: flex; align-items: center; gap: 4px;
         }
+        .saga-badge svg { width: 9px; height: 9px; fill: var(--red); }
 
         .star-watchlist {
-            position: absolute; top: 10px; right: 10px;
+            position: absolute; top: 9px; right: 9px;
             z-index: 20;
-            width: 36px; height: 36px; border-radius: 50%;
+            width: 34px; height: 34px; border-radius: 50%;
             background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: center;
-            font-size: 17px; cursor: pointer;
-            transition: all 0.25s var(--ease);
+            cursor: pointer;
+            transition: transform 0.2s var(--ease), background 0.2s;
             border: 1px solid rgba(255,255,255,0.15);
             color: #fff;
         }
+        .star-watchlist svg { width: 15px; height: 15px; fill: currentColor; }
         .star-watchlist:hover {
-            transform: scale(1.15);
+            transform: scale(1.1);
             background: rgba(229,9,20,0.3);
             border-color: var(--red);
         }
@@ -659,35 +699,32 @@
             background: rgba(255, 193, 7, 0.25);
             border-color: #ffc107;
             color: #ffc107;
-            box-shadow: 0 0 20px rgba(255,193,7,0.5);
         }
 
         /* ==================== TOP 10 ==================== */
-        .carousel-top10 { gap: 40px; padding-left: 30px; }
+        .carousel-top10 { gap: 36px; padding-left: 28px; }
         .card-top10 {
             flex: 0 0 190px; display: flex;
             align-items: flex-end; position: relative;
             cursor: pointer;
-            transition: transform 0.35s var(--ease-out);
+            transition: transform 0.25s var(--ease-out);
+            transform: translateZ(0);
         }
-        .card-top10:hover { transform: translateY(-8px) scale(1.04); }
+        .card-top10:hover { transform: translateY(-6px) scale(1.03) translateZ(0); }
         .card-top10 img {
             width: 165px; height: 250px; z-index: 2;
             position: relative; border-radius: var(--radius-sm);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
             object-fit: cover;
             image-rendering: -webkit-optimize-contrast;
-            transition: filter 0.35s;
         }
-        .card-top10:hover img { filter: brightness(1.1); }
         .top10-number {
-            position: absolute; left: -32px; bottom: -20px;
-            font-size: 145px; font-weight: 900; line-height: 0.8;
+            position: absolute; left: -30px; bottom: -18px;
+            font-size: 140px; font-weight: 900; line-height: 0.8;
             color: rgba(11, 11, 14, 0.9);
             -webkit-text-stroke: 4px var(--red);
             z-index: 3; user-select: none;
             font-family: 'Impact', 'Arial Black', sans-serif;
-            text-shadow: 0 0 25px rgba(229, 9, 20, 0.7);
             pointer-events: none;
         }
 
@@ -696,103 +733,103 @@
             display: block; margin: 30px auto 50px;
             background: var(--bg-3);
             border: 1px solid var(--border-strong);
-            color: #fff; padding: 14px 42px;
+            color: #fff; padding: 13px 38px;
             border-radius: 999px; font-weight: 700;
-            font-size: 13.5px;
+            font-size: 13px;
             cursor: pointer;
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, transform 0.15s;
             letter-spacing: 0.5px;
+            font-family: inherit;
         }
         .btn-load-more:hover {
-            background: linear-gradient(135deg, var(--red-bright), var(--red));
+            background: var(--red);
             border-color: var(--red);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(229,9,20,0.5);
         }
 
         /* ==================== SAGA PAGE ==================== */
-        .saga-page { padding: 90px 45px 50px; display: none; }
+        .saga-page { padding: 90px 40px 50px; display: none; }
         .saga-header {
-            display: flex; gap: 40px;
+            display: flex; gap: 35px;
             align-items: flex-start; margin-bottom: 25px;
             flex-wrap: wrap;
         }
         .saga-poster {
-            width: 240px; height: 350px;
+            width: 230px; height: 340px;
             object-fit: cover; border-radius: var(--radius);
-            box-shadow: 0 15px 45px rgba(0,0,0,0.85), 0 0 40px rgba(229,9,20,0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.85);
             border: 1px solid var(--border-strong);
             image-rendering: -webkit-optimize-contrast;
-            transition: transform 0.4s var(--ease-out);
         }
-        .saga-poster:hover { transform: scale(1.03); }
         .saga-details { flex: 1; min-width: 300px; }
         .saga-title {
-            font-size: 40px; font-weight: 900;
+            font-size: 38px; font-weight: 900;
             margin-bottom: 14px;
             letter-spacing: -1px;
             line-height: 1.1;
         }
         .saga-title span.red {
             color: var(--red);
-            text-shadow: 0 0 25px var(--red-glow);
         }
         .saga-stats-bar {
-            display: flex; gap: 24px;
-            font-size: 13.5px; color: var(--text-2);
+            display: flex; gap: 22px;
+            font-size: 13px; color: var(--text-2);
             margin-bottom: 18px; font-weight: 700;
             flex-wrap: wrap;
         }
+        .saga-stats-bar span { display: inline-flex; align-items: center; gap: 6px; }
+        .saga-stats-bar svg { width: 13px; height: 13px; fill: var(--red); }
         .saga-desc {
-            font-size: 14.5px; color: var(--text-1);
-            line-height: 1.7; margin-bottom: 24px;
+            font-size: 14px; color: var(--text-1);
+            line-height: 1.7; margin-bottom: 22px;
             max-width: 800px;
         }
 
-        .btn-group-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-group-actions { display: flex; gap: 10px; flex-wrap: wrap; }
         .btn-saga-action {
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--border-strong);
-            color: #fff; padding: 11px 22px;
+            color: #fff; padding: 10px 20px;
             border-radius: var(--radius-sm);
-            font-size: 13px; font-weight: 700;
+            font-size: 12.5px; font-weight: 700;
             cursor: pointer; display: flex;
-            align-items: center; gap: 8px;
-            transition: all 0.25s var(--ease);
+            align-items: center; gap: 7px;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
             font-family: inherit;
         }
+        .btn-saga-action svg { width: 13px; height: 13px; fill: currentColor; }
         .btn-saga-action:hover {
-            background: linear-gradient(135deg, var(--red-bright), var(--red));
+            background: var(--red);
             border-color: var(--red);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(229,9,20,0.4);
+            transform: translateY(-1px);
         }
         .btn-saga-action.active {
-            background: linear-gradient(135deg, var(--red-bright), var(--red));
+            background: var(--red);
             border-color: var(--red);
         }
         .btn-admin-danger {
-            background: rgba(136,0,0,0.3);
-            border-color: rgba(229,9,20,0.6);
+            background: rgba(136,0,0,0.25);
+            border-color: rgba(229,9,20,0.55);
         }
         .btn-admin-danger:hover {
             background: var(--red);
             border-color: var(--red);
         }
 
-        .saga-top-cast { margin: 30px 0; }
+        .saga-top-cast { margin: 28px 0; }
         .saga-top-cast-title {
-            font-size: 16px; font-weight: 800;
-            text-transform: uppercase; margin-bottom: 16px;
+            font-size: 15px; font-weight: 800;
+            text-transform: uppercase; margin-bottom: 14px;
             letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 8px;
         }
+        .saga-top-cast-title svg { width: 15px; height: 15px; fill: var(--red); }
         .saga-top-cast-title span.red {
             color: var(--red);
-            text-shadow: 0 0 15px var(--red-glow);
         }
 
         .cast-list {
-            display: flex; gap: 18px;
+            display: flex; gap: 16px;
             overflow-x: auto; padding-bottom: 10px;
             scrollbar-width: none;
         }
@@ -800,51 +837,47 @@
         .cast-item {
             display: flex; flex-direction: column;
             align-items: center; text-align: center;
-            width: 80px; flex-shrink: 0;
+            width: 78px; flex-shrink: 0;
         }
         .cast-img {
-            width: 66px; height: 66px;
+            width: 62px; height: 62px;
             border-radius: 50%; object-fit: cover;
-            background: var(--bg-3); margin-bottom: 8px;
+            background: var(--bg-3); margin-bottom: 7px;
             border: 2px solid var(--border-strong);
             image-rendering: -webkit-optimize-contrast;
-            transition: all 0.3s var(--ease);
+            transition: border-color 0.2s, transform 0.2s;
         }
         .cast-item:hover .cast-img {
             border-color: var(--red);
-            transform: scale(1.08);
-            box-shadow: 0 0 20px var(--red-glow);
+            transform: scale(1.05);
         }
         .cast-name {
-            font-size: 11.5px; font-weight: 700;
+            font-size: 11px; font-weight: 700;
             line-height: 1.25; color: var(--text-0);
         }
 
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px; margin: 20px 0;
+            gap: 15px; margin: 20px 0;
         }
         .info-card {
-            background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+            background: var(--bg-2);
             border: 1px solid var(--border);
             padding: 18px; border-radius: var(--radius);
-            transition: all 0.25s var(--ease);
+            transition: border-color 0.2s;
         }
-        .info-card:hover {
-            border-color: rgba(229,9,20,0.3);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
+        .info-card:hover { border-color: rgba(229,9,20,0.3); }
         .info-card-title {
-            font-size: 13px; font-weight: 800;
+            font-size: 12.5px; font-weight: 800;
             color: var(--text-0); margin-bottom: 12px;
             display: flex; align-items: center; gap: 8px;
         }
+        .info-card-title svg { width: 14px; height: 14px; fill: var(--red); }
         .info-list-item {
             display: flex; justify-content: space-between;
-            font-size: 12.5px; color: var(--text-2);
-            padding: 6px 0;
+            font-size: 12px; color: var(--text-2);
+            padding: 5px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         .info-list-item:last-child { border-bottom: none; }
@@ -852,13 +885,13 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 16px; margin: 20px 0;
+            gap: 15px; margin: 20px 0;
         }
         .stat-card {
-            background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+            background: var(--bg-2);
             border: 1px solid var(--border);
-            padding: 20px; border-radius: var(--radius);
-            transition: all 0.25s var(--ease);
+            padding: 18px; border-radius: var(--radius);
+            transition: border-color 0.2s;
             position: relative;
             overflow: hidden;
         }
@@ -866,38 +899,36 @@
             content: '';
             position: absolute; top: 0; left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--green), transparent);
-            opacity: 0.6;
+            background: var(--green);
+            opacity: 0.5;
         }
         .stat-card:hover {
             border-color: rgba(16,185,129,0.3);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
         }
         .stat-card-title {
-            font-size: 12px; color: var(--text-2);
+            font-size: 11.5px; color: var(--text-2);
             margin-bottom: 8px;
             display: flex; align-items: center; gap: 6px;
             font-weight: 600;
             letter-spacing: 0.3px;
         }
+        .stat-card-title svg { width: 12px; height: 12px; fill: var(--green); }
         .stat-card-value {
-            font-size: 22px; font-weight: 900;
-            background: linear-gradient(135deg, #34d399, var(--green));
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 21px; font-weight: 900;
+            color: var(--green);
         }
 
         .back-link {
             display: inline-flex; align-items: center; gap: 8px;
-            color: var(--text-2); font-size: 13.5px;
+            color: var(--text-2); font-size: 13px;
             font-weight: 700; cursor: pointer;
             margin-bottom: 25px;
             padding: 8px 16px;
             border-radius: 999px;
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, color 0.2s;
             border: 1px solid transparent;
         }
+        .back-link svg { width: 13px; height: 13px; fill: currentColor; }
         .back-link:hover {
             color: #fff;
             background: rgba(229,9,20,0.1);
@@ -908,22 +939,21 @@
         .arrow-btn {
             position: absolute; top: 42%;
             transform: translateY(-50%);
-            width: 44px; height: 44px;
+            width: 42px; height: 42px;
             background: rgba(11,11,14,0.85);
             border: 2px solid var(--red);
             border-radius: 50%; color: #fff;
-            font-size: 20px; font-weight: bold;
             cursor: pointer; z-index: 20;
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, transform 0.15s, opacity 0.2s;
             opacity: 0;
-            backdrop-filter: blur(10px);
+            font-family: inherit;
         }
+        .arrow-btn svg { width: 16px; height: 16px; fill: #fff; }
         .carousel-wrapper:hover .arrow-btn { opacity: 1; }
         .arrow-btn:hover {
             background: var(--red);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 0 25px var(--red-glow);
+            transform: translateY(-50%) scale(1.08);
         }
         .arrow-btn.left { left: -18px; }
         .arrow-btn.right { right: -18px; }
@@ -945,42 +975,42 @@
             position: absolute; top: 15px; right: 20px;
             background: rgba(255,255,255,0.05);
             border: 2px solid rgba(255,255,255,0.2);
-            color: #fff; width: 44px; height: 44px;
-            border-radius: 50%; font-size: 20px;
+            color: #fff; width: 42px; height: 42px;
+            border-radius: 50%;
             cursor: pointer; z-index: 50;
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.25s var(--ease);
-            backdrop-filter: blur(10px);
+            transition: background 0.2s, border-color 0.2s, transform 0.25s;
+            font-family: inherit;
         }
+        .modal-close svg { width: 16px; height: 16px; fill: #fff; }
         .modal-close:hover {
             background: var(--red);
             border-color: var(--red);
-            transform: rotate(90deg) scale(1.05);
-            box-shadow: 0 0 25px var(--red-glow);
+            transform: rotate(90deg);
         }
 
         .detail-top {
-            display: flex; gap: 35px;
+            display: flex; gap: 32px;
             margin-top: 10px; flex-wrap: wrap;
         }
         .detail-poster {
-            width: 240px; height: 360px;
+            width: 235px; height: 350px;
             object-fit: cover; border-radius: var(--radius);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.85);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.85);
             flex-shrink: 0;
             image-rendering: -webkit-optimize-contrast;
             border: 1px solid var(--border-strong);
         }
         .detail-info { flex: 1; min-width: 280px; }
         .detail-title {
-            font-size: 36px; font-weight: 900;
+            font-size: 34px; font-weight: 900;
             margin-bottom: 12px;
             letter-spacing: -0.8px;
             line-height: 1.1;
         }
         .detail-synopsis {
-            font-size: 14.5px; color: var(--text-1);
-            line-height: 1.7; margin: 18px 0;
+            font-size: 14px; color: var(--text-1);
+            line-height: 1.7; margin: 16px 0;
         }
 
         .trailer-box {
@@ -991,7 +1021,9 @@
             font-size: 12px; color: var(--text-2);
             text-transform: uppercase; letter-spacing: 1.5px;
             font-weight: 800;
+            display: flex; align-items: center; gap: 6px;
         }
+        .trailer-box h3 svg { width: 13px; height: 13px; fill: var(--red); }
         .trailer-embed {
             width: 100%; aspect-ratio: 16/9;
             background: var(--bg-3);
@@ -1024,17 +1056,18 @@
             border: 1px solid var(--red);
             color: #fff;
             padding: 9px 14px; border-radius: var(--radius-sm);
-            font-size: 13.5px; font-weight: 700;
+            font-size: 12.5px; font-weight: 700;
             cursor: pointer;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(8px);
             display: flex; align-items: center; gap: 7px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, transform 0.15s;
+            font-family: inherit;
         }
+        .btn-toggle-sources svg { width: 14px; height: 14px; fill: #fff; }
         .btn-toggle-sources:hover {
             background: var(--red);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(229,9,20,0.5);
+            transform: translateY(-1px);
         }
 
         /* ==================== SOURCE SIDEBAR ==================== */
@@ -1043,18 +1076,18 @@
             width: 280px; height: 100%;
             background: rgba(13, 13, 20, 0.97);
             border-left: 1px solid var(--border-strong);
-            z-index: 200; padding: 18px;
-            display: flex; flex-direction: column; gap: 10px;
-            transition: right 0.35s var(--ease-out);
-            backdrop-filter: blur(15px);
+            z-index: 200; padding: 16px;
+            display: flex; flex-direction: column; gap: 8px;
+            transition: right 0.3s var(--ease-out);
+            backdrop-filter: blur(10px);
             overflow-y: auto;
             border-radius: 0 var(--radius) var(--radius) 0;
         }
         .source-sidebar.open { right: 0; }
         .source-sidebar-title {
-            font-size: 12px; font-weight: 800;
+            font-size: 11.5px; font-weight: 800;
             color: var(--text-2); text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 10px;
             letter-spacing: 1px;
@@ -1064,43 +1097,54 @@
             background: var(--bg-3);
             border: 1px solid var(--border-strong);
             color: #fff;
-            padding: 12px 14px;
+            padding: 11px 13px;
             border-radius: var(--radius-sm);
-            font-size: 12.5px; font-weight: 700;
+            font-size: 12px; font-weight: 700;
             cursor: pointer; text-align: left;
             display: flex; align-items: center;
             justify-content: space-between;
-            transition: all 0.25s var(--ease);
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
             font-family: inherit;
         }
         .btn-source-item:hover {
             background: rgba(229,9,20,0.15);
             border-color: var(--red);
-            transform: translateX(-4px);
+            transform: translateX(-3px);
         }
         .btn-source-item.active {
-            background: linear-gradient(135deg, var(--red-bright), var(--red));
+            background: var(--red);
             border-color: var(--red);
-            box-shadow: 0 4px 15px rgba(229,9,20,0.4);
         }
-        .btn-source-item .lang-flag { font-size: 13px; opacity: 0.8; }
+        .btn-source-item .lang-flag {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.25);
+            color: #fff;
+        }
+        .btn-source-item.active .lang-flag {
+            background: rgba(0,0,0,0.3);
+        }
 
         /* ==================== TV SEASONS / EPISODES ==================== */
-        .tv-seasons-container { margin-top: 30px; display: none; }
+        .tv-seasons-container { margin-top: 28px; display: none; }
         .seasons-title {
-            font-size: 18px; font-weight: 800;
-            color: #fff; margin-bottom: 16px;
+            font-size: 17px; font-weight: 800;
+            color: #fff; margin-bottom: 14px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding-left: 14px;
+            padding-left: 13px;
             position: relative;
         }
         .seasons-title::before {
             content: '';
             position: absolute; left: 0; top: 50%;
             transform: translateY(-50%);
-            width: 3px; height: 18px;
-            background: linear-gradient(180deg, var(--red), var(--red-bright));
+            width: 3px; height: 16px;
+            background: var(--red);
             border-radius: 2px;
         }
 
@@ -1117,14 +1161,14 @@
             overflow: hidden;
             border: 1px solid var(--border);
             cursor: pointer;
-            transition: all 0.25s var(--ease);
+            transition: transform 0.2s var(--ease), border-color 0.2s;
             position: relative;
+            transform: translateZ(0);
         }
         .season-card:hover, .season-card.active,
         .episode-card:hover, .episode-card.active {
-            transform: translateY(-5px);
+            transform: translateY(-4px) translateZ(0);
             border-color: var(--red);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.6), 0 0 20px rgba(229,9,20,0.25);
         }
         .season-card.active::after,
         .episode-card.active::after {
@@ -1137,23 +1181,23 @@
         .season-card img, .episode-card img {
             width: 100%; height: 190px;
             object-fit: cover; display: block;
-            transition: transform 0.4s var(--ease-out);
+            transition: transform 0.3s var(--ease-out);
         }
         .episode-card img { height: 100px; }
         .season-card:hover img, .episode-card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
         .season-info, .episode-info {
-            padding: 10px;
+            padding: 9px;
             background: var(--bg-2);
         }
         .season-info-title {
-            font-size: 12px; font-weight: 700;
+            font-size: 11.5px; font-weight: 700;
             color: #fff; white-space: nowrap;
             overflow: hidden; text-overflow: ellipsis;
         }
         .season-info-sub {
-            font-size: 10.5px; color: var(--text-2);
+            font-size: 10px; color: var(--text-2);
             margin-top: 4px; display: flex;
             justify-content: space-between;
             font-weight: 600;
@@ -1161,88 +1205,89 @@
 
         /* ==================== ADMIN INPUTS ==================== */
         .admin-modal-title {
-            font-size: 20px; font-weight: 900;
+            font-size: 19px; font-weight: 900;
             margin-bottom: 18px; color: #fff;
             letter-spacing: -0.3px;
+            display: flex; align-items: center; gap: 10px;
         }
+        .admin-modal-title svg { width: 18px; height: 18px; fill: var(--red); }
         .admin-input {
             width: 100%;
             background: var(--bg-3);
             border: 1px solid var(--border-strong);
             color: #fff;
-            padding: 12px 14px;
+            padding: 11px 13px;
             border-radius: var(--radius-sm);
-            margin-bottom: 12px;
-            font-size: 14px;
+            margin-bottom: 11px;
+            font-size: 13.5px;
             outline: none;
-            transition: all 0.25s var(--ease);
+            transition: border-color 0.2s, background-color 0.2s;
             font-family: inherit;
             resize: vertical;
         }
         .admin-input:focus {
             border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(229,9,20,0.15);
             background: rgba(229,9,20,0.03);
         }
         .admin-input::placeholder { color: var(--text-3); }
         .admin-btn-group {
             display: flex; justify-content: flex-end;
-            gap: 10px; margin-top: 18px;
+            gap: 10px; margin-top: 16px;
         }
 
         /* ==================== MISC ADMIN ==================== */
         .movie-saga-item { position: relative; }
         .btn-remove-movie {
-            position: absolute; top: 10px; left: 10px;
+            position: absolute; top: 9px; left: 9px;
             z-index: 30;
             background: var(--red);
             color: #fff; border: none;
-            border-radius: 50%; width: 28px; height: 28px;
-            font-weight: bold; cursor: pointer;
+            border-radius: 50%; width: 26px; height: 26px;
+            cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-            transition: all 0.25s var(--ease);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+            transition: transform 0.2s;
+            font-family: inherit;
         }
+        .btn-remove-movie svg { width: 11px; height: 11px; fill: #fff; }
         .btn-remove-movie:hover {
-            transform: scale(1.15) rotate(90deg);
-            box-shadow: 0 6px 20px rgba(229,9,20,0.6);
+            transform: scale(1.12) rotate(90deg);
         }
 
         .movie-select-row {
             display: flex; align-items: center;
-            gap: 12px; padding: 10px;
+            gap: 11px; padding: 9px;
             cursor: pointer;
             border-bottom: 1px solid var(--border);
-            transition: background 0.2s;
+            transition: background 0.15s;
             border-radius: var(--radius-sm);
         }
         .movie-select-row:hover { background: rgba(229,9,20,0.08); }
         .movie-select-poster {
-            width: 38px; height: 55px;
+            width: 36px; height: 52px;
             object-fit: cover; border-radius: 5px;
             background: var(--bg-3);
             flex-shrink: 0;
         }
         .movie-select-title {
-            font-size: 13px; color: #fff;
+            font-size: 12.5px; color: #fff;
             font-weight: 700; flex: 1;
         }
         .movie-select-btn {
             color: var(--red); font-weight: 800;
-            font-size: 12px; white-space: nowrap;
+            font-size: 11.5px; white-space: nowrap;
         }
 
-        .add-movie-columns { display: flex; gap: 18px; flex-wrap: wrap; }
+        .add-movie-columns { display: flex; gap: 16px; flex-wrap: wrap; }
         .add-movie-col { flex: 1; min-width: 240px; }
         .add-movie-col-title {
-            font-size: 12px; font-weight: 800;
-            margin-bottom: 10px; color: var(--text-2);
+            font-size: 11.5px; font-weight: 800;
+            margin-bottom: 9px; color: var(--text-2);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .add-movie-col-title.red-title {
             color: var(--red);
-            text-shadow: 0 0 15px rgba(229,9,20,0.4);
         }
         .pending-movie-row { background: rgba(16,185,129,0.06); }
         .pending-movie-row .movie-select-btn { color: var(--green); }
@@ -1251,19 +1296,19 @@
             background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
             border: 2px solid var(--red);
             border-radius: var(--radius-lg);
-            padding: 30px;
+            padding: 28px;
             width: 90%; max-width: 420px;
             text-align: center;
-            box-shadow: 0 0 60px rgba(229, 9, 20, 0.4), var(--shadow-lg);
-            animation: slideUp 0.35s var(--ease-out);
+            box-shadow: 0 0 50px rgba(229, 9, 20, 0.35), var(--shadow-lg);
+            animation: slideUp 0.3s var(--ease-out);
         }
         .custom-confirm-title {
-            font-size: 20px; font-weight: 900;
-            color: #fff; margin-bottom: 12px;
+            font-size: 19px; font-weight: 900;
+            color: #fff; margin-bottom: 10px;
         }
         .custom-confirm-text {
-            font-size: 13.5px; color: var(--text-1);
-            margin-bottom: 24px; line-height: 1.6;
+            font-size: 13px; color: var(--text-1);
+            margin-bottom: 22px; line-height: 1.6;
         }
 
         .hero-list-container {
@@ -1271,32 +1316,31 @@
             background: var(--bg-3);
             border: 1px solid var(--border-strong);
             border-radius: var(--radius-sm);
-            margin-bottom: 18px; padding: 10px;
-            display: flex; flex-direction: column; gap: 8px;
+            margin-bottom: 16px; padding: 10px;
+            display: flex; flex-direction: column; gap: 7px;
         }
         .hero-list-item {
             display: flex; align-items: center;
             justify-content: space-between;
             background: var(--bg-2);
-            padding: 10px 14px; border-radius: var(--radius-sm);
+            padding: 9px 13px; border-radius: var(--radius-sm);
             border: 1px solid var(--border);
-            transition: all 0.2s var(--ease);
+            transition: border-color 0.2s;
         }
         .hero-list-item:hover {
             border-color: rgba(229,9,20,0.3);
-            transform: translateX(3px);
         }
         .hero-item-info {
             display: flex; align-items: center;
             gap: 10px; overflow: hidden;
         }
         .hero-item-img {
-            width: 44px; height: 28px;
+            width: 42px; height: 27px;
             object-fit: cover; border-radius: 4px;
             flex-shrink: 0;
         }
         .hero-item-title {
-            font-size: 13px; font-weight: 700;
+            font-size: 12.5px; font-weight: 700;
             white-space: nowrap; overflow: hidden;
             text-overflow: ellipsis; color: #fff;
         }
@@ -1306,7 +1350,8 @@
             border: none; padding: 5px 10px;
             border-radius: 5px; font-size: 11px;
             font-weight: 700; cursor: pointer;
-            transition: all 0.2s var(--ease);
+            transition: background 0.15s, transform 0.15s;
+            font-family: inherit;
         }
         .btn-edit-hero-item:hover {
             background: #2563eb;
@@ -1317,7 +1362,8 @@
             border: none; padding: 5px 10px;
             border-radius: 5px; font-size: 11px;
             font-weight: 700; cursor: pointer;
-            transition: all 0.2s var(--ease);
+            transition: background 0.15s, transform 0.15s;
+            font-family: inherit;
         }
         .btn-del-hero-item:hover {
             background: var(--red-bright);
@@ -1325,91 +1371,102 @@
         }
 
         /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 1024px) {
-            header { padding: 12px 20px; }
-            .hero-container { padding: 0 40px; }
-            .main-content { padding: 15px 25px 50px; }
-            .saga-page { padding: 80px 30px 40px; }
+        @media (max-width: 1100px) {
+            .explorer-menu { min-width: 220px; }
+        }
+
+        @media (max-width: 900px) {
+            header { padding: 10px 16px; gap: 10px; flex-wrap: wrap; }
+            .logo { font-size: 18px; }
+            nav { gap: 2px; order: 3; flex: 1 0 100%; overflow-x: auto; padding-bottom: 4px; }
+            .nav-item { font-size: 12px; padding: 7px 10px; }
+            .nav-item.active::after { bottom: -4px; }
+            .search-box input { width: 150px; }
+            .search-box input:focus { width: 200px; }
+            .hero-container { padding: 0 25px; height: 65vh; min-height: 460px; }
+            .hero-title { font-size: 36px; }
+            .hero-progress-bar-container { left: 25px; bottom: 20px; }
+            .main-content { padding: 15px 18px 50px; }
+            .saga-page { padding: 90px 20px 40px; }
         }
 
         @media (max-width: 768px) {
-            header { padding: 10px 15px; flex-wrap: wrap; gap: 8px; }
-            .logo { font-size: 19px; }
-            nav { gap: 6px; flex: 1; }
-            .nav-item { font-size: 12.5px; padding: 7px 10px; }
-            .nav-item svg { width: 13px; height: 13px; }
-            .search-box input { width: 130px; padding: 6px 10px 6px 30px; font-size: 12px; }
-            .search-box input:focus { width: 180px; }
-            .btn-header-login { padding: 7px 12px; font-size: 12px; }
-            .lang-switch img { width: 20px; height: 14px; }
+            header { padding: 10px 14px; }
+            .logo { font-size: 17px; }
+            nav { gap: 2px; }
+            .nav-item { font-size: 11.5px; padding: 6px 9px; }
+            .nav-item .nav-text { display: none; }
+            .nav-item svg { width: 16px; height: 16px; }
+            .search-box input { width: 120px; padding: 7px 10px 7px 30px; font-size: 12px; }
+            .search-box input:focus { width: 160px; }
+            .btn-header-login { padding: 7px 11px; font-size: 11.5px; }
+            .btn-header-login .login-text { display: none; }
+            .explorer-btn { padding: 7px 11px; font-size: 12px; }
 
-            .hero-container {
-                height: 65vh; min-height: 480px;
-                padding: 0 22px; margin-top: 55px;
-            }
-            .hero-title { font-size: 34px; letter-spacing: -1px; }
+            .hero-container { height: 60vh; min-height: 440px; padding: 0 20px; }
+            .hero-title { font-size: 30px; letter-spacing: -1px; }
             .hero-title-logo { max-width: 240px; max-height: 75px; }
             .hero-overview { -webkit-line-clamp: 2; font-size: 13px; }
             .hero-tag { font-size: 10px; padding: 5px 11px; letter-spacing: 2px; }
-            .btn-watch { padding: 12px 28px; font-size: 13.5px; }
+            .btn-watch { padding: 11px 24px; font-size: 12.5px; }
             .btn-edit-hero { padding: 8px 14px; font-size: 11px; margin-left: 6px; }
-            .hero-progress-bar-container { left: 20px; bottom: 20px; padding: 6px 14px; }
+            .hero-progress-bar-container { left: 16px; bottom: 16px; padding: 6px 13px; }
             .hero-progress-track { width: 80px; }
 
-            .main-content { padding: 15px 18px 45px; margin-top: -40px; }
-            .section-title { font-size: 18px; margin-top: 30px; padding-left: 13px; }
-            .section-title::before { height: 18px; width: 3px; }
-            .movie-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-            .card { flex: 0 0 150px; height: 225px; }
-            .movie-grid .card { height: 225px; }
+            .main-content { padding: 15px 15px 45px; margin-top: -40px; }
+            .section-title { font-size: 17px; margin-top: 28px; padding-left: 12px; }
+            .section-title::before { height: 16px; width: 3px; }
+            .section-title svg { width: 15px; height: 15px; }
+            .movie-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
+            .card { flex: 0 0 145px; height: 218px; }
+            .movie-grid .card { height: 218px; }
 
-            .card-top10 { flex: 0 0 145px; }
-            .card-top10 img { width: 125px; height: 188px; }
-            .top10-number { font-size: 95px; left: -22px; bottom: -12px; }
-            .carousel-top10 { gap: 30px; padding-left: 22px; }
+            .card-top10 { flex: 0 0 140px; }
+            .card-top10 img { width: 120px; height: 180px; }
+            .top10-number { font-size: 90px; left: -22px; bottom: -12px; }
+            .carousel-top10 { gap: 28px; padding-left: 22px; }
 
-            .saga-page { padding: 75px 20px 40px; }
+            .saga-page { padding: 85px 18px 40px; }
             .saga-header { flex-direction: column; gap: 22px; }
-            .saga-poster { width: 190px; height: 280px; }
-            .saga-title { font-size: 28px; }
-            .saga-stats-bar { gap: 15px; font-size: 12.5px; }
+            .saga-poster { width: 180px; height: 265px; }
+            .saga-title { font-size: 26px; }
+            .saga-stats-bar { gap: 14px; font-size: 12px; }
 
             .trailer-box { width: 100%; }
-            .detail-poster { width: 180px; height: 270px; }
-            .detail-title { font-size: 26px; }
-            .detail-top { gap: 20px; }
+            .detail-poster { width: 170px; height: 255px; }
+            .detail-title { font-size: 24px; }
+            .detail-top { gap: 18px; }
 
             .season-card, .episode-card {
                 flex: 0 0 calc(50% - 8px);
-                min-width: 125px;
+                min-width: 122px;
             }
-            .season-card img { height: 150px; }
-            .episode-card img { height: 85px; }
+            .season-card img { height: 145px; }
+            .episode-card img { height: 82px; }
 
-            .source-sidebar { width: 260px; right: -280px; }
+            .source-sidebar { width: 250px; right: -270px; }
 
-            .auth-modal-card, .admin-modal-content { padding: 24px 20px; }
-            .admin-modal-title { font-size: 17px; }
+            .auth-modal-card, .admin-modal-content { padding: 22px 18px; }
+            .admin-modal-title { font-size: 16px; }
             .admin-input { padding: 10px 12px; font-size: 13px; }
-            .btn-saga-action { padding: 9px 16px; font-size: 12px; }
+            .btn-saga-action { padding: 9px 14px; font-size: 12px; }
 
-            .custom-confirm-card { padding: 24px 20px; }
-            .custom-confirm-title { font-size: 17px; }
+            .custom-confirm-card { padding: 22px 18px; }
+            .custom-confirm-title { font-size: 16px; }
         }
 
         @media (max-width: 480px) {
-            .logo { font-size: 17px; }
-            .nav-item span[data-i18n] { display: none; }
-            .btn-suggestion { padding: 6px 10px; font-size: 11px; }
-            .btn-watch-party { padding: 6px 10px; font-size: 11px; }
-            .hero-title { font-size: 28px; }
-            .hero-container { padding: 0 16px; }
-            .section-title { font-size: 16px; }
-            .movie-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
-            .card { flex: 0 0 130px; height: 195px; }
-            .movie-grid .card { height: 195px; }
-            .saga-title { font-size: 24px; }
-            .saga-poster { width: 160px; height: 240px; }
+            .logo { font-size: 15px; }
+            .nav-item { padding: 5px 7px; }
+            .hero-title { font-size: 26px; }
+            .hero-container { padding: 0 14px; }
+            .section-title { font-size: 15px; }
+            .movie-grid { grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
+            .card { flex: 0 0 125px; height: 190px; }
+            .movie-grid .card { height: 190px; }
+            .saga-title { font-size: 22px; }
+            .saga-poster { width: 150px; height: 225px; }
+            .explorer-menu { min-width: 200px; }
         }
     </style>
 </head>
@@ -1419,28 +1476,76 @@
         <div class="logo" onclick="switchTab('all')">SK STREAM</div>
         <nav>
             <button class="nav-item active" id="btn-all" onclick="switchTab('all')">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> <span data-i18n="nav_home">Accueil</span>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span class="nav-text" data-i18n="nav_home">Accueil</span>
             </button>
+
+            <!-- ==================== EXPLORER DROPDOWN ==================== -->
+            <div class="explorer-wrap">
+                <button class="explorer-btn" id="explorerBtn" onclick="toggleExplorer(event)">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M3 5h8V3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                    <span>Explorer</span>
+                    <svg class="chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                </button>
+
+                <div class="explorer-menu" id="explorerMenu">
+                    <button class="explorer-item" onclick="switchTab('movie'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                        <span data-i18n="nav_movies">Films</span>
+                    </button>
+                    <button class="explorer-item" onclick="switchTab('tv'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+                        <span data-i18n="nav_series">Séries</span>
+                    </button>
+                    <button class="explorer-item" onclick="switchTab('anime'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg>
+                        <span data-i18n="nav_anime">Animés</span>
+                    </button>
+                    <div class="explorer-divider"></div>
+                    <button class="explorer-item" onclick="scrollToSection('gridKDramas'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        <span>K-Dramas</span>
+                    </button>
+                    <button class="explorer-item" onclick="scrollToSection('gridComedies'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+                        <span>Comédies</span>
+                    </button>
+                    <button class="explorer-item" onclick="scrollToSection('gridAction'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
+                        <span>Action</span>
+                    </button>
+                    <button class="explorer-item" onclick="scrollToSection('gridHorror'); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                        <span>Horreur</span>
+                    </button>
+
+                    <div class="explorer-divider"></div>
+
+                    <a href="https://Hesskahmdl.github.io/my-stream/watch-party.html" class="explorer-item watchparty">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                        <span>Watch Party</span>
+                        <span class="explorer-badge">LIVE</span>
+                    </a>
+
+                    <button class="explorer-item suggest" onclick="openSuggestionModal(); closeExplorer()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+                        <span>Suggestions / Bugs</span>
+                    </button>
+
+                    <a href="https://hesskahmdl.github.io/my-stream/sk-admin-secret.html" class="explorer-item dashboard" id="explorerDashboard" style="display:none;">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </div>
+
             <button class="nav-item" id="btn-saga" onclick="switchTab('saga')">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> <span data-i18n="nav_sagas">Sagas</span>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="nav-text" data-i18n="nav_sagas">Sagas</span>
             </button>
             <button class="nav-item" id="btn-watchlist" onclick="switchTab('watchlist')">
-                <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span data-i18n="nav_watchlist">Ma Watchlist</span>
-            </button>
-            <button class="nav-item" id="btn-movie" onclick="switchTab('movie')">
-                <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg> <span data-i18n="nav_movies">Films</span>
-            </button>
-            <button class="nav-item" id="btn-tv" onclick="switchTab('tv')">
-                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg> <span data-i18n="nav_series">Séries</span>
-            </button>
-            <button class="nav-item" id="btn-anime" onclick="switchTab('anime')">
-                <svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg> <span data-i18n="nav_anime">Anime</span>
-            </button>
-            <a href="https://Hesskahmdl.github.io/my-stream/watch-party.html" class="btn-watch-party">
-                👥 Watch Party
-            </a>
-            <button class="btn-suggestion" onclick="openSuggestionModal()">
-                💡 Suggestions / Bugs
+                <svg class="icon" viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                <span class="nav-text" data-i18n="nav_watchlist">Ma Watchlist</span>
             </button>
         </nav>
 
@@ -1454,11 +1559,13 @@
             </div>
 
             <a href="https://hesskahmdl.github.io/my-stream/sk-admin-secret.html" class="btn-dashboard-link" id="btnDevDashboard">
-                🛠️ Dashboard
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                <span>Dashboard</span>
             </a>
 
             <button class="btn-header-login" id="btnOpenAuthModal" onclick="openAuthModal()">
-                🔑 Connexion
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                <span class="login-text">Connexion</span>
             </button>
             <div class="user-profile-badge" id="userProfileBadge" style="display:none;" onclick="logoutUser()">
                 <img id="userAvatarImg" src="" alt="Profil">
@@ -1469,7 +1576,9 @@
 
     <div class="auth-modal" id="authModal">
         <div class="auth-modal-card">
-            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+            <button class="modal-close" onclick="closeAuthModal()">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#fff"/></svg>
+            </button>
             <h2 class="auth-modal-title">Connexion</h2>
 
             <button class="btn-discord-login" onclick="loginWithDiscord()">
@@ -1481,7 +1590,10 @@
 
     <div class="admin-modal" id="suggestionModal">
         <div class="admin-modal-content">
-            <div class="admin-modal-title">💡 Proposer une Suggestion ou Signalement</div>
+            <div class="admin-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+                <span>Proposer une Suggestion ou Signalement</span>
+            </div>
             <p style="font-size:12px; color:#aaa; margin-bottom:12px;">Un bug ? Un film manquant ? Dis-nous tout pour améliorer le site !</p>
             <textarea class="admin-input" id="suggestionText" rows="4" placeholder="Écris ton message ici..."></textarea>
             <div class="admin-btn-group">
@@ -1504,7 +1616,10 @@
 
     <div class="remote-popup-modal" id="remotePopupModal">
         <div class="remote-popup-card">
-            <h2 class="remote-popup-title">🔒 Connexion Requise</h2>
+            <h2 class="remote-popup-title">
+                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <span>Connexion Requise</span>
+            </h2>
             <p class="remote-popup-text">Pour continuer à regarder ce programme, connecte-toi avec ton compte Discord.</p>
             <button class="btn-discord-login" onclick="loginWithDiscord()">
                 <svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="#fff"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.91-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,45.92,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,45.92,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
@@ -1516,20 +1631,32 @@
     <div class="hero-container" id="heroBanner">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-tag" data-i18n="hero_tag">🔥 TENDANCE ACTUELLE</div>
+            <div class="hero-tag" data-i18n="hero_tag">
+                <svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
+                <span>TENDANCE ACTUELLE</span>
+            </div>
             <div id="heroTitleContainer">
                 <h1 class="hero-title" id="heroTitle">---</h1>
             </div>
             <div class="hero-meta">
                 <span class="badge" id="heroType">FILM</span>
                 <span id="heroYear">2026</span>
-                <span class="badge badge-rating" id="heroRating">⭐ 8.5</span>
+                <span class="badge badge-rating" id="heroRating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.5</span>
+                </span>
             </div>
             <p class="hero-overview" id="heroOverview">...</p>
 
             <div style="display:flex; align-items:center;">
-                <button class="btn-watch" id="heroWatchBtn" data-i18n="btn_watch">▶ REGARDER</button>
-                <button class="btn-edit-hero" id="btnEditHero" onclick="openEditHeroModal()">✏️ Modifier le Carrousel</button>
+                <button class="btn-watch" id="heroWatchBtn" data-i18n="btn_watch">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <span>REGARDER</span>
+                </button>
+                <button class="btn-edit-hero" id="btnEditHero" onclick="openEditHeroModal()">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <span>Modifier le Carrousel</span>
+                </button>
             </div>
         </div>
 
@@ -1544,79 +1671,145 @@
 
     <div class="main-content" id="homeMainView">
         <div id="homeSections">
-            <div class="section-title" data-i18n="sec_top10">🔥 Top 10 des Tendances</div>
+            <div class="section-title" data-i18n="sec_top10">
+                <svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
+                <span>Top 10 des Tendances</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridTop10', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridTop10', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel carousel-top10" id="gridTop10"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridTop10', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridTop10', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title" data-i18n="sec_sagas">👑 Les Sagas Incontournables</div>
+            <div class="section-title" data-i18n="sec_sagas">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span>Les Sagas Incontournables</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridSagas', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridSagas', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridSagas"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridSagas', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridSagas', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title" data-i18n="sec_movies">🎬 Films Populaires</div>
+            <div class="section-title" data-i18n="sec_movies">
+                <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                <span>Films Populaires</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridMovies', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridMovies', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridMovies"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridMovies', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridMovies', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title" data-i18n="sec_series">📺 Séries Incontournables</div>
+            <div class="section-title" data-i18n="sec_series">
+                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+                <span>Séries Incontournables</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridSeries', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridSeries', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridSeries"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridSeries', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridSeries', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title" data-i18n="sec_animes">✨ Animés & Mangas</div>
+            <div class="section-title" data-i18n="sec_animes">
+                <svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg>
+                <span>Animés & Mangas</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridAnimes', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridAnimes', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridAnimes"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridAnimes', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridAnimes', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title">🇰🇷 K-Dramas Populaires</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
+                <span>K-Dramas Populaires</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridKDramas', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridKDramas', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridKDramas"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridKDramas', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridKDramas', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title">😂 Comédies Populaires</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+                <span>Comédies Populaires</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridComedies', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridComedies', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridComedies"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridComedies', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridComedies', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title">💥 Action & Aventure</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
+                <span>Action & Aventure</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridAction', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridAction', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridAction"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridAction', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridAction', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
 
-            <div class="section-title">😱 Horreur & Thriller</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                <span>Horreur & Thriller</span>
+            </div>
             <div class="carousel-wrapper">
-                <button class="arrow-btn left" onclick="scrollCarousel('gridHorror', -500)">❮</button>
+                <button class="arrow-btn left" onclick="scrollCarousel('gridHorror', -500)">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
                 <div class="carousel" id="gridHorror"></div>
-                <button class="arrow-btn right" onclick="scrollCarousel('gridHorror', 500)">❯</button>
+                <button class="arrow-btn right" onclick="scrollCarousel('gridHorror', 500)">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                </button>
             </div>
         </div>
 
         <div id="filteredSection" style="display:none;">
             <div class="section-header">
                 <div class="section-title" id="filterTitle">Résultats</div>
-                <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="openCreateSagaModal()">➕ Créer une Saga</button>
+                <button id="adminAddSagaBtn" class="btn-saga-action" style="display:none;" onclick="openCreateSagaModal()">
+                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    <span>Créer une Saga</span>
+                </button>
                 <select class="filter-select" id="sortSelect" onchange="applySorting()">
-                    <option value="rating-desc" data-i18n="sort_rating_desc">⭐ Les mieux notés</option>
-                    <option value="rating-asc" data-i18n="sort_rating_asc">⭐ Les moins bien notés</option>
-                    <option value="title-asc" data-i18n="sort_title_asc">🔤 Alphabétique (A-Z)</option>
-                    <option value="year-desc" data-i18n="sort_year_desc">📅 Plus récents</option>
+                    <option value="rating-desc" data-i18n="sort_rating_desc">Les mieux notés</option>
+                    <option value="rating-asc" data-i18n="sort_rating_asc">Les moins bien notés</option>
+                    <option value="title-asc" data-i18n="sort_title_asc">Alphabétique (A-Z)</option>
+                    <option value="year-desc" data-i18n="sort_year_desc">Plus récents</option>
                 </select>
             </div>
             <div class="movie-grid" id="gridFiltered"></div>
@@ -1625,25 +1818,46 @@
     </div>
 
     <div class="saga-page" id="sagaDetailView">
-        <div class="back-link" onclick="closeSagaView()" data-i18n="back_sagas">❮ Retour aux collections</div>
+        <div class="back-link" onclick="closeSagaView()" data-i18n="back_sagas">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <span>Retour aux collections</span>
+        </div>
 
         <div class="saga-header">
             <img class="saga-poster" id="sagaPoster" src="" alt="Poster">
             <div class="saga-details">
                 <h1 class="saga-title" id="sagaTitle">Spider-Man (MCU) - <span class="red">Saga</span></h1>
                 <div class="saga-stats-bar">
-                    <span id="sagaMovieCount">🎬 0 film</span>
-                    <span id="sagaYears">📅 2026</span>
+                    <span id="sagaMovieCount">
+                        <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                        <span>0 film</span>
+                    </span>
+                    <span id="sagaYears">
+                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                        <span>2026</span>
+                    </span>
                 </div>
                 <p class="saga-desc" id="sagaDesc">Description...</p>
                 <div class="btn-group-actions">
-                    <button class="btn-saga-action" id="btnWatchlistSaga" onclick="toggleWatchlistCurrentSaga()">🔖 Ajouter à ma watchlist</button>
-                    <button class="btn-saga-action" id="adminAddMovieToSagaBtn" style="display:none;" onclick="openAddMovieToSagaModal()">➕ Ajouter un film</button>
-                    <button class="btn-saga-action btn-admin-danger" id="adminDeleteSagaBtn" style="display:none;" onclick="deleteCurrentSaga()">🗑️ Supprimer la Saga</button>
+                    <button class="btn-saga-action" id="btnWatchlistSaga" onclick="toggleWatchlistCurrentSaga()">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>Ajouter à ma watchlist</span>
+                    </button>
+                    <button class="btn-saga-action" id="adminAddMovieToSagaBtn" style="display:none;" onclick="openAddMovieToSagaModal()">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        <span>Ajouter un film</span>
+                    </button>
+                    <button class="btn-saga-action btn-admin-danger" id="adminDeleteSagaBtn" style="display:none;" onclick="deleteCurrentSaga()">
+                        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        <span>Supprimer la Saga</span>
+                    </button>
                 </div>
 
                 <div class="saga-top-cast">
-                    <div class="saga-top-cast-title">🎭 CASTING <span class="red">PRINCIPAL</span></div>
+                    <div class="saga-top-cast-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <span>CASTING</span> <span class="red">PRINCIPAL</span>
+                    </div>
                     <div class="cast-list" id="sagaCastList"></div>
                 </div>
             </div>
@@ -1655,19 +1869,31 @@
         <div class="section-title" style="margin-top: 40px;"><span data-i18n="saga_sec_prod">Informations de</span> <span class="red">production</span></div>
         <div class="info-grid">
             <div class="info-card">
-                <div class="info-card-title" data-i18n="info_producers">🏢 Sociétés de production</div>
+                <div class="info-card-title" data-i18n="info_producers">
+                    <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+                    <span>Sociétés de production</span>
+                </div>
                 <div id="infoProducers"></div>
             </div>
             <div class="info-card">
-                <div class="info-card-title" data-i18n="info_countries">📍 Pays de production</div>
+                <div class="info-card-title" data-i18n="info_countries">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span>Pays de production</span>
+                </div>
                 <div id="infoCountries"></div>
             </div>
             <div class="info-card">
-                <div class="info-card-title" data-i18n="info_languages">🌐 Langues</div>
+                <div class="info-card-title" data-i18n="info_languages">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+                    <span>Langues</span>
+                </div>
                 <div id="infoLanguages"></div>
             </div>
             <div class="info-card">
-                <div class="info-card-title" data-i18n="info_genres">🎬 Genres principaux</div>
+                <div class="info-card-title" data-i18n="info_genres">
+                    <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                    <span>Genres principaux</span>
+                </div>
                 <div id="infoGenres"></div>
             </div>
         </div>
@@ -1675,19 +1901,31 @@
         <div class="section-title" style="margin-top: 40px;"><span data-i18n="saga_sec_stats">Statistiques</span> <span class="red">globales</span></div>
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-card-title" data-i18n="stat_budget">💲 Budget total</div>
+                <div class="stat-card-title" data-i18n="stat_budget">
+                    <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    <span>Budget total</span>
+                </div>
                 <div class="stat-card-value" id="statBudget">0 $</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-title" data-i18n="stat_revenue">💰 Revenus totaux</div>
+                <div class="stat-card-title" data-i18n="stat_revenue">
+                    <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    <span>Revenus totaux</span>
+                </div>
                 <div class="stat-card-value" id="statRevenue">0 $</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-title" data-i18n="stat_rating">⭐ Note moyenne</div>
+                <div class="stat-card-title" data-i18n="stat_rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>Note moyenne</span>
+                </div>
                 <div class="stat-card-value" id="statRating">0.0 / 10</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-title" data-i18n="stat_duration">⏱️ Durée totale</div>
+                <div class="stat-card-title" data-i18n="stat_duration">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span>Durée totale</span>
+                </div>
                 <div class="stat-card-value" id="statDuration">0h 00min</div>
             </div>
         </div>
@@ -1695,7 +1933,9 @@
 
     <div class="overlay" id="playerModal">
         <div class="modal-container">
-            <button class="modal-close" onclick="closePlayer()">✕</button>
+            <button class="modal-close" onclick="closePlayer()">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
 
             <div class="detail-top">
                 <img id="modalPoster" src="" class="detail-poster" alt="Affiche">
@@ -1703,58 +1943,70 @@
                 <div class="detail-info">
                     <h1 class="detail-title" id="modalTitle">Titre</h1>
                     <div class="hero-meta">
-                        <span class="badge badge-rating" id="modalRating">⭐ 0.0</span>
+                        <span class="badge badge-rating" id="modalRating">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <span>0.0</span>
+                        </span>
                         <span id="modalYear">2026</span>
                         <span class="badge" id="modalType">TYPE</span>
                     </div>
                     <p class="detail-synopsis" id="modalOverview">Synopsis...</p>
 
-                    <button class="btn-saga-action" id="btnModalWatchlist" onclick="toggleWatchlistCurrentMovie()" style="margin-bottom: 15px;">🔖 Ajouter à ma watchlist</button>
+                    <button class="btn-saga-action" id="btnModalWatchlist" onclick="toggleWatchlistCurrentMovie()" style="margin-bottom: 15px;">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>Ajouter à ma watchlist</span>
+                    </button>
 
                     <div class="cast-list" id="castList"></div>
                 </div>
 
                 <div class="trailer-box">
-                    <h3 data-i18n="modal_trailer">🎬 Bande-annonce</h3>
+                    <h3 data-i18n="modal_trailer">
+                        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg>
+                        <span>Bande-annonce</span>
+                    </h3>
                     <div class="trailer-embed" id="trailerContainer"></div>
                 </div>
             </div>
 
             <div class="info-grid" style="margin-top: 20px;">
                 <div class="info-card">
-                    <div class="info-card-title" data-i18n="modal_prod_details">🏢 Production & Détails</div>
+                    <div class="info-card-title" data-i18n="modal_prod_details">
+                        <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+                        <span>Production & Détails</span>
+                    </div>
                     <div id="movieProducersInfo"><span style="color:#666; font-size:12px;">Chargement des données...</span></div>
                 </div>
             </div>
 
             <div class="player-container-box">
                 <button class="btn-toggle-sources" onclick="toggleSourceSidebar()">
-                    ☰ Sources
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                    <span>Sources</span>
                 </button>
                 <div class="source-sidebar" id="sourceSidebar">
                     <div class="source-sidebar-title">Choix des Lecteurs</div>
                     <button class="btn-source-item active" id="btn-src-vidzy" onclick="selectSource('vidzy')">
-                        <span>Vidzy</span> <span class="lang-flag">🇫🇷 VF / Multi</span>
+                        <span>Vidzy</span> <span class="lang-flag">VF / Multi</span>
                     </button>
                     <button class="btn-source-item" id="btn-src-frembed" onclick="selectSource('frembed')">
-                        <span>Frembed</span> <span class="lang-flag">🇫🇷 VF</span>
+                        <span>Frembed</span> <span class="lang-flag">VF</span>
                     </button>
                     <button class="btn-source-item" id="btn-src-movix" onclick="selectSource('movix')">
-                        <span>Movix</span> <span class="lang-flag">🇫🇷 VF</span>
+                        <span>Movix</span> <span class="lang-flag">VF</span>
                     </button>
                     <button class="btn-source-item" id="btn-src-multiembed" onclick="selectSource('multiembed')">
-                        <span>MultiEmbed</span> <span class="lang-flag">🇫🇷 VF</span>
+                        <span>MultiEmbed</span> <span class="lang-flag">VF</span>
                     </button>
                     <button class="btn-source-item" id="btn-src-vidlink" onclick="selectSource('vidlink')">
-                        <span>VidLink</span> <span class="lang-flag">🇬🇧 VO / Multi</span>
+                        <span>VidLink</span> <span class="lang-flag">VO / Multi</span>
                     </button>
                     <button class="btn-source-item" id="btn-src-2embed" onclick="selectSource('2embed')">
-                        <span>2embed</span> <span class="lang-flag">💬 VOSTFR</span>
+                        <span>2embed</span> <span class="lang-flag">VOSTFR</span>
                     </button>
                 </div>
                 <div class="player-wrapper" id="videoContainer"></div>
 
-                <!-- AFFICHAGE DYNAMIQUE DES SAISONS & ÉPISODES (TMDB) EN GRILLE -->
                 <div class="tv-seasons-container" id="tvSeasonsContainer">
                     <div class="seasons-title">Saisons</div>
                     <div class="seasons-grid" id="seasonsList"></div>
@@ -1768,12 +2020,15 @@
 
     <div class="admin-modal" id="editHeroModal">
         <div class="admin-modal-content">
-            <div class="admin-modal-title">Gérer le Carrousel (Bannière)</div>
+            <div class="admin-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                <span>Gérer le Carrousel (Bannière)</span>
+            </div>
 
             <div style="font-size:12px; color:#aaa; margin-bottom:6px; font-weight:bold;">Éléments actuels du Carrousel :</div>
             <div class="hero-list-container" id="heroListManager"></div>
 
-            <div style="font-size:12px; color:#e50914; margin-bottom:8px; font-weight:bold;" id="heroFormLabel">➕ Ajouter un élément :</div>
+            <div style="font-size:12px; color:#e50914; margin-bottom:8px; font-weight:bold;" id="heroFormLabel">Ajouter un élément :</div>
             <input type="text" class="admin-input" id="heroEditTitle" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForHero(this.value)">
             <div id="heroMovieSelectList" style="max-height: 150px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px; display:none;"></div>
 
@@ -1791,7 +2046,10 @@
 
     <div class="admin-modal" id="createSagaModal">
         <div class="admin-modal-content">
-            <div class="admin-modal-title">Créer une nouvelle Saga</div>
+            <div class="admin-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                <span>Créer une nouvelle Saga</span>
+            </div>
             <input type="text" class="admin-input" id="newSagaName" placeholder="Nom de la saga (ex: Fast & Furious)">
             <input type="text" class="admin-input" id="newSagaPoster" placeholder="Lien TMDB Image (ex: /t/p/w780/...) ou URL complète">
             <textarea class="admin-input" id="newSagaDesc" placeholder="Description de la saga" rows="3"></textarea>
@@ -1804,21 +2062,24 @@
 
     <div class="admin-modal" id="addMovieModal">
         <div class="admin-modal-content" style="max-width:720px;">
-            <div class="admin-modal-title">Ajouter des films à la Saga</div>
+            <div class="admin-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                <span>Ajouter des films à la Saga</span>
+            </div>
             <div class="add-movie-columns">
                 <div class="add-movie-col">
-                    <div class="add-movie-col-title">🔎 Catalogue</div>
+                    <div class="add-movie-col-title">Catalogue</div>
                     <input type="text" class="admin-input" id="searchMovieForSaga" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForSaga(this.value)">
                     <div id="movieSelectList" style="max-height: 260px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
                 </div>
                 <div class="add-movie-col">
-                    <div class="add-movie-col-title red-title">🎬 Films sélectionnés</div>
+                    <div class="add-movie-col-title red-title">Films sélectionnés</div>
                     <div id="pendingMovieList" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
                 </div>
             </div>
             <div class="admin-btn-group">
                 <button class="btn-saga-action" onclick="closeAdminModals()">Fermer</button>
-                <button class="btn-saga-action" style="background:#e50914;" onclick="applyPendingSagaMovies()">✅ Appliquer</button>
+                <button class="btn-saga-action" style="background:#e50914;" onclick="applyPendingSagaMovies()">Appliquer</button>
             </div>
         </div>
     </div>
@@ -1846,6 +2107,51 @@
         let currentEpisode = 1;
         let tvSeasonsData = [];
 
+        // ==================== EXPLORER DROPDOWN ====================
+        function toggleExplorer(e) {
+            if (e) e.stopPropagation();
+            const btn = document.getElementById('explorerBtn');
+            const menu = document.getElementById('explorerMenu');
+            const isOpen = menu.classList.contains('open');
+            if (isOpen) {
+                closeExplorer();
+            } else {
+                btn.classList.add('open');
+                menu.classList.add('open');
+            }
+        }
+
+        function closeExplorer() {
+            const btn = document.getElementById('explorerBtn');
+            const menu = document.getElementById('explorerMenu');
+            if (btn) btn.classList.remove('open');
+            if (menu) menu.classList.remove('open');
+        }
+
+        document.addEventListener('click', function(e) {
+            const wrap = document.querySelector('.explorer-wrap');
+            if (wrap && !wrap.contains(e.target)) closeExplorer();
+        });
+
+        function scrollToSection(sectionId) {
+            switchTab('all');
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) {
+                    const wrapper = el.closest('.carousel-wrapper');
+                    const title = wrapper ? wrapper.previousElementSibling : null;
+                    const target = title || el;
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+
+        // ==================== SVG ICON HELPERS ====================
+        const ICON_STAR_FILLED = '<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+        const ICON_STAR_OUTLINE = '<svg viewBox="0 0 24 24"><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>';
+        const ICON_CLOSE = '<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#fff"/></svg>';
+
+        // ==================== CORE FUNCTIONS ====================
         function openCustomConfirm(title, text, callback) {
             document.getElementById('customConfirmTitle').textContent = title;
             document.getElementById('customConfirmText').textContent = text;
@@ -1876,7 +2182,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: `💡 **Nouvelle Suggestion / Signalement Bug**`,
+                        content: `**Nouvelle Suggestion / Signalement Bug**`,
                         embeds: [{
                             title: "Message d'un utilisateur",
                             color: 15009812,
@@ -1898,6 +2204,7 @@
             const btnLogin = document.getElementById('btnOpenAuthModal');
             const badge = document.getElementById('userProfileBadge');
             const devBtn = document.getElementById('btnDevDashboard');
+            const explorerDash = document.getElementById('explorerDashboard');
             const editHeroBtn = document.getElementById('btnEditHero');
 
             if (saved) {
@@ -1910,6 +2217,7 @@
                 if (String(user.id) === DEV_DISCORD_ID) {
                     isAdmin = true;
                     if (devBtn) devBtn.style.display = 'inline-flex';
+                    if (explorerDash) explorerDash.style.display = 'flex';
                     if (editHeroBtn) editHeroBtn.style.display = 'inline-flex';
                     updateAdminUI();
                 }
@@ -1917,6 +2225,7 @@
                 btnLogin.style.display = 'flex';
                 badge.style.display = 'none';
                 if (devBtn) devBtn.style.display = 'none';
+                if (explorerDash) explorerDash.style.display = 'none';
                 if (editHeroBtn) editHeroBtn.style.display = 'none';
             }
         }
@@ -1990,25 +2299,25 @@
         const translations = {
             fr: {
                 nav_home: "Accueil", nav_sagas: "Sagas", nav_watchlist: "Ma Watchlist", nav_movies: "Films", nav_series: "Séries", nav_anime: "Anime",
-                search_ph: "Rechercher...", hero_tag: "🔥 TENDANCE ACTUELLE", btn_watch: "▶ REGARDER",
-                sec_top10: "🔥 Top 10 des Tendances", sec_sagas: "👑 Les Sagas Incontournables", sec_movies: "🎬 Films Populaires",
-                sec_series: "📺 Séries Incontournables", sec_animes: "✨ Animés & Mangas",
-                sort_rating_desc: "⭐ Les mieux notés", sort_rating_asc: "⭐ Les moins bien notés", sort_title_asc: "🔤 Alphabétique (A-Z)", sort_year_desc: "📅 Plus récents",
-                btn_load_more: "Charger la suite", back_sagas: "❮ Retour aux collections", saga_sec_movies: "Films de la", saga_sec_prod: "Informations de",
-                info_producers: "🏢 Sociétés de production", info_countries: "📍 Pays de production", info_languages: "🌐 Langues", info_genres: "🎬 Genres principaux",
-                saga_sec_stats: "Statistiques", stat_budget: "💲 Budget total", stat_revenue: "💰 Revenus totaux", stat_rating: "⭐ Note moyenne", stat_duration: "⏱️ Durée totale",
-                modal_trailer: "🎬 Bande-annonce", modal_prod_details: "🏢 Production & Détails", add_wl: "🔖 Ajouter à ma watchlist", rem_wl: "❌ Retirer de ma watchlist"
+                search_ph: "Rechercher...", hero_tag: "TENDANCE ACTUELLE", btn_watch: "REGARDER",
+                sec_top10: "Top 10 des Tendances", sec_sagas: "Les Sagas Incontournables", sec_movies: "Films Populaires",
+                sec_series: "Séries Incontournables", sec_animes: "Animés & Mangas",
+                sort_rating_desc: "Les mieux notés", sort_rating_asc: "Les moins bien notés", sort_title_asc: "Alphabétique (A-Z)", sort_year_desc: "Plus récents",
+                btn_load_more: "Charger la suite", back_sagas: "Retour aux collections", saga_sec_movies: "Films de la", saga_sec_prod: "Informations de",
+                info_producers: "Sociétés de production", info_countries: "Pays de production", info_languages: "Langues", info_genres: "Genres principaux",
+                saga_sec_stats: "Statistiques", stat_budget: "Budget total", stat_revenue: "Revenus totaux", stat_rating: "Note moyenne", stat_duration: "Durée totale",
+                modal_trailer: "Bande-annonce", modal_prod_details: "Production & Détails", add_wl: "Ajouter à ma watchlist", rem_wl: "Retirer de ma watchlist"
             },
             en: {
                 nav_home: "Home", nav_sagas: "Sagas", nav_watchlist: "My Watchlist", nav_movies: "Movies", nav_series: "TV Shows", nav_anime: "Anime",
-                search_ph: "Search...", hero_tag: "🔥 TRENDING NOW", btn_watch: "▶ WATCH NOW",
-                sec_top10: "🔥 Top 10 Trending", sec_sagas: "👑 Must-Watch Sagas", sec_movies: "🎬 Popular Movies",
-                sec_series: "📺 Must-Watch Series", sec_animes: "✨ Anime & Manga",
-                sort_rating_desc: "⭐ Highest Rated", sort_rating_asc: "⭐ Lowest Rated", sort_title_asc: "🔤 Alphabetical (A-Z)", sort_year_desc: "📅 Newest",
-                btn_load_more: "Load More", back_sagas: "❮ Back to collections", saga_sec_movies: "Movies in this", saga_sec_prod: "Production",
-                info_producers: "🏢 Production Companies", info_countries: "📍 Production Countries", info_languages: "🌐 Languages", info_genres: "🎬 Main Genres",
-                saga_sec_stats: "Global", stat_budget: "💲 Total Budget", stat_revenue: "💰 Total Revenue", stat_rating: "⭐ Average Rating", stat_duration: "⏱️ Total Runtime",
-                modal_trailer: "🎬 Trailer", modal_prod_details: "🏢 Production & Details", add_wl: "🔖 Add to Watchlist", rem_wl: "❌ Remove from Watchlist"
+                search_ph: "Search...", hero_tag: "TRENDING NOW", btn_watch: "WATCH NOW",
+                sec_top10: "Top 10 Trending", sec_sagas: "Must-Watch Sagas", sec_movies: "Popular Movies",
+                sec_series: "Must-Watch Series", sec_animes: "Anime & Manga",
+                sort_rating_desc: "Highest Rated", sort_rating_asc: "Lowest Rated", sort_title_asc: "Alphabetical (A-Z)", sort_year_desc: "Newest",
+                btn_load_more: "Load More", back_sagas: "Back to collections", saga_sec_movies: "Movies in this", saga_sec_prod: "Production",
+                info_producers: "Production Companies", info_countries: "Production Countries", info_languages: "Languages", info_genres: "Main Genres",
+                saga_sec_stats: "Global", stat_budget: "Total Budget", stat_revenue: "Total Revenue", stat_rating: "Average Rating", stat_duration: "Total Runtime",
+                modal_trailer: "Trailer", modal_prod_details: "Production & Details", add_wl: "Add to Watchlist", rem_wl: "Remove from Watchlist"
             }
         };
 
@@ -2032,7 +2341,14 @@
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) el.textContent = translations[lang][key];
+                if (translations[lang][key]) {
+                    const span = el.querySelector('span:not(.red)') || el;
+                    if (span.tagName === 'SPAN' && el.querySelector('span')) {
+                        span.textContent = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
             });
 
             document.querySelectorAll('[data-i18n-ph]').forEach(el => {
@@ -2223,7 +2539,7 @@
                 const elapsed = Date.now() - startTime;
                 const percentage = Math.min(100, (elapsed / SLIDE_DURATION) * 100);
                 if (fill) fill.style.width = percentage + '%';
-            }, 50);
+            }, 60);
 
             sliderTimer = setInterval(() => {
                 heroIndex = (heroIndex + 1) % heroItems.length;
@@ -2253,7 +2569,7 @@
             }
 
             document.getElementById('heroYear').textContent = item.year || '2026';
-            document.getElementById('heroRating').textContent = `⭐ ${parseFloat(item.rating || 0).toFixed(1)}`;
+            document.getElementById('heroRating').querySelector('span').textContent = parseFloat(item.rating || 0).toFixed(1);
             document.getElementById('heroOverview').textContent = item.overview || "";
             document.getElementById('heroWatchBtn').onclick = () => {
                 if (item.tmdb_id_clean || item.tmdb_id) {
@@ -2281,8 +2597,13 @@
 
             if (e && e.currentTarget) {
                 const star = e.currentTarget;
-                if (saved.includes(id)) { star.classList.add('active'); star.textContent = "★"; }
-                else { star.classList.remove('active'); star.textContent = "☆"; }
+                if (saved.includes(id)) {
+                    star.classList.add('active');
+                    star.innerHTML = ICON_STAR_FILLED;
+                } else {
+                    star.classList.remove('active');
+                    star.innerHTML = ICON_STAR_OUTLINE;
+                }
             }
             return saved.includes(id);
         }
@@ -2297,11 +2618,12 @@
         function updateSagaWatchlistBtn(isSaved) {
             const btn = document.getElementById('btnWatchlistSaga');
             if (!btn) return;
+            const span = btn.querySelector('span');
             if (isSaved) {
-                btn.innerHTML = translations[lang].rem_wl || "❌ Retirer de ma watchlist";
+                if (span) span.textContent = translations[lang].rem_wl || "Retirer de ma watchlist";
                 btn.classList.add('active');
             } else {
-                btn.innerHTML = translations[lang].add_wl || "🔖 Ajouter à ma watchlist";
+                if (span) span.textContent = translations[lang].add_wl || "Ajouter à ma watchlist";
                 btn.classList.remove('active');
             }
         }
@@ -2317,11 +2639,12 @@
         function updateMovieWatchlistBtn(isSaved) {
             const btn = document.getElementById('btnModalWatchlist');
             if (!btn) return;
+            const span = btn.querySelector('span');
             if (isSaved) {
-                btn.innerHTML = translations[lang].rem_wl || "❌ Retirer de ma watchlist";
+                if (span) span.textContent = translations[lang].rem_wl || "Retirer de ma watchlist";
                 btn.classList.add('active');
             } else {
-                btn.innerHTML = translations[lang].add_wl || "🔖 Ajouter à ma watchlist";
+                if (span) span.textContent = translations[lang].add_wl || "Ajouter à ma watchlist";
                 btn.classList.remove('active');
             }
         }
@@ -2338,18 +2661,22 @@
         function createCardHtml(item, isInSagaView = false) {
             const id = String(item.tmdb_id_clean || item.tmdb_id);
             const isSaved = isSavedInWatchlist(id);
-            const removeBtn = (isAdmin && isInSagaView) ? `<button class="btn-remove-movie" onclick="removeMovieFromCurrentSaga(event, '${item.title.replace(/'/g, "\\'")}')">✕</button>` : '';
+            const removeBtn = (isAdmin && isInSagaView) ? `<button class="btn-remove-movie" onclick="removeMovieFromCurrentSaga(event, '${item.title.replace(/'/g, "\\'")}')">${ICON_CLOSE}</button>` : '';
+            const starIcon = isSaved ? ICON_STAR_FILLED : ICON_STAR_OUTLINE;
 
             return `
                 <div class="card movie-saga-item" onclick="openDetailsById('${id}')">
                     ${removeBtn}
                     <div class="star-watchlist ${isSaved ? 'active' : ''}" onclick="toggleWatchlistEvent(event, '${id}')">
-                        ${isSaved ? '★' : '☆'}
+                        ${starIcon}
                     </div>
                     <img class="poster-img" src="${item.poster || 'https://via.placeholder.com/500x750'}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy">
                     <div class="card-hover-overlay">
                         <div class="card-hover-title">${item.title}</div>
-                        <div class="card-hover-rating">⭐ ${parseFloat(item.rating || 0).toFixed(1)} (${item.year || 'N/A'})</div>
+                        <div class="card-hover-rating">
+                            <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            ${parseFloat(item.rating || 0).toFixed(1)} (${item.year || 'N/A'})
+                        </div>
                         <div class="card-hover-desc">${item.overview || "Regarder maintenant..."}</div>
                     </div>
                 </div>
@@ -2358,19 +2685,26 @@
 
         function createSagaCardHtml(saga) {
             const isSaved = isSavedInWatchlist(saga.id);
-            const deleteSagaBtn = isAdmin ? `<button class="btn-remove-movie" onclick="quickDeleteSaga(event, '${saga.id}')">✕</button>` : '';
+            const deleteSagaBtn = isAdmin ? `<button class="btn-remove-movie" onclick="quickDeleteSaga(event, '${saga.id}')">${ICON_CLOSE}</button>` : '';
+            const starIcon = isSaved ? ICON_STAR_FILLED : ICON_STAR_OUTLINE;
 
             return `
                 <div class="card movie-saga-item" onclick="openSagaView('${saga.id}')">
                     ${deleteSagaBtn}
-                    <div class="saga-badge">SAGA</div>
+                    <div class="saga-badge">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        SAGA
+                    </div>
                     <div class="star-watchlist ${isSaved ? 'active' : ''}" onclick="toggleWatchlistEvent(event, '${saga.id}')">
-                        ${isSaved ? '★' : '☆'}
+                        ${starIcon}
                     </div>
                     <img class="poster-img" src="${formatTmdbImage(saga.poster, 'w780')}" alt="${saga.title}">
                     <div class="card-hover-overlay">
                         <div class="card-hover-title">${saga.title}</div>
-                        <div class="card-hover-rating">⭐ ${saga.rating || '8.0'}</div>
+                        <div class="card-hover-rating">
+                            <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            ${saga.rating || '8.0'}
+                        </div>
                         <div class="card-hover-desc">${saga.desc}</div>
                     </div>
                 </div>
@@ -2391,7 +2725,9 @@
         function createAddSagaCardHtml() {
             return `
                 <div class="card card-add-saga" onclick="openCreateSagaModal()">
-                    <div class="add-saga-circle">+</div>
+                    <div class="add-saga-circle">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    </div>
                     <div class="add-saga-text">Créer une Saga</div>
                 </div>
             `;
@@ -2439,7 +2775,7 @@
                 return currentSaga.exactTitles.some(exact => titleLower === (exact || '').toLowerCase().trim());
             });
 
-            document.getElementById('sagaMovieCount').textContent = `🎬 ${sagaMovies.length} film${sagaMovies.length > 1 ? 's' : ''}`;
+            document.getElementById('sagaMovieCount').querySelector('span').textContent = `${sagaMovies.length} film${sagaMovies.length > 1 ? 's' : ''}`;
             document.getElementById('sagaMoviesList').innerHTML = sagaMovies.map(item => createCardHtml(item, true)).join('');
 
             let totalBudget = 0, totalRevenue = 0, totalRuntime = 0, ratingSum = 0;
@@ -2583,7 +2919,7 @@
             currentFilteredList = catalog.filter(i => (i.title || '').toLowerCase().includes(q.toLowerCase()));
             currentPage = 1;
 
-            document.getElementById('filterTitle').textContent = `🔍 Recherche: "${query}" (${currentFilteredList.length})`;
+            document.getElementById('filterTitle').textContent = `Recherche: "${query}" (${currentFilteredList.length})`;
             renderPaginatedGrid();
         }
 
@@ -2623,12 +2959,11 @@
             document.getElementById('modalTitle').textContent = item.title;
             document.getElementById('modalPoster').src = formatTmdbImage(item.poster, 'w780');
             document.getElementById('modalYear').textContent = item.year || '2026';
-            document.getElementById('modalRating').textContent = `⭐ ${parseFloat(item.rating || 0).toFixed(1)}`;
+            document.getElementById('modalRating').querySelector('span').textContent = parseFloat(item.rating || 0).toFixed(1);
             document.getElementById('modalOverview').textContent = item.overview || "Synopsis indisponible.";
 
             updateMovieWatchlistBtn(isSavedInWatchlist(idClean));
 
-            // Connexion dynamique aux données de saisons/épisodes via TMDB
             const isTv = (item.type === 'tv' || isAnimeItem(item));
             const tvContainer = document.getElementById('tvSeasonsContainer');
 
@@ -2645,7 +2980,6 @@
             document.getElementById('playerModal').style.display = 'block';
         }
 
-        // CHARGEMENT ET AFFICHAGE DYNAMIQUE DE VRAIES SAISONS (TMDB)
         async function loadTmdbSeasons(tmdbId) {
             const seasonsList = document.getElementById('seasonsList');
             seasonsList.innerHTML = '<span style="color:#aaa; font-size:12px;">Chargement des saisons...</span>';
@@ -2690,7 +3024,6 @@
             selectSource(currentSourceKey);
         }
 
-        // CHARGEMENT ET AFFICHAGE DES ÉPISODES CORRESPONDANTS (TMDB)
         async function loadTmdbEpisodes(tmdbId, seasonNum) {
             const episodesList = document.getElementById('episodesList');
             episodesList.innerHTML = '<span style="color:#aaa; font-size:12px;">Chargement des épisodes...</span>';
@@ -2822,7 +3155,7 @@
 
         function resetHeroForm() {
             editingHeroIndex = null;
-            document.getElementById('heroFormLabel').textContent = "➕ Ajouter un élément :";
+            document.getElementById('heroFormLabel').textContent = "Ajouter un élément :";
             document.getElementById('btnSubmitHeroForm').textContent = "Ajouter au Carrousel";
             document.getElementById('heroEditTitle').value = '';
             document.getElementById('heroEditImage').value = '';
@@ -2837,7 +3170,7 @@
             editingHeroIndex = index;
             const item = heroItems[index];
 
-            document.getElementById('heroFormLabel').textContent = `✏️ Modifier : "${item.title}"`;
+            document.getElementById('heroFormLabel').textContent = `Modifier : "${item.title}"`;
             document.getElementById('btnSubmitHeroForm').textContent = "Enregistrer les modifications";
             document.getElementById('heroEditTitle').value = item.title || '';
             document.getElementById('heroEditImage').value = item.backdrop || item.poster || '';
@@ -2960,8 +3293,8 @@
                 const alreadyInSaga = currentSaga && currentSaga.exactTitles && currentSaga.exactTitles.includes(titleLower);
                 const isPending = pendingSagaMovies.includes(titleLower);
                 let statusLabel = '+ Ajouter';
-                if (alreadyInSaga) statusLabel = '✔ Déjà dans la saga';
-                else if (isPending) statusLabel = '✓ Retirer';
+                if (alreadyInSaga) statusLabel = 'Déjà dans la saga';
+                else if (isPending) statusLabel = 'Retirer';
 
                 return `
                     <div class="movie-select-row" onclick="togglePendingSagaMovie('${m.title.replace(/'/g, "\\'")}')">
@@ -3006,7 +3339,7 @@
                     <div class="movie-select-row pending-movie-row" onclick="togglePendingSagaMovie('${displayTitle.replace(/'/g, "\\'")}')">
                         <img class="movie-select-poster" src="${poster}" alt="Poster">
                         <span class="movie-select-title">${displayTitle}${year ? ' (' + year + ')' : ''}</span>
-                        <span class="movie-select-btn" style="color:#e50914;">✕ Retirer</span>
+                        <span class="movie-select-btn" style="color:#e50914;">Retirer</span>
                     </div>
                 `;
             }).join('');
@@ -3075,9 +3408,9 @@
             }
 
             const ua = navigator.userAgent;
-            let deviceType = "💻 PC";
-            if (/iPhone/i.test(ua)) deviceType = "📱 iPhone";
-            else if (/Android/i.test(ua)) deviceType = "📱 Android";
+            let deviceType = "PC";
+            if (/iPhone/i.test(ua)) deviceType = "iPhone";
+            else if (/Android/i.test(ua)) deviceType = "Android";
 
             const safeKey = slugify(userId);
 
@@ -3126,7 +3459,7 @@
                     if (isBanned === true) {
                         document.body.innerHTML = `
                             <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#0b0b0e; color:#fff; font-family:sans-serif; text-align:center; padding:20px;">
-                                <h1 style="color:#e50914; font-size:42px; margin-bottom:15px;">🚫 ACCÈS INTERDIT</h1>
+                                <h1 style="color:#e50914; font-size:42px; margin-bottom:15px;">ACCÈS INTERDIT</h1>
                                 <p style="color:#aaa; font-size:16px;">Ton compte ou ton adresse IP a été banni de ce site par l'administrateur.</p>
                             </div>`;
                         return;
