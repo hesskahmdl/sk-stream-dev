@@ -6,11 +6,11 @@
     <title>SK Stream</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #000000; color: #fff; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0b0b0e; color: #fff; overflow-x: hidden; }
 
         header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 30px; background: rgba(0, 0, 0, 0.97);
+            padding: 12px 30px; background: rgba(11, 11, 14, 0.95);
             position: fixed; top: 0; width: 100%; z-index: 5000; backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
@@ -26,60 +26,6 @@
         }
         .nav-item svg { width: 16px; height: 16px; fill: currentColor; }
         .nav-item:hover, .nav-item.active { color: #fff; border-bottom-color: #e50914; }
-
-        /* EFFET DE LUMIÈRE QUI SUIT LA SOURIS SUR LES ITEMS DE NAV */
-        .nav-item { overflow: visible; isolation: isolate; }
-        .nav-item::before {
-            content: ""; position: absolute; inset: -6px -10px; border-radius: 8px; opacity: 0;
-            pointer-events: none; z-index: -1; transition: opacity 0.25s ease;
-            background: radial-gradient(90px circle at var(--mx, 50%) var(--my, 50%), rgba(229,9,20,0.35), transparent 70%);
-        }
-        .nav-item:hover::before { opacity: 1; }
-
-        .explorer-chevron { font-size: 10px; transition: transform 0.2s ease; display: inline-block; }
-        #btn-explorer.menu-open .explorer-chevron { transform: rotate(180deg); }
-
-        .explorer-menu {
-            position: fixed; top: 55px; left: 50%; transform: translateX(-50%) translateY(-8px);
-            width: min(1100px, 94vw); background: rgba(3,3,4,0.98); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px; padding: 26px 30px; display: none; grid-template-columns: repeat(4, 1fr);
-            gap: 28px; z-index: 4900; box-shadow: 0 25px 60px rgba(0,0,0,0.9);
-            opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease;
-            backdrop-filter: blur(18px);
-        }
-        .explorer-menu.open { display: grid; opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-
-        .explorer-col-title {
-            font-size: 11px; font-weight: 800; color: #666; letter-spacing: 1.5px;
-            margin-bottom: 14px; text-transform: uppercase;
-        }
-
-        .explorer-item {
-            position: relative; display: flex; align-items: center; gap: 12px; padding: 10px;
-            border-radius: 10px; cursor: pointer; overflow: hidden; isolation: isolate;
-            border: 1px solid transparent; background: transparent; transition: border-color 0.2s, background 0.2s;
-            margin-bottom: 6px; text-decoration: none; width: 100%; text-align: left; font-family: inherit;
-        }
-        .explorer-item::before {
-            content: ""; position: absolute; inset: 0; border-radius: 10px; opacity: 0; z-index: -1;
-            pointer-events: none; transition: opacity 0.25s ease;
-            background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(229,9,20,0.28), transparent 70%);
-        }
-        .explorer-item:hover { border-color: rgba(229,9,20,0.35); background: rgba(255,255,255,0.02); }
-        .explorer-item:hover::before { opacity: 1; }
-        .explorer-icon {
-            width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.05);
-            display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
-        }
-        .explorer-item-title { font-size: 13px; font-weight: 800; color: #fff; }
-        .explorer-item-desc { font-size: 11px; color: #888; margin-top: 2px; }
-
-        @media (max-width: 900px) {
-            .explorer-menu { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 560px) {
-            .explorer-menu { grid-template-columns: 1fr; max-height: 70vh; overflow-y: auto; }
-        }
 
         .btn-suggestion {
             background: rgba(229, 9, 20, 0.15); color: #e50914; border: 1px solid #e50914;
@@ -102,7 +48,7 @@
         .lang-switch img.active { opacity: 1; border-color: #fff; }
 
         .search-box input {
-            background: #0a0a0d; border: 1px solid #2a2a35; color: #fff; padding: 6px 12px;
+            background: #18181f; border: 1px solid #2a2a35; color: #fff; padding: 6px 12px;
             border-radius: 20px; outline: none; font-size: 13px; width: 180px; transition: width 0.3s;
         }
         .search-box input:focus { width: 240px; border-color: #e50914; }
@@ -122,7 +68,7 @@
         .btn-dashboard-link:hover { background: #059669; transform: scale(1.05); }
 
         .user-profile-badge {
-            display: flex; align-items: center; gap: 8px; background: #0a0a0d;
+            display: flex; align-items: center; gap: 8px; background: #18181f;
             border: 1px solid #333; padding: 4px 12px 4px 5px; border-radius: 20px;
             cursor: pointer; position: relative;
         }
@@ -134,7 +80,7 @@
             display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px);
         }
         .auth-modal-card {
-            background: #08080a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+            background: #13131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
             padding: 30px; width: 90%; max-width: 380px; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
             position: relative; text-align: center;
         }
@@ -152,7 +98,7 @@
             display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px);
         }
         .remote-popup-card {
-            background: #08080a; border: 2px solid #e50914; border-radius: 16px;
+            background: #13131a; border: 2px solid #e50914; border-radius: 16px;
             padding: 35px 25px; width: 90%; max-width: 420px; text-align: center;
             box-shadow: 0 0 50px rgba(229, 9, 20, 0.5);
         }
@@ -166,8 +112,8 @@
         }
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(90deg, #000000 10%, rgba(0,0,0,0.85) 40%, transparent 100%),
-                        linear-gradient(0deg, #000000 0%, transparent 40%);
+            background: linear-gradient(90deg, #0b0b0e 10%, rgba(11,11,14,0.8) 40%, transparent 100%),
+                        linear-gradient(0deg, #0b0b0e 0%, transparent 40%);
         }
         .hero-content { position: relative; z-index: 10; max-width: 550px; }
         .hero-tag { color: #e50914; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
@@ -221,7 +167,7 @@
         .section-title span.red { color: #e50914; }
 
         .filter-select {
-            background: #0a0a0d; border: 1px solid #333; color: #fff; padding: 6px 12px;
+            background: #18181f; border: 1px solid #333; color: #fff; padding: 6px 12px;
             border-radius: 8px; font-size: 13px; font-weight: 600; outline: none; cursor: pointer;
         }
 
@@ -232,7 +178,7 @@
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; padding: 15px 0; }
 
         .card {
-            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: #08080a;
+            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: #13131a;
             border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
             flex: 0 0 180px; height: 270px; position: relative;
         }
@@ -259,7 +205,7 @@
         .add-saga-text { font-size: 13px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .card-hover-overlay {
-            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.94);
+            position: absolute; inset: 0; background: rgba(11, 11, 14, 0.92);
             padding: 14px; display: flex; flex-direction: column; justify-content: flex-end;
             opacity: 0; transition: opacity 0.3s ease; border-radius: 12px; border: 1px solid #e50914;
         }
@@ -292,7 +238,7 @@
         .top10-number {
             position: absolute; left: -28px; bottom: -15px;
             font-size: 130px; font-weight: 900; line-height: 0.8;
-            color: rgba(0, 0, 0, 0.85);
+            color: rgba(11, 11, 14, 0.85);
             -webkit-text-stroke: 4px #e50914;
             z-index: 3; user-select: none;
             font-family: 'Impact', 'Arial Black', sans-serif;
@@ -301,7 +247,7 @@
         }
 
         .btn-load-more {
-            display: block; margin: 25px auto 40px; background: #0d0d10; border: 1px solid #333;
+            display: block; margin: 25px auto 40px; background: #1f1f2e; border: 1px solid #333;
             color: #fff; padding: 12px 35px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
         .btn-load-more:hover { background: #e50914; border-color: #e50914; }
@@ -317,7 +263,7 @@
 
         .btn-group-actions { display: flex; gap: 12px; flex-wrap: wrap; }
         .btn-saga-action {
-            background: #0d0d10; border: 1px solid #333; color: #fff; padding: 10px 20px;
+            background: #1c1c24; border: 1px solid #333; color: #fff; padding: 10px 20px;
             border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex;
             align-items: center; gap: 8px; transition: 0.2s;
         }
@@ -336,12 +282,12 @@
         .cast-name { font-size: 11px; font-weight: bold; line-height: 1.2; color: #fff; }
 
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin: 20px 0; }
-        .info-card { background: #08080a; border: 1px solid #222; padding: 16px; border-radius: 10px; }
+        .info-card { background: #13131a; border: 1px solid #222; padding: 16px; border-radius: 10px; }
         .info-card-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .info-list-item { display: flex; justify-content: space-between; font-size: 12px; color: #aaa; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-        .stat-card { background: #08080a; border: 1px solid #222; padding: 18px; border-radius: 10px; }
+        .stat-card { background: #13131a; border: 1px solid #222; padding: 18px; border-radius: 10px; }
         .stat-card-title { font-size: 12px; color: #888; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .stat-card-value { font-size: 20px; font-weight: 900; color: #10b981; }
 
@@ -359,7 +305,7 @@
         .arrow-btn.left { left: -15px; }
         .arrow-btn.right { right: -15px; }
 
-        .overlay { position: fixed; inset: 0; background: #000000; z-index: 3000; display: none; overflow-y: auto; padding-top: 60px; }
+        .overlay { position: fixed; inset: 0; background: #0b0b0e; z-index: 3000; display: none; overflow-y: auto; padding-top: 60px; }
         .modal-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; }
         
         .modal-close { position: absolute; top: 15px; right: 20px; background: transparent; border: 2px solid #555; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 50; display: flex; align-items: center; justify-content: center; }
@@ -373,7 +319,7 @@
         
         .trailer-box { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
         .trailer-box h3 { font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-        .trailer-embed { width: 100%; aspect-ratio: 16/9; background: #08080a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+        .trailer-embed { width: 100%; aspect-ratio: 16/9; background: #15151a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
         .trailer-embed iframe { width: 100%; height: 100%; border: none; }
 
         .player-wrapper { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden; position: relative; margin-bottom: 15px; }
@@ -392,7 +338,7 @@
         /* PANNEAU LATÉRAL COULISSANT DES SOURCES */
         .source-sidebar {
             position: absolute; top: 0; right: -280px; width: 260px; height: 100%;
-            background: rgba(0, 0, 0, 0.97); border-left: 1px solid rgba(255,255,255,0.1);
+            background: rgba(13, 13, 20, 0.96); border-left: 1px solid rgba(255,255,255,0.1);
             z-index: 200; padding: 15px; display: flex; flex-direction: column; gap: 10px;
             transition: right 0.3s ease-in-out; backdrop-filter: blur(12px); overflow-y: auto;
         }
@@ -400,7 +346,7 @@
         .source-sidebar-title { font-size: 13px; font-weight: 800; color: #aaa; text-transform: uppercase; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
         
         .btn-source-item {
-            background: #0a0a0d; border: 1px solid #2a2a38; color: #fff;
+            background: #181822; border: 1px solid #2a2a38; color: #fff;
             padding: 10px 12px; border-radius: 8px; font-size: 12px; font-weight: bold;
             cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;
             transition: 0.2s;
@@ -417,7 +363,7 @@
         }
 
         .season-card, .episode-card {
-            flex: 0 0 calc(14.28% - 13px); min-width: 130px; background: #08080a; border-radius: 10px; overflow: hidden;
+            flex: 0 0 calc(14.28% - 13px); min-width: 130px; background: #13131a; border-radius: 10px; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: transform 0.2s, border-color 0.2s;
             position: relative;
         }
@@ -428,7 +374,7 @@
             width: 100%; height: 180px; object-fit: cover; display: block;
         }
         .episode-card img { height: 95px; }
-        .season-info, .episode-info { padding: 8px; background: #08080a; }
+        .season-info, .episode-info { padding: 8px; background: #13131a; }
         .season-info-title { font-size: 12px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .season-info-sub { font-size: 10px; color: #aaa; margin-top: 2px; display: flex; justify-content: space-between; }
 
@@ -437,12 +383,12 @@
             display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px);
         }
         .admin-modal-content {
-            background: #08080a; border: 1px solid #e50914; border-radius: 12px;
+            background: #13131a; border: 1px solid #e50914; border-radius: 12px;
             padding: 25px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.9);
         }
         .admin-modal-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; color: #fff; }
         .admin-input {
-            width: 100%; background: #0a0a0d; border: 1px solid #333; color: #fff;
+            width: 100%; background: #18181f; border: 1px solid #333; color: #fff;
             padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 14px; outline: none;
         }
         .admin-input:focus { border-color: #e50914; }
@@ -468,11 +414,11 @@
         .add-movie-col { flex: 1; min-width: 240px; }
         .add-movie-col-title { font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
         .add-movie-col-title.red-title { color: #e50914; }
-        .pending-movie-row { background: #0d0d10; }
+        .pending-movie-row { background: #1c1c24; }
         .pending-movie-row .movie-select-btn { color: #10b981; }
 
         .custom-confirm-card {
-            background: #08080a; border: 1px solid #e50914; border-radius: 12px;
+            background: #13131a; border: 1px solid #e50914; border-radius: 12px;
             padding: 25px; width: 90%; max-width: 400px; text-align: center;
             box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
         }
@@ -480,12 +426,12 @@
         .custom-confirm-text { font-size: 13px; color: #ccc; margin-bottom: 20px; }
 
         .hero-list-container {
-            max-height: 200px; overflow-y: auto; background: #0a0a0d; border: 1px solid #333;
+            max-height: 200px; overflow-y: auto; background: #18181f; border: 1px solid #333;
             border-radius: 6px; margin-bottom: 15px; padding: 8px; display: flex; flex-direction: column; gap: 8px;
         }
         .hero-list-item {
             display: flex; align-items: center; justify-content: space-between;
-            background: #050506; padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
+            background: #111116; padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
         }
         .hero-item-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
         .hero-item-img { width: 40px; height: 25px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
@@ -538,123 +484,13 @@
             <button class="nav-item" id="btn-anime" onclick="switchTab('anime')">
                 <svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg> <span data-i18n="nav_anime">Anime</span>
             </button>
-            <button class="nav-item" id="btn-explorer" onclick="toggleExplorerMenu(event)">
-                <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/></svg> <span data-i18n="nav_explorer">Explorer</span> <span class="explorer-chevron">⌄</span>
+            <a href="https://Hesskahmdl.github.io/my-stream/watch-party.html" class="btn-watch-party">
+                👥 Watch Party
+            </a>
+            <button class="btn-suggestion" onclick="openSuggestionModal()">
+                💡 Suggestions / Bugs
             </button>
         </nav>
-
-        <div class="explorer-menu" id="explorerMenu">
-            <div class="explorer-col">
-                <div class="explorer-col-title">Découvrir</div>
-                <div class="explorer-item" onclick="switchTab('saga'); closeExplorerMenu();">
-                    <div class="explorer-icon">🎞️</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Collections</div>
-                        <div class="explorer-item-desc">Explorez des collections thématiques</div>
-                    </div>
-                </div>
-                <div class="explorer-item" onclick="scrollToTop10();">
-                    <div class="explorer-icon">⭐</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Top 10</div>
-                        <div class="explorer-item-desc">Le classement des contenus les plus regardés</div>
-                    </div>
-                </div>
-                <button class="explorer-item" onclick="openSuggestionModal(); closeExplorerMenu();">
-                    <div class="explorer-icon">💡</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Suggestions</div>
-                        <div class="explorer-item-desc">Un bug ? Un film manquant ? Dis-nous tout</div>
-                    </div>
-                </button>
-                <div class="explorer-item" onclick="randomPick();">
-                    <div class="explorer-icon">🔀</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Roulette</div>
-                        <div class="explorer-item-desc">Laissez le hasard décider</div>
-                    </div>
-                </div>
-                <div class="explorer-item" onclick="notAvailable('CinéGraph');">
-                    <div class="explorer-icon">🕸️</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">CinéGraph</div>
-                        <div class="explorer-item-desc">Découvrez les connexions entre films</div>
-                    </div>
-                </div>
-            </div>
-            <div class="explorer-col">
-                <div class="explorer-col-title">Communauté</div>
-                <a href="https://Hesskahmdl.github.io/my-stream/watch-party.html" class="explorer-item">
-                    <div class="explorer-icon">👥</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Watch Party</div>
-                        <div class="explorer-item-desc">Regardez ensemble en temps réel</div>
-                    </div>
-                </a>
-                <div class="explorer-item" onclick="switchTab('watchlist'); closeExplorerMenu();">
-                    <div class="explorer-icon">📋</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Listes partagées</div>
-                        <div class="explorer-item-desc">Listes créées par la communauté</div>
-                    </div>
-                </div>
-                <button class="explorer-item" onclick="openSuggestionModal(); closeExplorerMenu();">
-                    <div class="explorer-icon">💡</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Greenlight</div>
-                        <div class="explorer-item-desc">Proposez vos demandes d'ajouts</div>
-                    </div>
-                </button>
-            </div>
-            <div class="explorer-col">
-                <div class="explorer-col-title">En direct & à venir</div>
-                <div class="explorer-item" onclick="notAvailable('TV en direct');">
-                    <div class="explorer-icon">📺</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">TV en direct</div>
-                        <div class="explorer-item-desc">Chaînes TV en direct</div>
-                    </div>
-                </div>
-                <div class="explorer-item" onclick="notAvailable('Calendrier');">
-                    <div class="explorer-icon">📅</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Calendrier</div>
-                        <div class="explorer-item-desc">Les sorties à venir, et les vôtres</div>
-                    </div>
-                </div>
-            </div>
-            <div class="explorer-col">
-                <div class="explorer-col-title">Outils & aide</div>
-                <div class="explorer-item" onclick="notAvailable('Paramètres');">
-                    <div class="explorer-icon">⚙️</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Paramètres</div>
-                        <div class="explorer-item-desc">Personnalisez votre expérience</div>
-                    </div>
-                </div>
-                <div class="explorer-item" onclick="notAvailable('Hub des tutos');">
-                    <div class="explorer-icon">❓</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Hub des tutos</div>
-                        <div class="explorer-item-desc">Tous les tutos au même endroit</div>
-                    </div>
-                </div>
-                <div class="explorer-item" onclick="notAvailable('GitHub');">
-                    <div class="explorer-icon">🐙</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">GitHub</div>
-                        <div class="explorer-item-desc">Code source open-source</div>
-                    </div>
-                </div>
-                <div class="explorer-item" onclick="notAvailable('Nos urls');">
-                    <div class="explorer-icon">🔗</div>
-                    <div class="explorer-text">
-                        <div class="explorer-item-title">Nos urls</div>
-                        <div class="explorer-item-desc">Nos liens officiels</div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
         <div class="right-header">
             <div class="search-box">
@@ -987,7 +823,7 @@
 
             <div style="font-size:12px; color:#e50914; margin-bottom:8px; font-weight:bold;" id="heroFormLabel">➕ Ajouter un élément :</div>
             <input type="text" class="admin-input" id="heroEditTitle" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForHero(this.value)">
-            <div id="heroMovieSelectList" style="max-height: 150px; overflow-y: auto; margin-bottom: 12px; background:#0a0a0d; padding:8px; border-radius:6px; display:none;"></div>
+            <div id="heroMovieSelectList" style="max-height: 150px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px; display:none;"></div>
             
             <input type="text" class="admin-input" id="heroEditImage" placeholder="Lien TMDB pour l'image (ex: /t/p/w1280/...) ou URL complète">
             <input type="text" class="admin-input" id="heroEditLogo" placeholder="Remplacer le titre par Logos (Lien URL de l'image logo PNG)">
@@ -1021,11 +857,11 @@
                 <div class="add-movie-col">
                     <div class="add-movie-col-title">🔎 Catalogue</div>
                     <input type="text" class="admin-input" id="searchMovieForSaga" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForSaga(this.value)">
-                    <div id="movieSelectList" style="max-height: 260px; overflow-y: auto; margin-bottom: 12px; background:#0a0a0d; padding:8px; border-radius:6px;"></div>
+                    <div id="movieSelectList" style="max-height: 260px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
                 </div>
                 <div class="add-movie-col">
                     <div class="add-movie-col-title red-title">🎬 Films sélectionnés</div>
-                    <div id="pendingMovieList" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px; background:#0a0a0d; padding:8px; border-radius:6px;"></div>
+                    <div id="pendingMovieList" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
                 </div>
             </div>
             <div class="admin-btn-group">
@@ -1068,67 +904,6 @@
         function closeCustomConfirm(choice) {
             document.getElementById('customConfirmModal').style.display = 'none';
             if (customConfirmCallback) customConfirmCallback(choice);
-        }
-
-        // === MENU EXPLORER (regroupe Watch Party, Suggestions, etc.) ===
-        function toggleExplorerMenu(e) {
-            if (e) e.stopPropagation();
-            const menu = document.getElementById('explorerMenu');
-            const btn = document.getElementById('btn-explorer');
-            if (!menu || !btn) return;
-            const willOpen = !menu.classList.contains('open');
-            menu.classList.toggle('open', willOpen);
-            btn.classList.toggle('menu-open', willOpen);
-        }
-
-        function closeExplorerMenu() {
-            const menu = document.getElementById('explorerMenu');
-            const btn = document.getElementById('btn-explorer');
-            if (menu) menu.classList.remove('open');
-            if (btn) btn.classList.remove('menu-open');
-        }
-
-        document.addEventListener('click', (e) => {
-            const menu = document.getElementById('explorerMenu');
-            const btn = document.getElementById('btn-explorer');
-            if (!menu || !btn) return;
-            if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
-                closeExplorerMenu();
-            }
-        });
-
-        function notAvailable(name) {
-            closeExplorerMenu();
-            alert(`🚧 ${name} — Bientôt disponible !`);
-        }
-
-        function randomPick() {
-            if (!catalog.length) return;
-            const item = catalog[Math.floor(Math.random() * catalog.length)];
-            closeExplorerMenu();
-            openDetails(item);
-        }
-
-        function scrollToTop10() {
-            closeExplorerMenu();
-            switchTab('all');
-            setTimeout(() => {
-                const el = document.getElementById('gridTop10');
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 150);
-        }
-
-        // === EFFET DE LUMIÈRE QUI SUIT LA SOURIS ===
-        function attachMouseSpotlight(selector) {
-            document.querySelectorAll(selector).forEach(el => {
-                el.addEventListener('mousemove', (e) => {
-                    const rect = el.getBoundingClientRect();
-                    const x = ((e.clientX - rect.left) / rect.width) * 100;
-                    const y = ((e.clientY - rect.top) / rect.height) * 100;
-                    el.style.setProperty('--mx', x + '%');
-                    el.style.setProperty('--my', y + '%');
-                });
-            });
         }
 
         function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
@@ -1262,7 +1037,7 @@
 
         const translations = {
             fr: {
-                nav_home: "Accueil", nav_sagas: "Sagas", nav_watchlist: "Ma Watchlist", nav_movies: "Films", nav_series: "Séries", nav_anime: "Anime", nav_explorer: "Explorer",
+                nav_home: "Accueil", nav_sagas: "Sagas", nav_watchlist: "Ma Watchlist", nav_movies: "Films", nav_series: "Séries", nav_anime: "Anime",
                 search_ph: "Rechercher...", hero_tag: "🔥 TENDANCE ACTUELLE", btn_watch: "▶ REGARDER",
                 sec_top10: "🔥 Top 10 des Tendances", sec_sagas: "👑 Les Sagas Incontournables", sec_movies: "🎬 Films Populaires",
                 sec_series: "📺 Séries Incontournables", sec_animes: "✨ Animés & Mangas",
@@ -1273,7 +1048,7 @@
                 modal_trailer: "🎬 Bande-annonce", modal_prod_details: "🏢 Production & Détails", add_wl: "🔖 Ajouter à ma watchlist", rem_wl: "❌ Retirer de ma watchlist"
             },
             en: {
-                nav_home: "Home", nav_sagas: "Sagas", nav_watchlist: "My Watchlist", nav_movies: "Movies", nav_series: "TV Shows", nav_anime: "Anime", nav_explorer: "Explore",
+                nav_home: "Home", nav_sagas: "Sagas", nav_watchlist: "My Watchlist", nav_movies: "Movies", nav_series: "TV Shows", nav_anime: "Anime",
                 search_ph: "Search...", hero_tag: "🔥 TRENDING NOW", btn_watch: "▶ WATCH NOW",
                 sec_top10: "🔥 Top 10 Trending", sec_sagas: "👑 Must-Watch Sagas", sec_movies: "🎬 Popular Movies",
                 sec_series: "📺 Must-Watch Series", sec_animes: "✨ Anime & Manga",
@@ -1455,8 +1230,6 @@
             renderSections();
             handleInitialUrl();
             startRealtimeSync();
-            attachMouseSpotlight('.nav-item');
-            attachMouseSpotlight('.explorer-item');
         }
 
         function handleInitialUrl() {
@@ -2400,7 +2173,7 @@
                     const isBanned = await banRes.json();
                     if (isBanned === true) {
                         document.body.innerHTML = `
-                            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#000000; color:#fff; font-family:sans-serif; text-align:center; padding:20px;">
+                            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#0b0b0e; color:#fff; font-family:sans-serif; text-align:center; padding:20px;">
                                 <h1 style="color:#e50914; font-size:42px; margin-bottom:15px;">🚫 ACCÈS INTERDIT</h1>
                                 <p style="color:#aaa; font-size:16px;">Ton compte ou ton adresse IP a été banni de ce site par l'administrateur.</p>
                             </div>`;
