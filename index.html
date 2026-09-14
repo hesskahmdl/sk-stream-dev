@@ -11,10 +11,10 @@
             --red-glow: rgba(229, 9, 20, 0.45);
             --green: #10b981;
             --bg-0: #000000;
-            --bg-1: #050505;
-            --bg-2: #0a0a0a;
-            --bg-3: #101010;
-            --bg-4: #1a1a1a;
+            --bg-1: #030303;
+            --bg-2: #080808;
+            --bg-3: #0f0f0f;
+            --bg-4: #161616;
             --border: rgba(255,255,255,0.06);
             --border-strong: rgba(255,255,255,0.12);
             --text-0: #ffffff;
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
-            background: var(--bg-1);
+            background: #000;
             color: var(--text-0);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -62,7 +62,7 @@
         header {
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 30px;
-            background: rgba(0, 0, 0, 0.92);
+            background: rgba(0, 0, 0, 0.95);
             position: fixed; top: 0; width: 100%; z-index: 5000;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -382,8 +382,8 @@
         .hero-overlay {
             position: absolute; inset: 0;
             background:
-                linear-gradient(90deg, var(--bg-1) 5%, rgba(5,5,5,0.9) 30%, rgba(5,5,5,0.35) 65%, transparent 100%),
-                linear-gradient(0deg, var(--bg-1) 0%, transparent 45%);
+                linear-gradient(90deg, #000 5%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.35) 65%, transparent 100%),
+                linear-gradient(0deg, #000 0%, transparent 45%);
         }
         .hero-content {
             position: relative; z-index: 10;
@@ -521,6 +521,7 @@
             padding: 20px 35px 60px;
             position: relative; z-index: 10;
             margin-top: -50px;
+            background: #000;
         }
 
         .section-header {
@@ -564,6 +565,63 @@
             font-family: inherit;
         }
         .filter-select:hover, .filter-select:focus { border-color: var(--red); }
+
+        /* ==================== STREAMING PLATFORMS SECTION ==================== */
+        .streaming-section {
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+        .streaming-section .section-title {
+            margin-top: 10px;
+            margin-bottom: 18px;
+        }
+        .streaming-carousel {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 8px 0 20px;
+            scrollbar-width: none;
+        }
+        .streaming-carousel::-webkit-scrollbar { display: none; }
+
+        .platform-card {
+            flex: 0 0 200px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px 14px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.25s var(--ease-out), box-shadow 0.25s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+            min-height: 140px;
+        }
+        .platform-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(229,9,20,0.25);
+        }
+        .platform-logo {
+            height: 55px;
+            max-width: 100%;
+            object-fit: contain;
+            margin-bottom: 14px;
+            flex: 1;
+        }
+        .platform-count {
+            background: #555;
+            color: #fff;
+            font-size: 10.5px;
+            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 999px;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+        }
 
         /* ==================== CAROUSELS ==================== */
         .carousel-wrapper { position: relative; }
@@ -657,7 +715,7 @@
 
         .card-hover-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.96) 70%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.96) 70%);
             padding: 16px;
             display: flex; flex-direction: column;
             justify-content: flex-end;
@@ -719,7 +777,7 @@
         }
 
         /* ==================== TOP 10 ==================== */
-        .carousel-top10 { gap: 36px; padding-left: 28px; }
+        .carousel-top10 { gap: 36px; padding-left: 28px; padding-top: 30px; padding-bottom: 30px; }
         .card-top10 {
             flex: 0 0 190px; display: flex;
             align-items: flex-end; position: relative;
@@ -735,7 +793,7 @@
             object-fit: cover;
             image-rendering: -webkit-optimize-contrast;
         }
-        /* === Lueur rouge dans le FOND derrière les chiffres === */
+        /* Chiffre : contour rouge, sans ombre */
         .top10-number {
             position: absolute; left: -32px; bottom: -22px;
             font-size: 160px; font-weight: 900; line-height: 0.8;
@@ -779,7 +837,7 @@
         }
 
         /* ==================== SAGA PAGE ==================== */
-        .saga-page { padding: 90px 40px 50px; display: none; }
+        .saga-page { padding: 90px 40px 50px; display: none; background: #000; min-height: 100vh; }
         .saga-header {
             display: flex; gap: 35px;
             align-items: flex-start; margin-bottom: 25px;
@@ -979,7 +1037,7 @@
             position: absolute; top: 42%;
             transform: translateY(-50%);
             width: 42px; height: 42px;
-            background: rgba(5,5,5,0.85);
+            background: rgba(0,0,0,0.85);
             border: 2px solid var(--red);
             border-radius: 50%; color: #fff;
             cursor: pointer; z-index: 20;
@@ -1001,12 +1059,12 @@
         /* ==================== PLAYER OVERLAY ==================== */
         .overlay {
             position: fixed; inset: 0;
-            background: var(--bg-1);
+            background: #000;
             z-index: 3000; display: none;
             overflow-y: auto; padding-top: 60px;
         }
 
-        /* Backdrop TMDB pour la page de détails - SANS filtre noir, bien visible */
+        /* Backdrop TMDB : visible avec léger voile pour la lisibilité */
         .overlay-backdrop {
             position: fixed;
             inset: 0;
@@ -1016,12 +1074,14 @@
             opacity: 1;
             transition: background-image 0.5s var(--ease);
         }
-        /* Léger dégradé uniquement en bas pour la lisibilité, pas d'ombre noire générale */
+        /* Voile léger (comme sur l'image) : assombrit un peu mais laisse voir l'image */
         .overlay-backdrop::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 0%, transparent 50%, rgba(5,5,5,0.85) 100%);
+            background:
+                linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.85) 80%, #000 100%),
+                linear-gradient(90deg, rgba(0,0,0,0.4) 0%, transparent 50%);
         }
 
         .modal-container {
@@ -1319,7 +1379,7 @@
         .source-sidebar {
             width: 0;
             overflow: hidden;
-            background: rgba(10, 10, 15, 0.98);
+            background: rgba(5, 5, 10, 0.98);
             border-left: 1px solid var(--border-strong);
             transition: width 0.3s var(--ease-out), padding 0.3s var(--ease-out);
             display: flex;
@@ -1671,6 +1731,8 @@
             .hero-progress-bar-container { left: 25px; bottom: 20px; }
             .main-content { padding: 15px 18px 50px; }
             .saga-page { padding: 90px 20px 40px; }
+            .platform-card { flex: 0 0 170px; min-height: 125px; }
+            .platform-logo { height: 45px; }
         }
 
         @media (max-width: 768px) {
@@ -1712,6 +1774,10 @@
                 width: 180px; height: 180px;
                 left: -50px; bottom: -30px;
             }
+
+            .platform-card { flex: 0 0 140px; min-height: 115px; padding: 14px 10px 10px; }
+            .platform-logo { height: 38px; margin-bottom: 10px; }
+            .platform-count { font-size: 9.5px; padding: 4px 8px; }
 
             .saga-page { padding: 85px 18px 40px; }
             .saga-header { flex-direction: column; gap: 22px; }
@@ -1758,6 +1824,8 @@
             .saga-title { font-size: 22px; }
             .saga-poster { width: 150px; height: 225px; }
             .explorer-menu { min-width: 200px; }
+            .platform-card { flex: 0 0 130px; min-height: 105px; }
+            .platform-logo { height: 32px; }
         }
     </style>
 </head>
@@ -1961,6 +2029,17 @@
 
     <div class="main-content" id="homeMainView">
         <div id="homeSections">
+
+            <!-- ========== SECTION PLATEFORMES DE STREAMING ========== -->
+            <div class="streaming-section">
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                    <span>Plateformes de Streaming</span>
+                </div>
+                <div class="streaming-carousel" id="streamingGrid"></div>
+            </div>
+
+            <!-- ========== TOP 10 ========== -->
             <div class="section-title" data-i18n="sec_top10">
                 <svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
                 <span>Top 10 des Tendances</span>
@@ -2428,6 +2507,100 @@
         let currentEpisode = 1;
         let tvSeasonsData = [];
 
+        // ========== PLATEFORMES DE STREAMING (données statiques + logos TMDB) ==========
+        const STREAMING_PLATFORMS = [
+            { id: 8,    name: "Netflix",         logo: "https://image.tmdb.org/t/p/original/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", color: "#e50914" },
+            { id: 119,  name: "Amazon Prime",    logo: "https://image.tmdb.org/t/p/original/emthp39XA2YScoYL1p0sdbAH2WA.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo_%282022%29.svg", color: "#00A8E1" },
+            { id: 531,  name: "Paramount+",      logo: "https://image.tmdb.org/t/p/original/xbhHHa1YgtpwhC8lb1NQ3ACVcLd.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Paramount_%2B_logo.svg", color: "#0064FF" },
+            { id: 337,  name: "Disney+",         logo: "https://image.tmdb.org/t/p/original/97yvRBw1GzX7fXprcF80er19ot.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg", color: "#113CCF" },
+            { id: 1899, name: "Marvel",          logo: "https://image.tmdb.org/t/p/original/6WXyI1wV4cJmX1Qz0sFhL6h8t4Y.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Marvel_Logo.svg", color: "#ED1D24" },
+            { id: 2,    name: "Apple TV+",       logo: "https://image.tmdb.org/t/p/original/peURlLlr8jggOwK53fJ5wdQl05y.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg", color: "#000000" },
+            { id: 384,  name: "Warner Bros",     logo: "https://image.tmdb.org/t/p/original/kyNx3l8b6c5t8n6t8n6t8n6t8n.jpg", fallbackLogo: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Warner_Bros._%282019%29_logo.svg", color: "#0A2A4A" }
+        ];
+
+        let streamingCounts = {};
+
+        async function fetchStreamingCounts() {
+            // Pour chaque plateforme, on récupère le nombre de films/séries dispos via TMDB discover
+            for (const platform of STREAMING_PLATFORMS) {
+                try {
+                    const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=fr-FR&with_watch_providers=${platform.id}&watch_region=FR&sort_by=popularity.desc&page=1`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        streamingCounts[platform.id] = data.total_results || 0;
+                    } else {
+                        streamingCounts[platform.id] = 0;
+                    }
+                } catch(e) {
+                    streamingCounts[platform.id] = 0;
+                }
+            }
+            renderStreamingPlatforms();
+        }
+
+        function renderStreamingPlatforms() {
+            const container = document.getElementById('streamingGrid');
+            if (!container) return;
+
+            container.innerHTML = STREAMING_PLATFORMS.map(p => {
+                const count = streamingCounts[p.id] || 0;
+                const displayCount = count > 0 ? `${count.toLocaleString('fr-FR')} FILMS & SÉRIES` : `DÉCOUVRIR`;
+                // Utilisation d'un logo de secours si TMDB ne fournit pas
+                return `
+                    <div class="platform-card" onclick="filterByPlatform(${p.id}, '${p.name.replace(/'/g, "\\'")}')">
+                        <img class="platform-logo" src="${p.fallbackLogo}" alt="${p.name}" onerror="this.src='${p.logo}'">
+                        <div class="platform-count">${displayCount}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function filterByPlatform(platformId, platformName) {
+            // Récupère les films/séries de la plateforme et les affiche dans la section filtrée
+            closeSagaView();
+            closePlayer();
+            document.getElementById('heroBanner').style.display = 'none';
+            document.getElementById('homeSections').style.display = 'none';
+            document.getElementById('filteredSection').style.display = 'block';
+            document.getElementById('filterTitle').textContent = `${platformName} - Films & Séries`;
+            document.getElementById('gridFiltered').innerHTML = '<p style="color:#aaa; padding:30px;">Chargement...</p>';
+
+            try {
+                const [moviesRes, tvRes] = await Promise.all([
+                    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=fr-FR&with_watch_providers=${platformId}&watch_region=FR&sort_by=popularity.desc&page=1`),
+                    fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=fr-FR&with_watch_providers=${platformId}&watch_region=FR&sort_by=popularity.desc&page=1`)
+                ]);
+                const moviesData = moviesRes.ok ? await moviesRes.json() : { results: [] };
+                const tvData = tvRes.ok ? await tvRes.json() : { results: [] };
+
+                const allResults = [
+                    ...(moviesData.results || []).map(m => ({ ...m, type: 'movie' })),
+                    ...(tvData.results || []).map(t => ({ ...t, type: 'tv' }))
+                ].sort((a,b) => (b.popularity || 0) - (a.popularity || 0));
+
+                if (allResults.length === 0) {
+                    document.getElementById('gridFiltered').innerHTML = '<p style="color:#aaa; padding:30px;">Aucun contenu disponible pour cette plateforme.</p>';
+                    return;
+                }
+
+                currentFilteredList = allResults.map(m => ({
+                    tmdb_id_clean: m.id,
+                    title: m.title || m.name,
+                    poster: m.poster_path ? formatTmdbImage(m.poster_path, 'w500') : 'https://via.placeholder.com/500x750',
+                    year: (m.release_date || m.first_air_date || '').split('-')[0],
+                    rating: m.vote_average,
+                    overview: m.overview,
+                    type: m.type
+                }));
+
+                currentCategoryType = 'platform';
+                currentPage = 1;
+                renderPaginatedGrid();
+            } catch(e) {
+                document.getElementById('gridFiltered').innerHTML = '<p style="color:#aaa; padding:30px;">Erreur de chargement.</p>';
+            }
+        }
+
         // ==================== EXPLORER DROPDOWN ====================
         function toggleExplorer(e) {
             if (e) e.stopPropagation();
@@ -2679,7 +2852,7 @@
 
             if (currentItem) openDetails(currentItem, false);
             if (currentSaga) openSagaView(currentSaga.id);
-            else if (currentCategoryType !== 'all') renderPaginatedGrid();
+            else if (currentCategoryType !== 'all' && currentCategoryType !== 'platform') renderPaginatedGrid();
         }
 
         function slugify(text) {
@@ -2817,6 +2990,10 @@
             await loadSagasFromFirebase();
             setupHeroSlider();
             renderSections();
+
+            // Charge les plateformes de streaming
+            fetchStreamingCounts();
+
             handleInitialUrl();
             startRealtimeSync();
         }
@@ -3318,7 +3495,7 @@
                 if (data.release_date || data.first_air_date) document.getElementById('modalYear').textContent = (data.release_date || data.first_air_date).split('-')[0];
                 document.getElementById('modalType').textContent = isTv ? 'SÉRIE' : 'FILM';
 
-                // Backdrop TMDB pour le fond - BIEN VISIBLE, sans filtre noir
+                // Backdrop TMDB : avec léger voile
                 if (data.backdrop_path) {
                     const backdropUrl = formatTmdbImage(data.backdrop_path, 'w1280');
                     document.getElementById('overlayBackdrop').style.backgroundImage = `url('${backdropUrl}')`;
