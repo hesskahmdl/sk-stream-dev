@@ -612,7 +612,6 @@
         }
         .card:hover img.poster-img { transform: scale(1.05); }
 
-        /* Red glow effect for cards */
         .card::after {
             content: '';
             position: absolute; inset: -2px;
@@ -736,16 +735,27 @@
             object-fit: cover;
             image-rendering: -webkit-optimize-contrast;
         }
+        /* === Lueur rouge dans le FOND derrière les chiffres === */
         .top10-number {
-            position: absolute; left: -30px; bottom: -18px;
-            font-size: 140px; font-weight: 900; line-height: 0.8;
+            position: absolute; left: -32px; bottom: -22px;
+            font-size: 160px; font-weight: 900; line-height: 0.8;
             color: transparent;
             -webkit-text-stroke: 4px var(--red);
             z-index: 3; user-select: none;
             font-family: 'Impact', 'Arial Black', sans-serif;
             pointer-events: none;
-            text-shadow: 0 0 30px rgba(229,9,20,0.8), 0 0 60px rgba(229,9,20,0.5), 0 0 90px rgba(229,9,20,0.3);
-            filter: drop-shadow(0 0 15px rgba(229,9,20,0.6));
+        }
+        /* Halo/lumière rouge dans le fond, agrandi */
+        .card-top10::before {
+            content: '';
+            position: absolute;
+            left: -60px; bottom: -40px;
+            width: 240px; height: 240px;
+            background: radial-gradient(circle, rgba(229,9,20,0.65) 0%, rgba(229,9,20,0.35) 35%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(20px);
         }
 
         /* ==================== LOAD MORE ==================== */
@@ -996,21 +1006,22 @@
             overflow-y: auto; padding-top: 60px;
         }
 
-        /* Backdrop TMDB pour la page de détails */
+        /* Backdrop TMDB pour la page de détails - SANS filtre noir, bien visible */
         .overlay-backdrop {
             position: fixed;
             inset: 0;
             background-size: cover;
             background-position: center 20%;
-            opacity: 0.25;
-            z-index: -1;
+            z-index: 0;
+            opacity: 1;
             transition: background-image 0.5s var(--ease);
         }
+        /* Léger dégradé uniquement en bas pour la lisibilité, pas d'ombre noire générale */
         .overlay-backdrop::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.95) 60%, var(--bg-1) 100%);
+            background: linear-gradient(180deg, transparent 0%, transparent 50%, rgba(5,5,5,0.85) 100%);
         }
 
         .modal-container {
@@ -1047,7 +1058,7 @@
         .detail-poster {
             width: 235px; height: 350px;
             object-fit: cover; border-radius: var(--radius);
-            box-shadow: 0 18px 40px rgba(0,0,0,0.85), 0 0 30px rgba(229,9,20,0.15);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.85);
             flex-shrink: 0;
             image-rendering: -webkit-optimize-contrast;
             border: 1px solid var(--border-strong);
@@ -1058,10 +1069,12 @@
             margin-bottom: 12px;
             letter-spacing: -0.8px;
             line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.9);
         }
         .detail-synopsis {
             font-size: 14px; color: var(--text-1);
             line-height: 1.7; margin: 16px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
         }
 
         /* TMDB Tabs */
@@ -1258,7 +1271,6 @@
             margin-top: 20px;
         }
 
-        /* Le player et les sources sont côte à côte */
         .player-flex {
             display: flex;
             gap: 0;
@@ -1304,7 +1316,6 @@
             box-shadow: 0 4px 20px rgba(229,9,20,0.5);
         }
 
-        /* Source sidebar - à droite du player, hors du champ du film */
         .source-sidebar {
             width: 0;
             overflow: hidden;
@@ -1695,8 +1706,12 @@
 
             .card-top10 { flex: 0 0 140px; }
             .card-top10 img { width: 120px; height: 180px; }
-            .top10-number { font-size: 90px; left: -22px; bottom: -12px; }
+            .top10-number { font-size: 100px; left: -24px; bottom: -14px; }
             .carousel-top10 { gap: 28px; padding-left: 22px; }
+            .card-top10::before {
+                width: 180px; height: 180px;
+                left: -50px; bottom: -30px;
+            }
 
             .saga-page { padding: 85px 18px 40px; }
             .saga-header { flex-direction: column; gap: 22px; }
@@ -1756,7 +1771,6 @@
                 <span class="nav-text" data-i18n="nav_home">Accueil</span>
             </button>
 
-            <!-- Movies, Series, Anime directly in navbar -->
             <button class="nav-item" id="btn-movie" onclick="switchTab('movie')">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
                 <span class="nav-text" data-i18n="nav_movies">Films</span>
@@ -1770,7 +1784,6 @@
                 <span class="nav-text" data-i18n="nav_anime">Anime</span>
             </button>
 
-            <!-- Explorer dropdown (to the right of Anime) -->
             <div class="explorer-wrap">
                 <button class="explorer-btn" id="explorerBtn" onclick="toggleExplorer(event)">
                     <svg class="icon" viewBox="0 0 24 24"><path d="M3 5h8V3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
@@ -2247,7 +2260,6 @@
                 </div>
             </div>
 
-            <!-- TMDB-style tabs and content -->
             <div class="tmdb-tabs" id="tmdbTabs">
                 <button class="tmdb-tab active" onclick="switchTmdbTab('apercu')">Aperçu</button>
                 <button class="tmdb-tab" onclick="switchTmdbTab('details')">Détails</button>
@@ -2280,7 +2292,6 @@
                 <div style="color: var(--text-2); font-size: 13px; padding: 20px; text-align: center;">Les commentaires arrivent bientôt...</div>
             </div>
 
-            <!-- Player and sources -->
             <div class="player-section-wrapper">
                 <div class="player-flex">
                     <div class="player-wrapper" id="videoContainer"></div>
@@ -3266,7 +3277,6 @@
                 history.pushState(null, null, `#watch-${slugTitle}-${idClean}`);
             }
 
-            // Basic info
             document.getElementById('modalTitle').textContent = item.title;
             document.getElementById('modalPoster').src = formatTmdbImage(item.poster, 'w780');
             document.getElementById('modalYear').textContent = item.year || '2026';
@@ -3287,7 +3297,6 @@
                 tvContainer.style.display = 'none';
             }
 
-            // Fetch TMDB details for the full page
             await fetchTmdbDetails(idClean, isTv);
 
             selectSource('vidzy');
@@ -3302,7 +3311,6 @@
                 if (!res.ok) throw new Error();
                 const data = await res.json();
 
-                // Update basic info with TMDB data
                 if (data.title || data.name) document.getElementById('modalTitle').textContent = data.title || data.name;
                 if (data.poster_path) document.getElementById('modalPoster').src = formatTmdbImage(data.poster_path, 'w780');
                 if (data.overview) document.getElementById('modalOverview').textContent = data.overview;
@@ -3310,7 +3318,7 @@
                 if (data.release_date || data.first_air_date) document.getElementById('modalYear').textContent = (data.release_date || data.first_air_date).split('-')[0];
                 document.getElementById('modalType').textContent = isTv ? 'SÉRIE' : 'FILM';
 
-                // Set backdrop TMDB pour le fond
+                // Backdrop TMDB pour le fond - BIEN VISIBLE, sans filtre noir
                 if (data.backdrop_path) {
                     const backdropUrl = formatTmdbImage(data.backdrop_path, 'w1280');
                     document.getElementById('overlayBackdrop').style.backgroundImage = `url('${backdropUrl}')`;
@@ -3318,28 +3326,14 @@
                     document.getElementById('overlayBackdrop').style.backgroundImage = 'none';
                 }
 
-                // Build TMDB-style overview tab
                 buildTmdbOverviewTab(data, isTv);
-
-                // Build details tab
                 buildTmdbDetailsTab(data, isTv);
-
-                // Build videos tab
                 buildTmdbVideosTab(data);
-
-                // Build images tab
                 buildTmdbImagesTab(data);
-
-                // Build cast tab
                 buildTmdbCastTab(data);
-
-                // Build crew tab
                 buildTmdbCrewTab(data);
-
-                // Set trailer
                 setTrailerFromTmdb(data);
 
-                // Update cast list under synopsis
                 if (data.credits && data.credits.cast) {
                     document.getElementById('castList').innerHTML = data.credits.cast.slice(0, 8).map(actor => `
                         <div class="cast-item">
