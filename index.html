@@ -10,11 +10,11 @@
             --red-bright: #ff0f1a;
             --red-glow: rgba(229, 9, 20, 0.45);
             --green: #10b981;
-            --bg-0: #07070a;
-            --bg-1: #0b0b0e;
-            --bg-2: #12121a;
-            --bg-3: #18181f;
-            --bg-4: #1f1f2a;
+            --bg-0: #000000;
+            --bg-1: #050505;
+            --bg-2: #0a0a0a;
+            --bg-3: #101010;
+            --bg-4: #1a1a1a;
             --border: rgba(255,255,255,0.06);
             --border-strong: rgba(255,255,255,0.12);
             --text-0: #ffffff;
@@ -62,7 +62,7 @@
         header {
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 30px;
-            background: rgba(7, 7, 10, 0.92);
+            background: rgba(0, 0, 0, 0.92);
             position: fixed; top: 0; width: 100%; z-index: 5000;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -116,6 +116,7 @@
             bottom: -14px; left: 25%; right: 25%; height: 2px;
             background: var(--red);
             border-radius: 2px;
+            box-shadow: 0 0 10px rgba(229,9,20,0.8);
         }
 
         /* ==================== EXPLORER DROPDOWN ==================== */
@@ -298,7 +299,7 @@
         /* ==================== MODALS ==================== */
         .auth-modal, .admin-modal, .remote-popup-modal {
             position: fixed; inset: 0;
-            background: rgba(3,3,6,0.85);
+            background: rgba(0,0,0,0.85);
             z-index: 7000;
             display: none; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
@@ -381,7 +382,7 @@
         .hero-overlay {
             position: absolute; inset: 0;
             background:
-                linear-gradient(90deg, var(--bg-1) 5%, rgba(11,11,14,0.9) 30%, rgba(11,11,14,0.35) 65%, transparent 100%),
+                linear-gradient(90deg, var(--bg-1) 5%, rgba(5,5,5,0.9) 30%, rgba(5,5,5,0.35) 65%, transparent 100%),
                 linear-gradient(0deg, var(--bg-1) 0%, transparent 45%);
         }
         .hero-content {
@@ -495,6 +496,7 @@
         .hero-dot.active {
             background: var(--red);
             width: 20px; border-radius: 10px;
+            box-shadow: 0 0 10px rgba(229,9,20,0.8);
         }
         .hero-divider {
             width: 1px; height: 14px;
@@ -511,6 +513,7 @@
             background: var(--red);
             border-radius: 3px;
             transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(229,9,20,0.8);
         }
 
         /* ==================== MAIN CONTENT ==================== */
@@ -655,7 +658,7 @@
 
         .card-hover-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(11,11,14,0.3) 0%, rgba(11,11,14,0.96) 70%);
+            background: linear-gradient(180deg, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.96) 70%);
             padding: 16px;
             display: flex; flex-direction: column;
             justify-content: flex-end;
@@ -736,11 +739,13 @@
         .top10-number {
             position: absolute; left: -30px; bottom: -18px;
             font-size: 140px; font-weight: 900; line-height: 0.8;
-            color: rgba(11, 11, 14, 0.9);
+            color: transparent;
             -webkit-text-stroke: 4px var(--red);
             z-index: 3; user-select: none;
             font-family: 'Impact', 'Arial Black', sans-serif;
             pointer-events: none;
+            text-shadow: 0 0 30px rgba(229,9,20,0.8), 0 0 60px rgba(229,9,20,0.5), 0 0 90px rgba(229,9,20,0.3);
+            filter: drop-shadow(0 0 15px rgba(229,9,20,0.6));
         }
 
         /* ==================== LOAD MORE ==================== */
@@ -964,7 +969,7 @@
             position: absolute; top: 42%;
             transform: translateY(-50%);
             width: 42px; height: 42px;
-            background: rgba(11,11,14,0.85);
+            background: rgba(5,5,5,0.85);
             border: 2px solid var(--red);
             border-radius: 50%; color: #fff;
             cursor: pointer; z-index: 20;
@@ -990,10 +995,29 @@
             z-index: 3000; display: none;
             overflow-y: auto; padding-top: 60px;
         }
+
+        /* Backdrop TMDB pour la page de détails */
+        .overlay-backdrop {
+            position: fixed;
+            inset: 0;
+            background-size: cover;
+            background-position: center 20%;
+            opacity: 0.25;
+            z-index: -1;
+            transition: background-image 0.5s var(--ease);
+        }
+        .overlay-backdrop::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.95) 60%, var(--bg-1) 100%);
+        }
+
         .modal-container {
             width: 100%; max-width: 1280px;
             margin: 0 auto; padding: 20px;
             position: relative;
+            z-index: 1;
         }
 
         .modal-close {
@@ -1228,21 +1252,35 @@
         }
         .trailer-embed iframe { width: 100%; height: 100%; border: none; }
 
+        /* ==================== PLAYER + SOURCES ==================== */
+        .player-section-wrapper {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* Le player et les sources sont côte à côte */
+        .player-flex {
+            display: flex;
+            gap: 0;
+            align-items: stretch;
+            position: relative;
+        }
+
         .player-wrapper {
-            width: 100%; aspect-ratio: 16/9;
+            flex: 1;
+            aspect-ratio: 16/9;
             background: #000;
             border-radius: var(--radius);
             overflow: hidden; position: relative;
-            margin-bottom: 15px;
             border: 1px solid var(--border-strong);
             box-shadow: var(--shadow-lg), 0 0 40px rgba(229,9,20,0.15);
+            min-width: 0;
+            transition: margin-right 0.3s var(--ease-out);
         }
         .player-wrapper iframe {
             width: 100%; height: 100%;
             border: none; position: absolute; inset: 0;
         }
-
-        .player-container-box { position: relative; width: 100%; overflow: hidden; }
 
         .btn-toggle-sources {
             position: absolute; top: 14px; right: 14px;
@@ -1266,21 +1304,26 @@
             box-shadow: 0 4px 20px rgba(229,9,20,0.5);
         }
 
-        /* ==================== SOURCE SIDEBAR (contained) ==================== */
+        /* Source sidebar - à droite du player, hors du champ du film */
         .source-sidebar {
-            position: absolute; top: 0; right: -300px;
-            width: 280px; height: 100%;
-            background: rgba(13, 13, 20, 0.97);
+            width: 0;
+            overflow: hidden;
+            background: rgba(10, 10, 15, 0.98);
             border-left: 1px solid var(--border-strong);
-            z-index: 200; padding: 16px;
-            display: flex; flex-direction: column; gap: 8px;
-            transition: right 0.3s var(--ease-out);
-            backdrop-filter: blur(10px);
-            overflow-y: auto;
+            transition: width 0.3s var(--ease-out), padding 0.3s var(--ease-out);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0;
             border-radius: 0 var(--radius) var(--radius) 0;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.8), 0 0 20px rgba(229,9,20,0.1);
+            position: relative;
+            flex-shrink: 0;
         }
-        .source-sidebar.open { right: 0; }
+        .source-sidebar.open {
+            width: 280px;
+            padding: 16px;
+        }
+
         .source-sidebar-title {
             font-size: 11.5px; font-weight: 800;
             color: var(--text-2); text-transform: uppercase;
@@ -1288,6 +1331,30 @@
             border-bottom: 1px solid var(--border);
             padding-bottom: 10px;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            white-space: nowrap;
+        }
+
+        .source-close-btn {
+            background: rgba(229,9,20,0.15);
+            border: 1px solid rgba(229,9,20,0.4);
+            color: #fff;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .source-close-btn svg { width: 10px; height: 10px; fill: #fff; }
+        .source-close-btn:hover {
+            background: var(--red);
+            border-color: var(--red);
+            transform: rotate(90deg);
+            box-shadow: 0 0 12px rgba(229,9,20,0.6);
         }
 
         .btn-source-item {
@@ -1302,6 +1369,7 @@
             justify-content: space-between;
             transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
             font-family: inherit;
+            white-space: nowrap;
         }
         .btn-source-item:hover {
             background: rgba(229,9,20,0.15);
@@ -1648,7 +1716,8 @@
             .season-card img { height: 145px; }
             .episode-card img { height: 82px; }
 
-            .source-sidebar { width: 250px; right: -270px; }
+            .player-flex { flex-direction: column; }
+            .source-sidebar.open { width: 100%; border-radius: 0 0 var(--radius) var(--radius); border-left: none; border-top: 1px solid var(--border-strong); }
 
             .auth-modal-card, .admin-modal-content { padding: 22px 18px; }
             .admin-modal-title { font-size: 16px; }
@@ -2140,6 +2209,7 @@
     </div>
 
     <div class="overlay" id="playerModal">
+        <div class="overlay-backdrop" id="overlayBackdrop"></div>
         <div class="modal-container">
             <button class="modal-close" onclick="closePlayer()">
                 <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -2189,7 +2259,6 @@
             </div>
 
             <div class="tmdb-tab-content active" id="tab-apercu">
-                <!-- Aperçu content: synopsis, stats, etc. -->
                 <div id="tmdbOverviewContent"></div>
             </div>
             <div class="tmdb-tab-content" id="tab-details">
@@ -2212,33 +2281,41 @@
             </div>
 
             <!-- Player and sources -->
-            <div class="player-container-box">
+            <div class="player-section-wrapper">
+                <div class="player-flex">
+                    <div class="player-wrapper" id="videoContainer"></div>
+                    <div class="source-sidebar" id="sourceSidebar">
+                        <div class="source-sidebar-title">
+                            <span>Choix des Lecteurs</span>
+                            <button class="source-close-btn" onclick="toggleSourceSidebar()" title="Fermer">
+                                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                            </button>
+                        </div>
+                        <button class="btn-source-item active" id="btn-src-vidzy" onclick="selectSource('vidzy')">
+                            <span>Vidzy</span> <span class="lang-flag">VF / Multi</span>
+                        </button>
+                        <button class="btn-source-item" id="btn-src-frembed" onclick="selectSource('frembed')">
+                            <span>Frembed</span> <span class="lang-flag">VF</span>
+                        </button>
+                        <button class="btn-source-item" id="btn-src-movix" onclick="selectSource('movix')">
+                            <span>Movix</span> <span class="lang-flag">VF</span>
+                        </button>
+                        <button class="btn-source-item" id="btn-src-multiembed" onclick="selectSource('multiembed')">
+                            <span>MultiEmbed</span> <span class="lang-flag">VF</span>
+                        </button>
+                        <button class="btn-source-item" id="btn-src-vidlink" onclick="selectSource('vidlink')">
+                            <span>VidLink</span> <span class="lang-flag">VO / Multi</span>
+                        </button>
+                        <button class="btn-source-item" id="btn-src-2embed" onclick="selectSource('2embed')">
+                            <span>2embed</span> <span class="lang-flag">VOSTFR</span>
+                        </button>
+                    </div>
+                </div>
+
                 <button class="btn-toggle-sources" onclick="toggleSourceSidebar()">
                     <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
                     <span>Sources</span>
                 </button>
-                <div class="source-sidebar" id="sourceSidebar">
-                    <div class="source-sidebar-title">Choix des Lecteurs</div>
-                    <button class="btn-source-item active" id="btn-src-vidzy" onclick="selectSource('vidzy')">
-                        <span>Vidzy</span> <span class="lang-flag">VF / Multi</span>
-                    </button>
-                    <button class="btn-source-item" id="btn-src-frembed" onclick="selectSource('frembed')">
-                        <span>Frembed</span> <span class="lang-flag">VF</span>
-                    </button>
-                    <button class="btn-source-item" id="btn-src-movix" onclick="selectSource('movix')">
-                        <span>Movix</span> <span class="lang-flag">VF</span>
-                    </button>
-                    <button class="btn-source-item" id="btn-src-multiembed" onclick="selectSource('multiembed')">
-                        <span>MultiEmbed</span> <span class="lang-flag">VF</span>
-                    </button>
-                    <button class="btn-source-item" id="btn-src-vidlink" onclick="selectSource('vidlink')">
-                        <span>VidLink</span> <span class="lang-flag">VO / Multi</span>
-                    </button>
-                    <button class="btn-source-item" id="btn-src-2embed" onclick="selectSource('2embed')">
-                        <span>2embed</span> <span class="lang-flag">VOSTFR</span>
-                    </button>
-                </div>
-                <div class="player-wrapper" id="videoContainer"></div>
 
                 <div class="tv-seasons-container" id="tvSeasonsContainer">
                     <div class="seasons-title">Saisons</div>
@@ -2263,7 +2340,7 @@
 
             <div style="font-size:12px; color:#e50914; margin-bottom:8px; font-weight:bold;" id="heroFormLabel">Ajouter un élément :</div>
             <input type="text" class="admin-input" id="heroEditTitle" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForHero(this.value)">
-            <div id="heroMovieSelectList" style="max-height: 150px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px; display:none;"></div>
+            <div id="heroMovieSelectList" style="max-height: 150px; overflow-y: auto; margin-bottom: 12px; background:#101010; padding:8px; border-radius:6px; display:none;"></div>
 
             <input type="text" class="admin-input" id="heroEditImage" placeholder="Lien TMDB pour l'image (ex: /t/p/w1280/...) ou URL complète">
             <input type="text" class="admin-input" id="heroEditLogo" placeholder="Remplacer le titre par Logos (Lien URL de l'image logo PNG)">
@@ -2303,11 +2380,11 @@
                 <div class="add-movie-col">
                     <div class="add-movie-col-title">Catalogue</div>
                     <input type="text" class="admin-input" id="searchMovieForSaga" placeholder="Rechercher un film du catalogue..." oninput="filterMoviesForSaga(this.value)">
-                    <div id="movieSelectList" style="max-height: 260px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
+                    <div id="movieSelectList" style="max-height: 260px; overflow-y: auto; margin-bottom: 12px; background:#101010; padding:8px; border-radius:6px;"></div>
                 </div>
                 <div class="add-movie-col">
                     <div class="add-movie-col-title red-title">Films sélectionnés</div>
-                    <div id="pendingMovieList" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px; background:#18181f; padding:8px; border-radius:6px;"></div>
+                    <div id="pendingMovieList" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px; background:#101010; padding:8px; border-radius:6px;"></div>
                 </div>
             </div>
             <div class="admin-btn-group">
@@ -3233,6 +3310,14 @@
                 if (data.release_date || data.first_air_date) document.getElementById('modalYear').textContent = (data.release_date || data.first_air_date).split('-')[0];
                 document.getElementById('modalType').textContent = isTv ? 'SÉRIE' : 'FILM';
 
+                // Set backdrop TMDB pour le fond
+                if (data.backdrop_path) {
+                    const backdropUrl = formatTmdbImage(data.backdrop_path, 'w1280');
+                    document.getElementById('overlayBackdrop').style.backgroundImage = `url('${backdropUrl}')`;
+                } else {
+                    document.getElementById('overlayBackdrop').style.backgroundImage = 'none';
+                }
+
                 // Build TMDB-style overview tab
                 buildTmdbOverviewTab(data, isTv);
 
@@ -3372,7 +3457,6 @@
         function playYoutubeVideo(key) {
             document.getElementById('trailerContainer').innerHTML = `<iframe src="https://www.youtube.com/embed/${key}?autoplay=1" allowfullscreen></iframe>`;
             switchTmdbTab('apercu');
-            // Scroll to trailer
             document.querySelector('.trailer-box').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -3556,13 +3640,12 @@
             }
 
             document.getElementById('videoContainer').innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
-            const sidebar = document.getElementById('sourceSidebar');
-            if (sidebar) sidebar.classList.remove('open');
         }
 
         function closePlayer() {
             document.getElementById('playerModal').style.display = 'none';
             document.getElementById('videoContainer').innerHTML = '';
+            document.getElementById('overlayBackdrop').style.backgroundImage = 'none';
             document.body.style.overflow = 'auto';
             const sidebar = document.getElementById('sourceSidebar');
             if (sidebar) sidebar.classList.remove('open');
